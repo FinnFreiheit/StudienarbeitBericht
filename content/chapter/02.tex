@@ -73,7 +73,54 @@ Neben den oben aufgezählten Grundeinstellungen sind viele weitere Möglich. Um 
 
 \begin{figure}[!htb]
     \centering
-    \includegraphics[scale=0.45]{devToolsManifest.png}
+    \includegraphics[scale=0.3]{devToolsManifest.png}
     \caption{Entwicklereinstellungen Web-App-Manifest}
     \label{img:devManifest}
 \end{figure}
+
+
+\newpage
+
+\subsection{Service Workers}\label{sec:ServiceWorker}
+\begin{quote}
+    \textit{Service workers are a fundamental part of a PWA. They enable fast loading (regardless of the network), offline access, push notifications, and other capabilities \cite{Developers2022a}.}
+\end{quote}
+
+Der \textit{Service Worker} ist ein wichtiger Grundbaustein um Funktionalitäten wie Push-Notifikations, Hintergrund-Synchronisation und die Möglichkeit, auch Offline die Anwendung auszuführen, zu realisieren. 
+
+Bei dem \textit{Service Worker} handelt es sich um ein script das im Hintergrund des Browsers, unabhängig von der Webanwendung, läuft \cite{Gaunt2021}. Entstanden sind die service worker aus der Verwendung des Application Caches . Die service Worker \ac{API} wächst kontinuierlich und bietet zunehmende weitere Funktionalitäten.
+
+Bei der Verwendung eines Service Worker sollten folgenden Eigenschaften berücksichtigt werden: 
+\begin{itemize}
+    \item Ein service worker kann zwar nicht direkt das \ac{DOM} einer Seite manipulieren, kann aber auf Requests der Seite mit Responses reagieren und die Seite selbst kann darufhin ihr DOM ändern
+    \item Ein service worker ist ein \glqq programmierbarer\grqq{} Proxy, der steuert, wie Requests von der Webseite behandelt werden.
+    \item Service workers verwenden die IndexDB API, um client-seitig strukturierte Daten persistent zu speichern.
+    \item Service workers verwenden Promises. 
+\end{itemize}
+
+\subsubsection{Der Lebenszyklus eines Service Workers}
+
+Der Lebenszyklus eines Service Workers beginnt mit dem registrieren. Die Registrierung erfolgt im JavaScript-Quellcode der PWA. 
+Der Service Worker wird vom Browser heruntergeladen und installiert, sobald die PWA mit registrierten Service Worker das erste mal aufgerufen wird. 
+
+Nach einer erfolgreichen Installation wird der Service Worker aktiviert und verwaltet ab dann sämtliche Requests der Applikation. 
+Durch den Aktivierten Service Worker kann die Application auch ohne eine bestehende Internetverbindung geladen werden. Der Service Worker verarbeitet den Initialen Request der Applikation, leitet diesen jedoch nicht an den Webserver weiter, siehe Abbildung \ref{img:swonline}, sondern läd die Applikation aus dem Cache Storage, siehe Abbildung \ref{img:swoffline}.
+
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.45]{swonline.png}
+    \caption{Laden einer Applikation ohne Service Worker}
+    \label{img:swonline}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.45]{swoffline.png}
+    \caption{Laden einer Applikation ohne Internetverbindung}
+    \label{img:swoffline}
+\end{figure}
+
+
+\subsubsection{Push Notifikations}
+
+Eine Notifikation ist eine Nachricht, die auf dem Endgerät des Nutzers Angezeigt wird. Dies kann als Reaktion auf eine Nutzereingabe geschehen, es kann jedoch auch unabhängig vom Nutzer eine Nachricht von einem Server \glqq gepusht\grqq{} werden und das auch ohne das die Applikation aktiv ist.  Um push Notifikations zu erzeugen werden zwei APIs benötigt. Die \textit{Notifikations API} visualisiert die Nachricht für den Nutzer und die \textit{Push API} erlaubt es den Service Worker, Kapitel \ref{sec:ServiceWorker} Nachrichten zu verwalten, die vom Server gesendet wurden während die Applikation nicht aktiv war. 
