@@ -1,0 +1,41 @@
+%!TEX root = ../../main.tex
+\section{Architektur}
+
+Die grundlegende Architektur einer Webanwendung ist in Abbildung~\ref{img:architektur} beschrieben. Man spricht von einer Client-Server-Architektur. Die Nutzer einer Webanwendung interagieren mit einem Browser (dem Client). In dem Browser wird die Webseite (das Frontend, Kapitel \ref{Angular}) dargestellt. Die Inhalte einer Webseite werden mithilfe von \ac{HTML} (siehe Abschnitt~\ref{sec:html}) und das Layout mithilfe von \ac{CSS} (siehe Abschnitt~\ref{sec:css}) definiert. Auf Nutzerinteraktionen kann dynmaisch mithilfe von JavaScript reagiert werden. Ein Browser kann also die drei Skript-Sprachen HTML, CSS und JavaScript interpretieren.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[scale=0.5]{architektur.png}
+    \caption{Architektur der gesamten Anwendung}
+    \label{img:architektur}
+\end{figure}
+
+Die Webseiten liegen auf einem Webserver (dem Server) bzw. werden von einem Webserver bereitgestellt. In den Browser wird eine \ac{URL} eingegeben, welche die Adresse eines Webservers und den Namen der darauf befindlichen Webseite enthält. Die Kommunikation zwischen Browser und Webserver erfolgt mittels \ac{HTTP}. Die Eingabe einer URL in den Browser erwirkt einen sogenannten \textit{HTTP-Request} an den Webserver. Typischerweise wird eine \texttt{GET}-Anfrage an den Webserver gestellt, um die Webseite zu laden. Der Webserver beantwortet diesen Request mit einer \textit{Response}, indem der Webserver die angefragte Seite an den Browser sendet. Diese wird im Browser dargestellt. Wird innerhalb der Webseite auf einen Hyperlink geklickt, entspricht das in der Regel einer weiteren Anfrage an den (oder einen anderen) Webserver und eine neue Seite wird übermittelt und dargestellt.
+
+Es kann jedoch sein, dass die angefragte Webseite nicht bereits fertig (\textit{statisch}) auf dem Webserver bereitgestellt ist, sondern eine solche Webseite erst auf dem Webserver \textit{dynamisch} zusammengestellt werden muss. Dies ist z.B. der Fall, wenn Suchanfragen durch den Nutzer gestellt und die Ergebnisse der Suche zunächst aus einer Datenbank extrahiert und dann in eine Webseite eingebunden werden müssen. Der Webserver kommuniziert in einem solchen Fall mit der an den Webserver angebundenen Datenbank mittels \ac{SQL}. Insbesondere in dem Fall, dass durch den Webserver die an den Browser zu übertragende Webseite erst \glqq zusammengebaut\grqq{} werden muss, spricht man beim Webserver auch vom sogenannten \textit{Backend}.
+
+Die Kommunikation vom Browser an den Webserver beinhaltet jedoch nicht nur solche \texttt{GET}-Anfragen, die eine Ressource (Webseite) vom Webserver anfordern, sondern kann darüber hinaus auch das Senden von Daten an den Webserver beinhalten. Das ist z.B. der Fall, wenn eine Webseite ein Formular enthält, in das Daten eingeben werden können und diese Daten entweder in die Datenbank gespeichert werden sollen oder aber als neue Daten zur Aktualisierung alter Daten in der Datenbank verwendet werden. Neben den \texttt{GET}-Anfragen sind deshalb im HTTP-Standard auch sogenannte \texttt{POST}- (Senden neuer Daten), \texttt{PUT}- (Aktualisieren von Daten) und \texttt{DELETE}- (Löschen von Daten) -Anfragen vorgesehen. Betrachtet man die Möglichkeiten zur Manipulation einer Datenbank, dann gibt es vier verschiedene Operationen, die auf einer Datenbank möglich sind:
+
+\begin{itemize}
+    \item \textit{Create} : das Hinzufügen neuer Daten(sätze),
+    \item \textit{Read} : das Lesen einer oder mehrerer Daten(sätze),
+    \item \textit{Update} : das Aktualisieren einer oder mehrerer Daten(sätze) sowie
+    \item \textit{Delete} : das Löschen einer oder mehrerer Daten(sätze).
+\end{itemize}
+
+Diese vier Operationen werden deshalb auch unter dem Begriff \ac{CRUD} zusammengefasst. Die oben genannten HTTP-Anfragen lassen sich somit gut auf diese CRUD-Operationen abbilden:
+
+
+\begin{itemize}
+    \item \texttt{GET}-Anfrage für das Lesen (read),
+    \item \texttt{POST}-Anfrage für das Erstellen (create),
+    \item \texttt{PUT}-Anfrage für das Aktualisieren (update) und
+    \item \texttt{DELETE}-Anfrage für das Löschen (delete)
+\end{itemize}
+
+einer Ressource (Daten). Dieses \glqq Mapping\grqq{} bildet die Grundlage für eine \ac{REST}-Schnittstelle. \textit{REST} stellt eine Beschreibung von konkreten HTTP-Anfragen an konkrete Ressourcen auf dem Webserver (oder der Datenbank) dar. Es verbindet also eine HTTP-Anfrage mit einer Ressource und beschreibt somit eindeutig, was mit dieser Ressource geschehen soll. In der vorliegenden Arbeit wurde eine REST-Schnittstelle mithilfe von \textit{Node.js} implementiert, siehe Abschnitt \ref{node}. Mithilfe der Schnittstellen werden Daten der  \ac{NoSQL}-Datenbank names \textit{MonogDB} manipuliert, siehe Abschnitt \ref{mongo}. 
+
+
+
+
+ 

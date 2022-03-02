@@ -2,4 +2,143 @@
 
 \addchap{\appendixPhrase}
 
+\section{HTML} \label{sec:html}
+Mit der \ac{HTML} wird das Grundgerüst einer Internetseite aufgebaut. Dafür werden Textelemente von einem HTML-Tag jeweils geöffnet (<html>) und geschlossen (</html>).  Auch HTML-Tags können Einfluss auf die Position und die Darstellung der Textelemente im Browser ausüben. Zum Beispiel verursacht der HTML-Tag \texttt{<h1>Text</h1>}, dass das Textelement als Überschrift angezeigt wird \cite{W3HTML2021}. 
 
+Eine HTML-Datei verfügt im Allgemeinen über folgendes Grundgerüst.
+
+\begin{lstlisting}[caption=Grundgerüst einer HTML-Seite, label=htmlGrundgerüst]
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Seitentitel</title>
+    </head>
+    <body>
+        <h1> Das ist eine Grosse Ueberschrift </h1>
+        <p> Das ist ein Absatz </p>
+    </body>
+</html>
+\end{lstlisting}
+
+Der Tag \texttt{<!DOCTYPE html>} gibt dem Browser an, dass es sich um eine HTML-Datei handelt. Der \texttt{<head>}-Bereich beinhaltet Metadaten über das Webdokument, wie zum Beispiel den Titel, der im Browser-Reiter angezeigt wird. Neben dem Titel können im Head noch weitere Metadaten wie Schlüsselwörter, Autor und Zeichenkodierung angegeben werden. Wird das Aussehen einer Webseite in einer separaten Datei festgelegt, muss diese Datei auch im Head der HTML-Datei verlinkt werden. Die Inhalte, die vom Browser dargestellt werden, sind im \texttt{<body>}-Bereich angegeben. Im Code-Beispiel \ref{htmlGrundgerüst} ist das eine Überschrift und ein Absatz und wird, wie in Abbildung \ref{img:htmlGrund} dargestellt, im Browser angezeigt.
+
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[scale=0.5]{htmlGrund.png}  
+    \caption{HTML Grundgerüst}
+    \label{img:htmlGrund}
+\end{figure}
+
+\subsection{Attribute} \label{sec:Attribute}
+
+HTML-Tags können durch Attribute erweitert werden. Die Attribute werden innerhalb der spitzen Klammern angegeben, siehe Listing \ref{list:htmlAttribut}. Besonders wichtig sind globale Attribute, die für alle HTML-Elemente verwendet werden können. Mithilfe des globalen Attributs \texttt{class} können mehrere HTML-Tags in einer Kategorie beziehungsweise Klasse zusammengefasst werden. Die Eigenschaften dieser Klasse können im Anschluss in der CSS-Datei beeinflusst werden, siehe das folgende Kapitel.
+
+\begin{lstlisting}[caption=HTML Attribute, label=list:htmlAttribut]   
+<h1 class="Ueberschrift"> 
+    Das ist eine Grosse Ueberschrift 
+</h1>
+\end{lstlisting}
+
+
+%--------------------------------------
+\section{CSS} \label{sec:css}
+
+\ac{CSS} werden verwendet, um 
+\begin{itemize}
+    \item dem HTML-Dokument einen ansprechenden Stil zuzuweisen,
+    \item das Layout des HTML-Dokumentes zu definieren und
+    \item das Layout so zu gestalten, dass sich der Inhalt automatisch an die Bildschirmgröße anpasst. 
+\end{itemize}
+
+Generell gilt, dass mit HTML die Inhalte definiert werden und mit CSS das Aussehen. 
+Die Syntax, um CSS-Eigenschaften für HTML-Elemente zu definieren, ist wie folgt aufgebaut. 
+
+\begin{lstlisting}[caption= Die generelle Syntax für CSS-Eigenschaften, label=syntaxCSS]
+selektor {
+    Eigenschaften : Wert;
+}
+\end{lstlisting}
+
+Selektoren können HTML-Elemente wie \texttt{<h1>} und \texttt{<p>}, oder Klassen und IDs, wie bereits im Kapitel \ref{sec:html} angesprochen, sein. Wird eine Klasse als Selektor verwendet, muss ein Punkt vor den Namen geschrieben werden, bei einer ID eine Raute \cite{W3CSS2021}.
+
+Um die Überschrift aus Listing \ref{list:htmlAttribut} grün zu färben, würde die CSS-Syntax wie in Listing \ref{UeberschriftGruen} dargestellt, aussehen. Das Ergebnis ist in Abbildung \ref{img:UeberschriftGruen} dargestellt.  
+
+\begin{lstlisting}[caption= Grüne Überschrift CSS, label=UeberschriftGruen]
+
+<!-- eine Klasse als Selektor -->
+.Ueberschrift {
+    color : green;
+}
+
+<!-- ein HTML-Element als Selektor--> 
+h1 {
+    color : green;
+}
+\end{lstlisting}
+
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[scale=0.5]{gruenerUeberschrift.png}
+    \caption{Grüne Überschrift}
+    \label{img:UeberschriftGruen}
+\end{figure}
+
+\subsection{CSS in die HTML-Datei einbinden}
+
+Wie im Kapitel \ref{sec:html} bereits erwähnt, ist es  möglich, eine CSS-Datei im HTML-Head zu verlinken, siehe Listing \ref{CSSLink}. Darin wird die Datei \textbf{style.css} eingebunden. 
+
+\begin{lstlisting}[caption= CSS-Datei in HTML verlinken, label=CSSLink, float=!htb]
+<head>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1 class="Ueberschrift"> 
+        Das ist eine Grosse Ueberschrift 
+    </h1>
+</body>
+\end{lstlisting}
+
+Das Attribut \texttt{href} gibt den Pfad der verlinkten Ressource an. Die Beziehung des verknüpften Dokuments zum aktuellen Dokument wird mit dem Attribut \texttt{rel} angegeben \cite{Mozilla2021}.
+CSS Deklarationen können auch direkt in das HTML Dokument geschrieben werden, indem man den HTML-Tag \texttt{<style>} verwendet, Listing \ref{CSSdirekt}. 
+
+\begin{lstlisting}[caption= CSS-Datei in HTML einbinden, label=CSSdirekt]
+<head>
+    <style>
+        .Ueberschrift {
+            color : green;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="Ueberschrift"> 
+        Das ist eine Grosse Ueberschrift 
+    </h1>
+</body>
+\end{lstlisting}
+
+%----------------------------------
+\section{JavaScript}\label{sec:JavaScript}
+
+JavaScript ist eine Programmiersprache, mit der man komplexe Funktionen für Webseiten realisieren kann. JavaScript findet immer dann Anwendung, wenn eine Internetseite mehr als nur statische Informationen darstellt \cite{Mozilla2021}. 
+
+Mithilfe von JavaScript können: 
+\begin{itemize}
+    \item Informationen in Variablen gespeichert,
+    \item Operationen auf Webinhalte, wie zum Beispiel Texte ausgeführt und 
+    \item auf Ereignisse reagiert werden, wie zum Beispiel auf einen Maus-Klick.  
+\end{itemize}
+
+\subsection{JavaScript in die HTML-Datei einbinden}
+JavaScript kann, genauso wie CSS, entweder unter Verwendung des HTML-Tags \texttt{<script>} direkt in das HTML-Dokument geschrieben werden, oder der Code wird als externe Datei eingebunden. Dafür wird auch der HTML-Tag \texttt{script} verwendet, mit dem Attribut \texttt{src}\footnote{source (Quelle)}, und dem Pfad der JavaScript Datei \cite{W3JS2021}, siehe Listing \ref{jsHTML}. 
+
+\begin{lstlisting}[caption= JavaScript in HTML einbinden, label=jsHTML, float=!htb]
+    <head>
+        <!--direkte Einbindung -->
+        <script>
+           //JavaScript Code 
+        </script>
+
+        <!-- als externe Datei Einbinden -->
+        <script src="dateiname.js"></script>
+    </head>
+\end{lstlisting}

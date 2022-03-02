@@ -79,16 +79,31 @@
 	\pagestyle{headings}
 
 	%Content
-	\foreach \i in {01,02,03,04,05,06,07,08,09,...,99} {%
-		\edef\FileName{content/chapter/\i .tex}%
-			\IfFileExists{\FileName}{%
-				\input{\FileName}
-			}
-			{%
-%				No chapter available
-			}
-	}
 
+%	\foreach \i in {01,02,03,04,05,06,07,08,09,...,99} {%
+%		\edef\FileName{content/chapter/\i .tex}%
+%			\IfFileExists{\FileName}{%
+%				\input{\FileName}
+%			}
+%			{%
+%				No chapter available
+%			}
+%	}
+	%%%%%%%%%%%%%%%%%%%%% Einleitung %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\input{content/chapter/Einleitung/einleitung.tex}
+	\input{content/chapter/Einleitung/motivation.tex}
+
+	%%%%%%%%%%%%%%%%%%%%% Theoretische Grundlagen %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\input{content/chapter/TheoretischeGrundlagen/theoretischeGrundlage.tex}
+	\input{content/chapter/TheoretischeGrundlagen/architektur.tex}	
+	\input{content/chapter/TheoretischeGrundlagen/angular.tex}
+	\input{content/chapter/TheoretischeGrundlagen/node.tex}
+	\input{content/chapter/TheoretischeGrundlagen/mongo.tex}
+	\input{content/chapter/TheoretischeGrundlagen/pwaGrundlagen.tex}
+
+	%%%%%%%%%%%%%%%%%%%%%  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+	
 	\clearpage
 
 	% Bibilography
