@@ -13,7 +13,7 @@ Wie in Kapitel \ref{se:Begriffsklaerung} erwähnt verfügt eine PWA unter andere
 Im folgenden werden die theoretischen Grundlagen erläutert, die benötigt werden, um diese Funktionalitäten zu realisieren. 
 
 
-\subsection{Web-App-Manifest}
+\subsection{Web-App-Manifest}\label{sec:webappmanifest}
 
 \begin{quote}
    \textit{The web app manifest is a JSON file that defines how the PWA should be treated as an installed application, including the look and feel and basic behavior within the operating system \cite{Developers2022}. }
@@ -119,7 +119,55 @@ Durch den Aktivierten Service Worker kann die Application auch ohne eine bestehe
     \label{img:swoffline}
 \end{figure}
 
+\subsection{Progressive Web Apps in Angular}
 
-\subsubsection{Push Notifikations}
+Angular (Abschnitt \ref{Angular}) eignet sich sehr gut um eine PWA zu entwickeln, da beides Entwicklungen von Google sind. 
+Um aus einer Angular Anwendung eine PWA zu erstellen, muss das Paket \texttt{@angular/pwa} über das \ac{CLI} hinzugefügt werden.
+Durch das hinzufügen des Paketes werden im Hintergrund folgende Veränderungen an dem Projekt durchgeführt: 
+\begin{itemize}
+    \item Das Paket \texttt{@angular/service-worker} wird zum Projekt hinzugefügt,
+    \item der Build Support für den Service Worker wird in der Angular CLI aktiviert,
+    \item das \texttt{ServiceWorkerModule} wird im \texttt{AppModule} importiert,
+    \item die Datei index.html wird um ein Link zum Web App Manifest (Abschitt \ref{sec:webappmanifest}) und um relevante Meta-Tags ergänzt,
+    \item Icon-Dateien werden erzeugt und verlinkt,
+    \item die Konfigurationsdatei \textit{ngsw-config.json} für den Service Worker wird erzeugt. 
+\end{itemize}
+
+Im anschluss kann die Applikation alle Grundfunktionen einer PWA ausführen. Die Anwendung kann installiert werden. Im Web App Manifest steht der Projektname und das unter \texttt{assets} abgespeicherte Angular Icon wird als App-Icon verwendet. Nach dem erstmaligen öffnen der Applikation im Browser wird der Service Worker Installiert. Anschließend kann die Webseite auch ohne Netzwerkverbindung geladen werden.  
+
+
+
+\subsection{PWA für IOS}
+
+Apple unterstützt die Entwicklung von PWAs nicht. PWAs stellen  eine Möglichkeit dar, um Apps für das IPhon zu Installieren, die sich nicht im App Store befinden. Im Jahr 2020 hat Apple mit dem App Store ein Umsatz von 643 Milliarden US-Doller erwirtschaftet \cite{Kirchenbauer2021}. Apple erhält 30\% Provision, wenn eine App gekauft oder wenn In-App Käufe abgeschlossen werden. Durch PWAs könnte diese Einnahmequelle wegfallen. 
+
+Durch zusätzliche Einstellungen können PWAs auf dem Homescreen von IOS Geräten installiert werde. Im \texttt{head} der \texttt{index.html} muss der Dateipfad zum verwendeten Icon angegeben werden, da dieser Pfad nicht aus dem Web-App-Manifest ausgelesen wird. 
+Des weiteren muss in einem \texttt{meta-tag} angegeben werden, das die Webanwendung als App genutzt werden kann. Diese zusätzlichen Angaben ermöglichen es die Applikation zu installieren, Apple beschränkt jedoch die volle Funktionsumfang der PWAs. Durch ein Softwareupdate hat Apple eine Zwangslöschung für lokal beschreibbare Speicherfunktionen eingeführt \cite{t3n2020}. Eine PWA nutzt diesen lokalen Speicher um Daten zu speichern. 
+Auch der Service Worker wird von Safari nicht vollständig unterstützt. Safari ermöglicht weder Push-Nachrichten noch Hintergrund Synchronisation \cite{mediaevent}. 
+
+\subsection{Push Notifikations}
 
 Eine Notifikation ist eine Nachricht, die auf dem Endgerät des Nutzers Angezeigt wird. Dies kann als Reaktion auf eine Nutzereingabe geschehen, es kann jedoch auch unabhängig vom Nutzer eine Nachricht von einem Server \glqq gepusht\grqq{} werden und das auch ohne das die Applikation aktiv ist.  Um push Notifikations zu erzeugen werden zwei APIs benötigt. Die \textit{Notifikations API} visualisiert die Nachricht für den Nutzer und die \textit{Push API} erlaubt es den Service Worker, Kapitel \ref{sec:ServiceWorker}, Nachrichten zu verwalten, die vom Server gesendet wurden während die Applikation nicht aktiv war. 
+
+\subsection{Endgerät Emulation }
+
+Um eine PWA Lokal auf Endgeräten zu testen, können diese Emuliert werden.           
+Um ein Android Handy zu Emuliere, kann das Programm \textit{Android Studio} verwendet werden. In Android Studio kann mithilfe des \ac{AVD Manager} ein Virtuelles Handy gestartet werden, Abbildung \ref{Android1} a. Im Emuliertem Handy kann der Browser geöffnet werden. Um auf die Lokale IP-Adresse des Rechners zugreifen zu können muss im Browser des Handys diese (\texttt{10.0.2.2:8080}) IP-Adresse eingegeben werden, Abbildung \ref{Android1} b. Daraufhin öffnet sich die Anwendung, die unter Einstellung installiert werden kann, Abbildung \ref{Android2} a. Die Anwendung wird darauf hin zum Startbildschirm hinzugefügt, Abbildung \ref{Android2} b.  
+
+\begin{figure}[!htb]
+    \centering
+    \subfloat[][]{\includegraphics[scale=0.4]{emuliertHandy.png}}
+    \qquad
+    \subfloat[][]{\includegraphics[scale=0.4]{PWABrowser.png}}
+    \caption{(a) Emuliertes Android Handy in Android Studio, (b) PWA im Browser geöffnet}
+    \label{Android1}
+\end{figure}
+
+\begin{figure}[!htb]
+    \centering
+    \subfloat[][]{\includegraphics[scale=0.4]{InstallationPWA.png}}
+    \qquad
+    \subfloat[][]{\includegraphics[scale=0.4]{pwaInstalliert.png}}
+    \caption{(a) Installation der PWA unter Android, (b) Installierte PWA }
+    \label{Android2}
+\end{figure}
