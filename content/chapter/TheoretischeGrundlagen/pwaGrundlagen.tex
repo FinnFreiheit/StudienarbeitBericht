@@ -121,7 +121,63 @@ Im Erfolgsfall (then-Methode) wird ein Objekt von typ \texttt{ServiceWorkerRegis
     \item die Eingenschaft \texttt{updatefound} wird aufgerufen, sobald der Browser eine neue Version des Service Workers gefunden hat. 
 \end{itemize}
 
-Bei der Registrierung wird das übergebene Script Zeile 2, vom Webbrowser abgerufen und geparst. 
+\subsubsection{Installieren}
+
+Mit der Registrierung erfolgt auch die Installation des Service-Worker-Skriptes, welches bei der Registrierung übergeben wurde, siehe Listing \ref{lst:serviceWorker} Zeile 2.
+In der Installationsphase läd der Service Worker Ressourcen vom Webserver und speichert diese Lokal ab. Wichtig ist hierbei das die Installationsphase erst dann beendet werden darf, wenn alle benötigten Ressourcen heruntergeladen wurden. Um dies zu realisieren steht die Methode \texttt{waitUntil()} zur Verfügung, die eine Promise-Kette abarbeitet. Die Methode öffnet den zugehörigen Cache. Im Cache werden durch die \texttt{addAll()}-Methode alle benötigten Ressourcen gespeichert, die normalerweise beim öffnen der Applikation von Webserver angefordert werden. Dies ermöglicht, das die Applikation in Zukunft auch ohne Netzwerkverbindung aus dem lokalen Cache geladen werden kann. 
+
+In Angular wird in der \textit{ngsw-config.json}-Datei definiert, welche Ressourcen in den Cache gespeichert werden sollen. Die Grundeinstellung sieht folgendermaßen aus, siehe Listing \ref{lst:ngswConfig}. Aus der JSON-Datei wird ersichtlich, das sämtliche JavaScript und CSS Dateien sowie die index.html im Cache gespeichert wird. Zusätzlich werden Dateien, wie zum Beispiel Bilder, aus dem \textit{assets} Verzeichnis gespeichert. 
+
+
+
+\begin{lstlisting}[caption={Angular \textit{ngsw-config.json}- Datei zu Angabe der Ressourcen, die durch den Service Worker in den Cache gespeichert werden sollen.}, label=lst:ngswConfig, float=!htb ]
+    "assetGroups": [
+        {
+          "name": "app",
+          "installMode": "prefetch",
+          "resources": {
+            "files": [
+              "/favicon.ico",
+              "/index.html",
+              "/manifest.webmanifest",
+              "/*.css",
+              "/*.js"
+            ]
+          }
+        },
+        {
+          "name": "assets",
+          "installMode": "lazy",
+          "updateMode": "prefetch",
+          "resources": {
+            "files": [
+              "/assets/**",
+              "/*.(eot|svg|cur|jpg|png|webp|gif|otf|ttf|woff|woff2|ani)"
+            ] 
+\end{lstlisting}
+
+
+Die im Cache gespeicherten Dateien können mithilfe der Google Chrome Developer Tools unter dem Reiter \textit{Application} eingesehen werden, siehe Abbildung \ref{img:CacheDevTools}. Da es sich in der Abbildung um eine Angular-Anwendung handelt, können die in der \textit{ngsw-config.json}-Datei angegebene Ressourcen wiedergefunden werden.   
+
+
+\subsubsection{Aktivieren}
+
+Nach der Installation geht der Service Worker in den aktiven Zustand über. Ein Aktivierter Service Worker ist in der Lage funktionale Ereignisse zu behandeln wie zum Beispiel das beantworten von HTTP(S) Anfragen oder das Entgegennehmen von Pushbenachrichtigungen. 
+Der Service Worker übernimmt somit die Kontrolle der Applikation. Dies geschieht jedoch erst wenn ein neuer Browser-Kontext geöffnet wird. Würde der Service Worker während der Laufzeit der Webanwendung aktiviert, kontrolliert er alle HTTP(S)-Anfragen der Webanwendung, darunter auch jene deren Ressourcen noch nicht im Cache gespeichert wurden.
+
+\subsubsection{Überschreiben}
+
+Sobald ein neuer Service Worker für einen bestimmten Scope Aktiviert wurde, terminiert der Webbrowser das alte Skript. Der alte Service Worker geht in den zustand \textit{redundant} und wird im weiteren Verlauf entfernt. 
+
+Unter Apple Safari wird ein registrierter Service Worker automatisch deinstalliert, sobald die Webseite des Service Workers mehrere Wochen nicht aufgerufen wurde. 
+
+
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[scale=0.3]{CacheDevTools.png}
+    \caption{Google Chrome Developer Tools zum einsehen der im Cache gespeicherten Dateien.}
+    \label{img:CacheDevTools}
+\end{figure}
 
 \begin{figure}
     \centering
