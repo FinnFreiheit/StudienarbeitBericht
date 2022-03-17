@@ -1,6 +1,6 @@
 %!TEX root = ../../main.tex
 
-\section{Progressive Web App Grundlagen}
+\chapter{Progressive Web App}
 
 Wie in Kapitel \ref{se:Begriffsklaerung} erwähnt verfügt eine PWA unter anderem über folgende Funktionen: 
 \begin{itemize}
@@ -13,7 +13,7 @@ Wie in Kapitel \ref{se:Begriffsklaerung} erwähnt verfügt eine PWA unter andere
 Im folgenden werden die theoretischen Grundlagen erläutert, die benötigt werden, um diese Funktionalitäten zu realisieren. 
 
 
-\subsection{Web-App-Manifest}\label{sec:webappmanifest}
+\section{Web-App-Manifest}\label{sec:webappmanifest}
 
 \begin{quote}
    \textit{The web app manifest is a JSON file that defines how the PWA should be treated as an installed application, including the look and feel and basic behavior within the operating system \cite{Developers2022}. }
@@ -27,19 +27,19 @@ Ohne Das Manifest ist die Applikation nicht installierbar, somit ist die Datei e
 Das Manifest muss mindestens ein \texttt{name}-Schlüssel und ein \texttt{String}-Wert aufweisen. 
 Neben dem Namen der Applikation kann ein Manifest über folgende Informationen verfügen: 
 
-\subsubsection{short\_name}
+\subsection{short\_name}
 Unter \texttt{short\_name} kann ein kurzer Name der Applikation angegeben werden. Dieser Name wird verwendet, falls das Endgerät nicht über genügend platz verfügt, um den Originalen Namen anzuzeigen. 
 
-\subsubsection{icons}
+\subsection{icons}
 Unter \texttt{icons} wird ein Array\footnote{Datentyp, das mehrere Werte speichern kann} mit Bildobjekten gespeichert. Ein Bildobjekt besteht aus einem Dateipfad, unter dem das anzuzeigende Bild gespeichert ist, einer Typ Beschreibung des Bildes zum Beispiel \textit{png} oder \textit{svg}, eine Informationen über die Auflösung des Bildes und optional noch eine Angabe  welchem Zweck das Bild dient. 
 
 Die Gespeicherten Bilder werden als App-Icon auf dem Desktop oder Handy angezeigt. 
 
-\subsubsection{start\_url}
+\subsection{start\_url}
 Die angegebene \texttt{start\_url} ist jene \ac{URL} die geöffnet wird, sobald der Nutzer das installierte Icon auswählt und somit die Applikation startet. 
 Wird keine explizite Startadresse angegeben, so wird die URL verwendet, von der die PWA installiert wurde. 
 
-\subsubsection{display}
+\subsection{display}
 
 Beim Auswählen des Installierten Icons wird die PWA in einem neuem Fenster geöffnet. Unter \texttt{display} kann angegeben werden, wie das Betriebssystem das Fenster darstellen soll. 
 Es kann zwischen \texttt{Fullscreen}, \texttt{Standalone} und \texttt{Minimal User Interface} unterschieden werden. 
@@ -57,7 +57,7 @@ Der unterschied zwischen den einzelnen Auswahlmöglichkeiten liegt bei den Navig
     \label{img:minimalui}
 \end{figure}
 
-\subsubsection{theme\_color}
+\subsection{theme\_color}
 Mit Hilfe dieser Einstellung kann die Farbe der oberen Navigationsleiste angepasst werden, wie in Abbildung \ref{img:themeColor} dargestellt ist. Hierbei ist jedoch darauf zu achten, das die Applikation nicht den meta tag theme-color definiert. 
 
 \begin{figure}[!htb]
@@ -66,7 +66,7 @@ Mit Hilfe dieser Einstellung kann die Farbe der oberen Navigationsleiste angepas
     \label{img:themeColor}
 \end{figure}
 
-\subsubsection{Debugging vom Manifest}
+\subsection{Debugging vom Manifest}
 
 Neben den oben aufgezählten Grundeinstellungen sind viele weitere Möglich. Um nachzuvollziehen, ob alle Einstellungen den Anforderungen entsprechen kann das Manifest mithilfe der Browser Entwicklerwerkzeuge untersucht werden. Unter Google Chrome kann unterm Reiter \textit{Application} das Manifest ausgewählt werden. Darauf hin erhält man folgende Ansicht, siehe Abbildung \ref{img:devManifest}.
 
@@ -80,7 +80,7 @@ Neben den oben aufgezählten Grundeinstellungen sind viele weitere Möglich. Um 
 
 \newpage
 
-\subsection{Service Workers}\label{sec:ServiceWorker}
+\section{Service Workers}\label{sec:ServiceWorker}
 \begin{quote}
     \textit{Service workers are a fundamental part of a PWA. They enable fast loading (regardless of the network), offline access, push notifications, and other capabilities \cite{Developers2022a}.}
 \end{quote}
@@ -97,13 +97,31 @@ Bei der Verwendung eines Service Worker sollten folgenden Eigenschaften berücks
     \item Service workers verwenden Promises. 
 \end{itemize}
 
-\subsubsection{Der Lebenszyklus eines Service Workers}
+\subsection{Der Lebenszyklus eines Service Workers}
 
-Der Lebenszyklus eines Service Workers beginnt mit dem registrieren. Die Registrierung erfolgt im JavaScript-Quellcode der PWA. 
-Der Service Worker wird vom Browser heruntergeladen und installiert, sobald die PWA mit registrierten Service Worker das erste mal aufgerufen wird. 
+ 
+Der Service Worker wird vom Browser in einem eigenen Thread unabhängig der Applikation ausgeführt. Dementsprechend besitzt der Service Worker einen eigenen Lebenszyklus, der im folgenden genauer beschrieben wird. 
 
-Nach einer erfolgreichen Installation wird der Service Worker aktiviert und verwaltet ab dann sämtliche Requests der Applikation. 
-Durch den Aktivierten Service Worker kann die Application auch ohne eine bestehende Internetverbindung geladen werden. Der Service Worker verarbeitet den Initialen Request der Applikation, leitet diesen jedoch nicht an den Webserver weiter, siehe Abbildung \ref{img:swonline}, sondern läd die Applikation aus dem Cache Storage, siehe Abbildung \ref{img:swoffline}.
+\subsubsection{Registrieren}
+Der Lebenszyklus eines Service Workers beginnt mit der Registrierung. Dies erfolgt mithilfe der \texttt{register()} Methode in der \texttt{serviceWorker} Eigenschaft des \texttt{navigator}-Objektes \cite{Navigator2022}, siehe Listing \ref{lst:serviceWorker} Zeile 2. Um das Konzept von Progressive Enhancement zu folgen (Abschitt \ref{se:Begriffsklaerung}), sollte vor der Registrierung überprüft werden, ob die Service-Worker-Schnittstellen vorhanden sind. Hierfür wird die \texttt{serviceWorker} Eigenschaft im \texttt{navigator}-Objekt abgefragt, siehe Listing \ref{lst:serviceWorker} Zeile 1. 
+
+\begin{lstlisting}[caption = Registrierung des Service Workers, label = lst:serviceWorker, float = !htb]
+    if('serviceWorker' in navigator){
+        navigator.serviceWorker.register('./sw.js')
+        .then(registration => console.log(registration))
+        .catch(error => console.error(error));
+    }
+\end{lstlisting}
+
+Das Aufrufen der Methode \texttt{register()} gibt ein Promise zurück, welches in Zeile 3 und 4 behandelt wird. 
+Im Erfolgsfall (then-Methode) wird ein Objekt von typ \texttt{ServiceWorkerRegistration} übergeben. Das Objekt verfügt unter anderem über folgende Schnittstellen: 
+\begin{itemize}
+    \item mit der \texttt{update()} Methode wird die Aktualisierung des Service Workers ausgelöst,
+    \item die Methode \texttt{unregister()} hebt die Registrierung des Service Workers auf, welches im anschluss vom Browser gelöscht wird,
+    \item die Eingenschaft \texttt{updatefound} wird aufgerufen, sobald der Browser eine neue Version des Service Workers gefunden hat. 
+\end{itemize}
+
+Bei der Registrierung wird das übergebene Script Zeile 2, vom Webbrowser abgerufen und geparst. 
 
 \begin{figure}
     \centering
@@ -119,7 +137,7 @@ Durch den Aktivierten Service Worker kann die Application auch ohne eine bestehe
     \label{img:swoffline}
 \end{figure}
 
-\subsection{Progressive Web Apps in Angular}
+\section{Progressive Web Apps in Angular}
 
 Angular (Abschnitt \ref{Angular}) eignet sich sehr gut um eine PWA zu entwickeln, da beides Entwicklungen von Google sind. 
 Um aus einer Angular Anwendung eine PWA zu erstellen, muss das Paket \texttt{@angular/pwa} über das \ac{CLI} hinzugefügt werden.
@@ -137,7 +155,7 @@ Im anschluss kann die Applikation alle Grundfunktionen einer PWA ausführen. Die
 
 
 
-\subsection{PWA für IOS}
+\section{PWA für IOS}
 
 Apple unterstützt die Entwicklung von PWAs nicht. PWAs stellen  eine Möglichkeit dar, um Apps für das IPhon zu Installieren, die sich nicht im App Store befinden. Im Jahr 2020 hat Apple mit dem App Store ein Umsatz von 643 Milliarden US-Doller erwirtschaftet \cite{Kirchenbauer2021}. Apple erhält 30\% Provision, wenn eine App gekauft oder wenn In-App Käufe abgeschlossen werden. Durch PWAs könnte diese Einnahmequelle wegfallen. 
 
@@ -145,11 +163,11 @@ Durch zusätzliche Einstellungen können PWAs auf dem Homescreen von IOS Geräte
 Des weiteren muss in einem \texttt{meta-tag} angegeben werden, das die Webanwendung als App genutzt werden kann. Diese zusätzlichen Angaben ermöglichen es die Applikation zu installieren, Apple beschränkt jedoch die volle Funktionsumfang der PWAs. Durch ein Softwareupdate hat Apple eine Zwangslöschung für lokal beschreibbare Speicherfunktionen eingeführt \cite{t3n2020}. Eine PWA nutzt diesen lokalen Speicher um Daten zu speichern. 
 Auch der Service Worker wird von Safari nicht vollständig unterstützt. Safari ermöglicht weder Push-Nachrichten noch Hintergrund Synchronisation \cite{mediaevent}. 
 
-\subsection{Push Notifikations}
+\section{Push Notifikations}
 
 Eine Notifikation ist eine Nachricht, die auf dem Endgerät des Nutzers Angezeigt wird. Dies kann als Reaktion auf eine Nutzereingabe geschehen, es kann jedoch auch unabhängig vom Nutzer eine Nachricht von einem Server \glqq gepusht\grqq{} werden und das auch ohne das die Applikation aktiv ist.  Um push Notifikations zu erzeugen werden zwei APIs benötigt. Die \textit{Notifikations API} visualisiert die Nachricht für den Nutzer und die \textit{Push API} erlaubt es den Service Worker, Kapitel \ref{sec:ServiceWorker}, Nachrichten zu verwalten, die vom Server gesendet wurden während die Applikation nicht aktiv war. 
 
-\subsection{Endgerät Emulation }
+\section{Endgerät Emulation }
 
 Um eine PWA Lokal auf Endgeräten zu testen, können diese Emuliert werden.           
 Um ein Android Handy zu Emuliere, kann das Programm \textit{Android Studio} verwendet werden. In Android Studio kann mithilfe des \ac{AVD Manager} ein Virtuelles Handy gestartet werden, Abbildung \ref{Android1} a. Im Emuliertem Handy kann der Browser geöffnet werden. Um auf die Lokale IP-Adresse des Rechners zugreifen zu können muss im Browser des Handys diese (\texttt{10.0.2.2:8080}) IP-Adresse eingegeben werden, Abbildung \ref{Android1} b. Daraufhin öffnet sich die Anwendung, die unter Einstellung installiert werden kann, Abbildung \ref{Android2} a. Die Anwendung wird darauf hin zum Startbildschirm hinzugefügt, Abbildung \ref{Android2} b.  
