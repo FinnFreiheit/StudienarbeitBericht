@@ -1,15 +1,14 @@
-# Abstract
-# Motivation 
-# Problemstellung 
+## PWA Bewertungskriterien: 
 
-# State of the Art/ stand der Technik 
-# Wissenschaftliche, Theoretische (Frontend, Backend Warum Mongo SQL noSQL, PWA)
-
-# Methode / Umsetzung 
-# StudienarbeitBericht
-
-
-
+ 
+-> These: Eine Applikation für alle Plattformen. 
+* Manifest
+* ServiceWorker
+  * Cache
+  * Push
+* Zugänglichkeit (AppStore, Installationsbutton etc.)
+* Einschrenkungen (Cache Löschen, ServiceWorker)
+* Debuggen (speziel Browser)
 
 # Recherche: 
 
