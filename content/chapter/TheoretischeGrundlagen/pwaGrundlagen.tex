@@ -181,14 +181,14 @@ Unter Apple Safari wird ein registrierter Service Worker automatisch deinstallie
 
 \begin{figure}[!htb]
     \centering
-    \includegraphics[scale=0.45]{swonline.png}
+    \includegraphics[scale=0.4]{swonline.png}
     \caption{Laden einer Applikation ohne Service Worker}
     \label{img:swonline}
 \end{figure}
 
 \begin{figure}[!htb]
     \centering
-    \includegraphics[scale=0.45]{swoffline.png}
+    \includegraphics[scale=0.4]{swoffline.png}
     \caption{Laden einer Applikation ohne Internetverbindung}
     \label{img:swoffline}
 \end{figure}
@@ -203,23 +203,20 @@ Neben dem Frontend, Backend und Service Worker sind an der Push-Kommunikation no
 
 Wie genau die einzelnen Kommunikationspartner miteinander interagieren ist in dem Sequenzdiagramm in Abbildung \ref{img:sequenceDiagram} dargestellt, und wird im folgendem genauer erläutert. 
 
+\newpage
 \begin{figure}[!htb]
     \centering
     \includegraphics{Push_sequence_diagram.png}
     \caption{Sequenzdiagramm für die Ereignisse einer Anmeldung, push Nachrichttransfer und Abmeldung \cite{PushW3}}
     \label{img:sequenceDiagram}
 \end{figure}
+\newpage
 
 
 \subsection{Push-Registrierung}
 
 Um Push-Nachrichten empfangen zu können, muss die Webanwendung über den Webbrowser eine Push-Registrierung beim Push-Dienst beantragen. Die Beantragung erfolgt über die PushAPI die über den ServiceWorker, genauer den \texttt{ServiceWorkerRegistration} zur Verfügung gestellt wird. Aus diesem Grund ist es zwingend notwendig, das der Service Worker registriert ist. 
 Bei der Registrierung sollte das Konzept von \textit{Progressive Enhancement} berücksichtigt werden, indem die Browserkompatibilität vor der Registrierung abgefragt wird, siehe Listing \ref{lst:regPush}. Diese Abfrage ist wichtig, da der Apple Safari Browser keine Push-Funktionen unterstützt, siehe Abbildung \ref{img:PushManagerBrowser} (b).
-
-Falls der Browser über die nötigen Funktionen verfügt, kann die \texttt{subscribe()}-Methode von \texttt{ServiceWorkerRegistration} aufgerufen werden, welches eine Objekt vom Typ \texttt{PushSubscription} zurück gibt. 
-Die PushSubscription verfügt über ein Konfigurationsobjekt mit zwei Eigenschaften. Die erste Eigenschaft mit dem Namen \texttt{userVisibleOnly}, ist eine boolsche Eigenschaft, die  beschreibt, ob Pushnachrichten immer zu einer für den Anwender sichtbaren Meldung führt. Diese Eigenschaft hat standardmäßig den Wert \texttt{false}. Dies führt aber bei dem Browser Google Chrome zu Komplikationen, da der Browser aus Gründen der Datensicherheit keine sogenannte \textit{Silent Push} Nachrichten zulässt. 
-
-Die zweite Eigenschaft des Konfigurationsobjektes hat den Namen \texttt{applicationServerKey}. Diese Eigenschaft wird benötigt um die Nachrichten zwischen Push-Dienst und Anwendung zu verschlüsseln. Zur Verschlüsselung wird das \ac{VAPID} Protokoll verwendet, das von IETF spezifiziert wurde \cite{rfc8292}. Die Verschlüsselung benötigt einen öffentlichen und einen privaten Schlüssel. Der öffentliche Schlüssel ist unter der \texttt{applicationServerKey} Eigenschaft gespeichert. Der private Schlüssel wird wiederum im Backend der Anwendung hinterlegt. 
 
 \begin{lstlisting}[caption={Push-Registrierung unter Berücksichtigung der Konzepte von Progressive Enhancement}, label={lst:regPush}, float={!htb}]
     if('serviceWorker' in navigator){
@@ -240,6 +237,19 @@ Die zweite Eigenschaft des Konfigurationsobjektes hat den Namen \texttt{applicat
     \caption{Überprüfung der Pushnachricht Funktionalitäten in den Browsern(a) Google Chrome  , (b) Apple Safari}
     \label{img:PushManagerBrowser}
 \end{figure}
+
+Falls der Browser über die nötigen Funktionen verfügt, kann die \texttt{subscribe()}-Methode von \texttt{ServiceWorkerRegistration} aufgerufen werden, welches eine Objekt vom Typ \texttt{PushSubscription} zurück gibt. 
+Die PushSubscription verfügt über ein Konfigurationsobjekt mit zwei Eigenschaften. Die erste Eigenschaft mit dem Namen \texttt{userVisibleOnly}, ist eine boolsche Eigenschaft, die  beschreibt, ob Pushnachrichten immer zu einer für den Anwender sichtbaren Meldung führt. Diese Eigenschaft hat standardmäßig den Wert \texttt{false}. Dies führt aber bei dem Browser Google Chrome zu Komplikationen, da der Browser aus Gründen der Datensicherheit keine sogenannte \textit{Silent Push} Nachrichten zulässt. Daher sollte diese Eigenschaft auf den Wert \texttt{true} geändert werden. 
+
+Die zweite Eigenschaft des Konfigurationsobjektes hat den Namen \texttt{applicationServerKey}. Diese Eigenschaft wird benötigt um die Nachrichten zwischen Push-Dienst und Anwendung zu verschlüsseln. Zur Verschlüsselung wird das \ac{VAPID} Protokoll verwendet, das von IETF spezifiziert wurde \cite{rfc8292}. Die Verschlüsselung benötigt einen öffentlichen und einen privaten Schlüssel. Der öffentliche Schlüssel ist unter der \texttt{applicationServerKey} Eigenschaft gespeichert. Der private Schlüssel wird wiederum im Backend der Anwendung hinterlegt. 
+
+Um die Registrierung abzuschließen, muss der Anwender sein Einverständnis zum Empfangen von Push-Benachrichtigungen geben. Für die Abfrage öffnet der Browser einmalig ein Dialogfenster. Wird keine Einverständnis von Nutzer erteilt, so wird auf diesem speziellen System nie wieder danach gefragt. Der Anwender müsste die Berechtigung manuell über das zugehörige Webseitenmenü erteilen, falls er sich umentscheiden sollte. 
+
+Nachdem die Berechtigung von dem Nutzer erteilt wurde, ist die Registrierung abgeschlossen. Die Anwendung ist nun in der Lage Push-Nachrichten zu empfangen. 
+
+\subsection{Informationsaustausch}
+
+
 
 
 \section{Progressive Web Apps in Angular}
