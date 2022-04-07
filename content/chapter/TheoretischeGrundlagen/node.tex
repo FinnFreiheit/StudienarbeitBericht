@@ -1,2 +1,33 @@
 %!TEX root = ../../main.tex
 \chapter{Node.js}\label{node}
+
+\section{Überblick}
+Node.js ist eine hochskalierbare Low-Level-Plattform. Unter Verwendung einer JavaScript-Laufzeitumgebung können Netzwerkanwendungen aufgebaut werden. (Buch S.1) Node.js verwendet JavaScript als serverseitige Programmiersprache (Buch S.3) und arbeitet asynchron und ereignisgesteuert. (website) 
+Außerdem setzt es standardmäßig keine Betriebssystem-Threads ein, die in ihrer Umsetzung recht ineffizient sind. Dies bedeutet für Projekte, dass es keine Gefahr der Entstehung von Deadlocks gibt. (website) Zudem beinhaltet Node.js Frameworks, mit deren Einsatz eine Echtzeit-Kommunikation von Client und Server möglich ist. (S.3)
+
+\section{Charakteristika}
+
+\subsection{Single-Thread-Architektur}
+Eine Charakteristik von Node.js ist die Single-Thread-Architektur. Jeder initiierte Prozess erhält eine Haupt-Thread-Instanz. Ein Prozess kann somit nicht mit einer Mehrzahl von Threads arbeiten, die sich gegenseitig blockieren könnten. 
+Hierbei wird die asynchrone Verarbeitung deutlich. Jene Funktionen von Node.js, die als asynchron gelten, arbeiten als nichtblockierende Ein- und Ausgaben. Sollte beispielsweise eine Anwendung eine Datei lesen, wird in diesem Zusammenhang die CPU nicht blockiert. Dadurch kann diese Anwendung gleichzeitig andere Aufgaben bearbeiten und ausführen, die von anderen Nutzern angefordert werden. (Buch S.1)
+
+\subsection{Ereignisschleife}
+
+Node.js arbeitet ereignisorientiert. Muss in einem Moment keine Aufgabe ausgeführt werden, schläft die JavaScript-Laufzeitumgebung und wartet auf ein neues Ereignis. Dabei arbeitet Node.js nicht mit Ereignissen in Form von Mausklicks oder Tastaturanschlägen, sondern mit Datenbankverbindungen oder dem Öffnen von Dateien. 
+Für diesen Prozess ist die Ereignisschleife verantwortlich, eine Endlosschleife, die in jeder Iteration das Vorhandensein von neuen Ereignissen prüft. Sie muss erkennen, wann eine neue Aufgabe ausgeführt werden muss. Sobald ein Ereignis ausgelöst wird, führt die Schleife die zugehörige Aufgabe. Währenddessen kann jeder beliebige Logik in die Callback-Funktion geschrieben werden. (Buch S.3)
+
+\section{Vorteile durch die Nutzung von JavaScript}
+
+Durch die Verwendung von JavaScript als serverseitige Programmiersprache ergeben sich einige Vorteile. Zum einen lässt sich das erstellte Projekt sehr leicht pflegen, sollte man die Sprache beherrschen. Die Sprache auf Server-Seite ist keine andere als diejenige auf Client-Seite. Dies hat den Vorteil, dass man auf die Verwendung serverseitiger Betriebssystem-Sprachen verzichten kann.
+Zudem benötigt Node.js keine zusätzlichen Frameworks, um JSON-Objekte parsen zu können. Gerade für Projekte, in deren Rahmen eine Verbindung zu Datenbanken wie beispielsweise MongoDB aufgebaut werden soll, ist dies ein hervorzuhebendes Argument, da diese Daten in Form von JSON-Objekten speichern. (Buch S.3)
+
+\section{Node Package Manager}
+Node.js verfügt über einen Package Manager – Kurzform NPM – mit dessen Hilfe Node-Module leicht verwaltet werden können. NPM beweist sich in der Verwendung als recht einfach und übernimmt beispielsweise die Verwaltung von Abhängigkeiten des Projekts oder das Installieren neuer Module. (S.10)
+
+\subsection{NPM Aufgabenautomatisierung}
+
+Mit dem NPM können Aufgaben automatisch ausgeführt werden. Ergänzt man in der Deskriptordatei das Attribut \texttt{scripts}, kann man verschiedenen Befehlen einen kürzeren Namen geben und sie damit ausführen. Beispielsweise kann der Befehl \texttt{npm run node app.js} auf \texttt{npm run start} gekürzt werden. (S.12)
+
+\section{Deskriptordatei package.json}
+Alle Projekte, die mithilfe von Node.js erstellt werden, bezeichnet man als Module. Erstellt man ein Projekt, wird zeitgleich dazu eine Deskriptordatei der Module mitgeliefert, die den Namen \texttt{package.json} trägt. Diese Datei ist für ein Projekt von großer Bedeutung, da sie wichtige Schlüsselattribute enthält. Jene Attribute werden sowohl von Node.js als auch von dem Package Manager gelesen. Bei Unordentlichkeiten innerhalb der Datei können daraus Fehler in der Ausführung resultieren. 
+Zu den Schlüsselattributen zählen beispielsweise \texttt{name}, \texttt{description}, \texttt{author} und \texttt{version}. Mit \texttt{name} als Hauptschlüssel wird der Name des erstellten Projekts bestimmt, über den das Projekt später aufgerufen werden kann, zum Beispiel bei der Verwendung von \texttt{npm run}. Mit der \texttt{description} kann eine genauere Erläuterung des Projekts folgen und unter \texttt{author} wird der Name des Autors des Projekts gespeichert. Das Attribut \texttt{version} spielt im Zusammenhang mit der Installation eine wichtige Rolle, da es empfohlen wird, bei dieser in jedem Fall eine Version anzugeben. (S. 10/11)

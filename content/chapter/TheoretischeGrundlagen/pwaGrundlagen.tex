@@ -213,7 +213,7 @@ Wie genau die einzelnen Kommunikationspartner miteinander interagieren ist in de
 \newpage
 
 
-\subsection{Push-Registrierung}
+\subsection{Push-Registrierung}\label{sec:pushRegistrirung}
 
 Um Push-Nachrichten empfangen zu können, muss die Webanwendung über den Webbrowser eine Push-Registrierung beim Push-Dienst beantragen. Die Beantragung erfolgt über die PushAPI die über den ServiceWorker, genauer den \texttt{ServiceWorkerRegistration} zur Verfügung gestellt wird. Aus diesem Grund ist es zwingend notwendig, das der Service Worker registriert ist. 
 Bei der Registrierung sollte das Konzept von \textit{Progressive Enhancement} berücksichtigt werden, indem die Browserkompatibilität vor der Registrierung abgefragt wird, siehe Listing \ref{lst:regPush}. Diese Abfrage ist wichtig, da der Apple Safari Browser keine Push-Funktionen unterstützt, siehe Abbildung \ref{img:PushManagerBrowser} (b).

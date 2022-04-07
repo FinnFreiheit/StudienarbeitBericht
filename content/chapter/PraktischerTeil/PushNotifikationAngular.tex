@@ -1,0 +1,71 @@
+%!TEX root = ../../main.tex
+\chapter{Push-Notifikation}
+
+\section{Registrierung}
+
+Damit die Webanwendung Push-Nachrichten empfangen kann, muss sie sich vorab beim Push-Dienst registrieren. Die Registrierung erfordert das Einverständnis des Anwenders. 
+Um das Anwendererlebnis zu verbessern, wird dieser nicht direkt danach gefragt sondern kann über den Button \texttt{SUBSCRIBE TO PUSH} die Registrierung anstoßen, siehe Abbildung~\ref{img:permissionPush}. Um das Konzepte von Progressive Enhancement einzuhalten, wird der Button nur den Nutzern angezeigt, dessen Browser über die nötigen Funktionalitäten verfügt um Push-Nachrichten empfangen zu können. Hierfür wird der Button über eine \texttt{*ngIf}-Strukturdirektive ein- bzw ausgeblendet (Abschitt \ref{sec:Strukturdirektive}), je nach dem, ob der Browser über ein \texttt{PushManager} verfügt oder nicht. 
+
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[scale=0.4]{permissionPush.png}
+    \caption{Nutzerabfrage um Push-Nachrichten versenden zu können. Abfrage erfolgt erst nachdem der Button \texttt{SUBSCRIBE TO PUSH} in der oberen Navigationsleiste ausgewählt wurde.}
+    \label{img:permissionPush}
+\end{figure}
+
+Der Button ist mithilfe eines Event Bindings (Abschitt \ref{subsec:eventBinding}) an die Funktion \linebreak\texttt{subscribeToNotifications()} verknüpft. Da es sich bei der Anwendung um ein Angluar Projekt handelt, 
+wird die Registrierung über die \texttt{SwPush}-Klasse durchgeführt (Listing \ref{lst:subscribeFkt} Zeile 2) die mithilfe von dependency injection über den Konstruktor geladen wurde. Wie in Abschnitt \ref{sec:pushRegistrirung} beschrieben wird die Push-Kommunikation durch das VAPID-Protokoll verschlüsselt. Hierfür muss bei der Registrierung der öffentliche Schlüssel übergeben werden (Listing \ref{lst:subscribeFkt} Zeile 3). Anders als in Abschnitt \ref{sec:pushRegistrirung} beschrieben, ist der Standartwert der Eigenschaft \texttt{userVisibleOnly}, aus dem Konfigurationsobjekt, \texttt{true}. Diese Einstellung wird von der Klasse \texttt{SwPush} vorgenommen. 
+
+Ist die Registrierung erfolgreich wird ein Objekt von typ \texttt{PushSubscription} zurückgegeben. 
+Das Objekt verfügt über folgende Eigenschaften: 
+\begin{itemize}
+    \item \textbf{endpoint}: Hinter dieser Eigenschaft befindet sich eine einzigartige URL, die für die Kommunikation mit dem Push-Dienst verwendet wird. 
+    \item \textbf{expirationTime}: Durch diese Eigenschaft können Nachrichten versendet werden, die nur für einen bestimmten Zeitraum gelten. 
+    \item \textbf{keys}: Enthält Informationen, um die Nachrichten zu entschlüsseln. 
+\end{itemize}
+Dieses Objekt muss im Anschluss über ein HTTP-Request an das Backend gesendet werden (Listing \ref{lst:subscribeFkt} Zeile 7-8). Hierbei wird die Kommunikation mit dem Backend in einem \texttt{Service} Ausgelagert. 
+
+Falls die Registrierung erfolglos war, wird in der \texttt{catch}-Methode des Promises der Fehler auf der Konsole ausgegeben (siehe Listing \ref{lst:subscribeFkt} Zeile 11). 
+
+Nach der Registrierung und dem Versenden des \texttt{PushSubscription} Objektes an das Backend müssen keine weiteren Vorkehrungen im Frontend vorgenommen werden. 
+
+\begin{lstlisting}[caption={Funktion zur Registrierung beim Push-Dienst},label = lst:subscribeFkt,  float=!htb]
+subscribeToNotifications(){
+    this.swPush.requestSubscription({
+      serverPublicKey: this.VAPID_PUBLIC_KEY
+    })
+      .then(subscribeObj => {
+        console.log(subscribeObj);
+        this.pushService.addPushSubscriber(subscribeObj).subscribe(res => {
+          console.log('Backend Response Push Subscription' + res);
+        });
+      })
+      .catch(err => console.error("Could not subscribe to notifications", err));
+  }
+\end{lstlisting}
+
+\newpage
+\section{Push-Nachrichten im Backend}
+
+Im Backend werden zwei \texttt{post}-Endpunkte implementiert. Der Subscription Endpunkt wird verwendet, um das \texttt{PushSubScription} Objekt entgegenzunehmen. Das Objekt wird in einer Datenbank gespeichert. 
+
+Der zweite Endpunkt wird verwendet um Push-Notifikations anzustoßen. Das Backend benutzt die Web-Push Bibliothek um allen Registrierten Klienten eine Push-Nachricht zu senden.  Die \texttt{sendNotifikation}-Methode der Web-Push Bibliothek benötigt ein Payload und ein \texttt{PushSubScription}-Objekt. Im Payload werden die Informationen angegeben, die in der Push-Nachricht angezeigt werden, hierbei muss mindestens ein Title und eine Nachricht vorhanden sein, siehe Listing \ref{lst:payload}. 
+
+\begin{lstlisting}[caption={Mindestanforderung an ein Payload, für eine Push-Nachricht}, label=lst:payload, float=!htb]
+    const notificationPayload = {
+        notification: {
+            title: 'Neue Notification',
+            body: 'Das ist der Inhalt der Notification'
+        },
+    }
+\end{lstlisting}
+
+Die Web-Push Methode, verschlüsselt die Nachricht vor dem Versenden, hierfür müssen die VAPID-Schlüsselpaare der Methode \texttt{webpush.setVapidDetails()} übergeben werden. 
+Wird nun eine HTTP-Post Anfrage an diesen Endpunkt gesendet, iteriert die Funktion über alle in der Datenbank gespeicherten \texttt{PushSubscription}-Objekte und sendet über die \texttt{sendNotifikation}-Methode den verschlüsselten Payload. Alle registrierten Klienten erhalten folgende Mitteilung, siehe Abbildung \ref{img:notificationBanner}.
+
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[scale=0.7]{notificationBanner.png}
+    \caption{Push-Nachricht, mit dem Payload aus Listing \ref{lst:payload}}
+    \label{img:notificationBanner}
+\end{figure}
