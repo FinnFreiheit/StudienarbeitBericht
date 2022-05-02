@@ -2,32 +2,147 @@
 \chapter{Node.js}\label{node}
 
 \section{Überblick}
-Node.js ist eine hochskalierbare Low-Level-Plattform. Unter Verwendung einer JavaScript-Laufzeitumgebung können Netzwerkanwendungen aufgebaut werden. (Buch S.1) Node.js verwendet JavaScript als serverseitige Programmiersprache (Buch S.3) und arbeitet asynchron und ereignisgesteuert. (website) 
-Außerdem setzt es standardmäßig keine Betriebssystem-Threads ein, die in ihrer Umsetzung recht ineffizient sind. Dies bedeutet für Projekte, dass es keine Gefahr der Entstehung von Deadlocks gibt. (website) Zudem beinhaltet Node.js Frameworks, mit deren Einsatz eine Echtzeit-Kommunikation von Client und Server möglich ist. (S.3)
+Node.js ist eine hochskalierbare Low-Level-Plattform. Unter Verwendung einer JavaScript-Laufzeitumgebung können Netzwerkanwendungen aufgebaut werden \cite[S.1]{neins}. Node.js verwendet JavaScript als serverseitige Programmiersprache \cite[S.3]{neins} und arbeitet asynchron und ereignisgesteuert \cite{nzwei}. 
+Außerdem setzt es standardmäßig keine Betriebssystem-Threads ein, die in ihrer Umsetzung recht ineffizient sind. Dies bedeutet für Projekte, dass es keine Gefahr der Entstehung von Deadlocks gibt \cite{nzwei}. Zudem beinhaltet Node.js Frameworks, mit deren Einsatz eine Echtzeit-Kommunikation von Client und Server möglich ist \cite[S.3]{neins}.
 
 \section{Charakteristika}
 
 \subsection{Single-Thread-Architektur}
 Eine Charakteristik von Node.js ist die Single-Thread-Architektur. Jeder initiierte Prozess erhält eine Haupt-Thread-Instanz. Ein Prozess kann somit nicht mit einer Mehrzahl von Threads arbeiten, die sich gegenseitig blockieren könnten. 
-Hierbei wird die asynchrone Verarbeitung deutlich. Jene Funktionen von Node.js, die als asynchron gelten, arbeiten als nichtblockierende Ein- und Ausgaben. Sollte beispielsweise eine Anwendung eine Datei lesen, wird in diesem Zusammenhang die CPU nicht blockiert. Dadurch kann diese Anwendung gleichzeitig andere Aufgaben bearbeiten und ausführen, die von anderen Nutzern angefordert werden. (Buch S.1)
+Hierbei wird die asynchrone Verarbeitung deutlich. Jene Funktionen von Node.js, die als asynchron gelten, arbeiten als nichtblockierende Ein- und Ausgaben. Sollte beispielsweise eine Anwendung eine Datei lesen, wird in diesem Zusammenhang die CPU nicht blockiert. Dadurch kann diese Anwendung gleichzeitig andere Aufgaben bearbeiten und ausführen, die von anderen Nutzern angefordert werden \cite[S.1]{neins}.
 
 \subsection{Ereignisschleife}
 
 Node.js arbeitet ereignisorientiert. Muss in einem Moment keine Aufgabe ausgeführt werden, schläft die JavaScript-Laufzeitumgebung und wartet auf ein neues Ereignis. Dabei arbeitet Node.js nicht mit Ereignissen in Form von Mausklicks oder Tastaturanschlägen, sondern mit Datenbankverbindungen oder dem Öffnen von Dateien. 
-Für diesen Prozess ist die Ereignisschleife verantwortlich, eine Endlosschleife, die in jeder Iteration das Vorhandensein von neuen Ereignissen prüft. Sie muss erkennen, wann eine neue Aufgabe ausgeführt werden muss. Sobald ein Ereignis ausgelöst wird, führt die Schleife die zugehörige Aufgabe. Währenddessen kann jeder beliebige Logik in die Callback-Funktion geschrieben werden. (Buch S.3)
+Für diesen Prozess ist die Ereignisschleife verantwortlich, eine Endlosschleife, die in jeder Iteration das Vorhandensein von neuen Ereignissen prüft. Sie muss erkennen, wann eine neue Aufgabe ausgeführt werden muss. Sobald ein Ereignis ausgelöst wird, führt die Schleife die zugehörige Aufgabe. Währenddessen kann jeder beliebige Logik in die Callback-Funktion geschrieben werden \cite[S.3]{neins}.
 
 \section{Vorteile durch die Nutzung von JavaScript}
 
 Durch die Verwendung von JavaScript als serverseitige Programmiersprache ergeben sich einige Vorteile. Zum einen lässt sich das erstellte Projekt sehr leicht pflegen, sollte man die Sprache beherrschen. Die Sprache auf Server-Seite ist keine andere als diejenige auf Client-Seite. Dies hat den Vorteil, dass man auf die Verwendung serverseitiger Betriebssystem-Sprachen verzichten kann.
-Zudem benötigt Node.js keine zusätzlichen Frameworks, um JSON-Objekte parsen zu können. Gerade für Projekte, in deren Rahmen eine Verbindung zu Datenbanken wie beispielsweise MongoDB aufgebaut werden soll, ist dies ein hervorzuhebendes Argument, da diese Daten in Form von JSON-Objekten speichern. (Buch S.3)
+Zudem benötigt Node.js keine zusätzlichen Frameworks, um JSON-Objekte parsen zu können. Gerade für Projekte, in deren Rahmen eine Verbindung zu Datenbanken wie beispielsweise MongoDB aufgebaut werden soll, ist dies ein hervorzuhebendes Argument, da diese Daten in Form von JSON-Objekten speichern \cite[S.3]{neins}. 
 
 \section{Node Package Manager}
-Node.js verfügt über einen Package Manager – Kurzform NPM – mit dessen Hilfe Node-Module leicht verwaltet werden können. NPM beweist sich in der Verwendung als recht einfach und übernimmt beispielsweise die Verwaltung von Abhängigkeiten des Projekts oder das Installieren neuer Module. (S.10)
+Node.js verfügt über einen Package Manager – Kurzform NPM – mit dessen Hilfe Node-Module leicht verwaltet werden können. NPM beweist sich in der Verwendung als recht einfach und übernimmt beispielsweise die Verwaltung von Abhängigkeiten des Projekts oder das Installieren neuer Module \cite[S.10]{neins}. 
 
 \subsection{NPM Aufgabenautomatisierung}
 
-Mit dem NPM können Aufgaben automatisch ausgeführt werden. Ergänzt man in der Deskriptordatei das Attribut \texttt{scripts}, kann man verschiedenen Befehlen einen kürzeren Namen geben und sie damit ausführen. Beispielsweise kann der Befehl \texttt{npm run node app.js} auf \texttt{npm run start} gekürzt werden. (S.12)
+Mit dem NPM können Aufgaben automatisch ausgeführt werden. Ergänzt man in der Deskriptordatei das Attribut \texttt{scripts}, kann man verschiedenen Befehlen einen kürzeren Namen geben und sie damit ausführen. Beispielsweise kann der Befehl \texttt{npm run node app.js} auf \texttt{npm run start} gekürzt werden \cite[S.12]{neins}. 
 
 \section{Deskriptordatei package.json}
 Alle Projekte, die mithilfe von Node.js erstellt werden, bezeichnet man als Module. Erstellt man ein Projekt, wird zeitgleich dazu eine Deskriptordatei der Module mitgeliefert, die den Namen \texttt{package.json} trägt. Diese Datei ist für ein Projekt von großer Bedeutung, da sie wichtige Schlüsselattribute enthält. Jene Attribute werden sowohl von Node.js als auch von dem Package Manager gelesen. Bei Unordentlichkeiten innerhalb der Datei können daraus Fehler in der Ausführung resultieren. 
-Zu den Schlüsselattributen zählen beispielsweise \texttt{name}, \texttt{description}, \texttt{author} und \texttt{version}. Mit \texttt{name} als Hauptschlüssel wird der Name des erstellten Projekts bestimmt, über den das Projekt später aufgerufen werden kann, zum Beispiel bei der Verwendung von \texttt{npm run}. Mit der \texttt{description} kann eine genauere Erläuterung des Projekts folgen und unter \texttt{author} wird der Name des Autors des Projekts gespeichert. Das Attribut \texttt{version} spielt im Zusammenhang mit der Installation eine wichtige Rolle, da es empfohlen wird, bei dieser in jedem Fall eine Version anzugeben. (S. 10/11)
+Zu den Schlüsselattributen zählen beispielsweise \texttt{name}, \texttt{description}, \texttt{author} und \texttt{version}. Mit \texttt{name} als Hauptschlüssel wird der Name des erstellten Projekts bestimmt, über den das Projekt später aufgerufen werden kann, zum Beispiel bei der Verwendung von \texttt{npm run}. Mit der \texttt{description} kann eine genauere Erläuterung des Projekts folgen und unter \texttt{author} wird der Name des Autors des Projekts gespeichert. Das Attribut \texttt{version} spielt im Zusammenhang mit der Installation eine wichtige Rolle, da es empfohlen wird, bei dieser in jedem Fall eine Version anzugeben \cite[S.10f.]{neins}. 
+
+\section{Node Express}
+
+Node Express ist ein flexibles, minimalistisches Node.js Web Framework, womit sich Webanwendungen sowie mobile Anwendung leicht entwickeln lassen. Mithilfe des Moduls ist es möglich, Anwendung in unterschiedlicher Größe und Komplexität zu erstellen \cite[S.16]{neins}. Express macht es außerdem einfach, durch die Vielzahl der verwendbaren http-Methoden und die zur Verfügung stehende Middlewares eine robuste API zu bauen \cite{ndrei}
+Mit folgendem Befehl lässt sich das Express Modul installieren, siehe Listing \ref*{lst:installNodeExpress}.
+
+\begin{lstlisting}[caption={Express Modul installieren}, label={lst:installNodeExpress}]
+    $ npm install express -save
+\end{lstlisting}
+
+
+\subsection{Vorteile}
+
+Zu den Vorteilen von Node Express gehört das Routing. Da viele http-Request-Methoden wie GET, POST, PUT etc. zur Verfügung stehen und eine Großzahl an Middleware in der Lage ist, auf diese Anfragen zu reagieren, lässt sich das Routing als robust bezeichnen. Außerdem benötigt man für die Verwendung des Moduls nur minimalistischen Code. Express beinhaltet keine unflexiblen Konventionen, was Entwicklern die Möglichkeit gibt, ihren Code frei zu gestalten.
+Zudem können Entwickler Standards und Best Practices von REST in ihren Code einbeziehen und damit bereits vorhandenes Wissen in ihren Anwendungen umsetzen \cite[S.16f.]{neins}.
+
+\subsection{Routing}
+
+Beim Routing wird festgelegt, wie eine Anwendung auf eine Anforderung des Clients an einen bestimmten Endpunkt reagieren soll. Dieser ist durch einen URI oder einen Pfad sowie eine http-Request-Methode dargestellt \cite{nvier}.
+Einfaches Routing hat folgende Struktur, siehe Listing \ref*{lst:routing}.
+
+\begin{lstlisting}[caption={Routing in Express}, label={lst:routing}]
+    app.METHOD(PATH, HANDLER)
+\end{lstlisting}
+
+
+App ist hierbei eine Instanz von Express. METHOD bezieht sich auf die http-Request-Methoden, welche in Kleinbuchstaben geschrieben werden müssen. PATH ist der Pfad des Endpunkts auf dem Server und HANDLER ist eine Funktion, die ausgeführt wird, sollte die Route zutreffen. Diese wird entweder als Handler- oder als Callback-Funktion bezeichnet \cite{nvier}.
+Die Anwendung wartet auf Anfragen des Clients. Bei Übereinstimmung dieser Anfrage mit der Route und der Request-Methode, wird die zugeordnete Handler-Funktion ausgeführt \cite{nfunf}. Jede Route kann dabei mehrere Handler-Funktionen haben, die je nach Anfrage ausgeführt werden \cite{nvier}.
+
+Außerdem gibt es die Möglichkeit, dass die Argumente einer Routing-Funktion mehrere Callback-Funktionen enthalten, die bei Zutreffen der Anfrage nacheinander ausgeführt werden. Um dies umsetzen zu können, muss jedoch das zusätzliche Argument \glqq next\grqq{} an die Callback-Funktion übergeben und in dieser mit next() aufgerufen werden. Nur unter Verwendung dieses Befehls kann die nächste Callback-Funktion ausgeführt werden \cite{nfunf}. Ansonsten bleibt die Anfrage in dieser Funktion hängen und wird nicht weiterbearbeitet \cite{nsechs}.
+
+Beispielsweise könnte eine Routing-Funktion mit zwei Callback-Funktionen folgendermaßen aussehen, siehe Listing \ref*{lst:routingZweiCallback}
+
+\begin{lstlisting}[caption={Routing-Funktion mit zwei Callback-Funktionen}, label={lst:routingZweiCallback}]
+    app.get('/example', (req, res, next) => {
+        console.log('this is the first callback function')
+        next()
+    }, (req, res) => {
+        res.send('this is the secound callback function')
+    });
+\end{lstlisting}
+
+In obigem Beispiel kann man die Response-Methode \texttt{res.send()} sehen. Damit lässt sich eine Antwort verschiedener Typen senden. Neben dieser gibt es weitere Methoden, die in Callback-Funktionen verwendet werden können. Beispielsweise lässt sich mit \texttt{res.json()} eine Antwort in JSON-Format und mit \texttt{res.sendStatus()} der Status-Code der Antwort senden. Der Status-Code bezieht sich auf http-Codes wie beispielsweise Code  \texttt{ 200 OK} und Code  \texttt{400 Bad Request}.
+
+Des Weiteren gibt es die Möglichkeit verkettete Routen-Handler zu erstellen unter der Verwendung von \texttt{app.route()}. Dabei wird der Pfad an einem Punkt definiert. Im Anschluss lassen sich die Callback-Funktionen für verschiedene Request-Methoden spezifizieren. Das definieren modularer Routen hat den Vorteil, dass sich Redundanzen vermeiden lassen und der Code minimalistisch gehalten werden kann. 
+Beispielsweise kann eine modulare Routing-Methode so aussehen, siehe Listing \ref*{lst:modulareRouting}
+
+\begin{lstlisting}[caption={modulare Routing Methode \cite{nfunf}}, label={lst:modulareRouting}]
+    app.route('/user')
+    .get((req, res) => {
+        res.send('Get user')
+    })
+    .post((req, res) => {
+        res.send('Add user')
+    })
+    .patch((req, res) => {
+        res.send('Update user')
+    })
+\end{lstlisting}
+
+\subsection{Middleware}
+
+Als Middleware wird eine Funktion bezeichnet, die vor dem endgültigen Request-Handler aufgerufen wird. Sie steht zwischen einem rohem Request und der letztendlich verwendeten Route \cite{nsieben}.
+Eine Express-Anwendung ist eine Serie von Middleware-Funktionsaufrufen. Diese Funktionen haben Zugriff auf die Request- und Response-Objekte sowie die in der Serie nächste Middleware-Funktion. 
+Middleware-Funktionen können verschiedene Aufgaben ausführen. Dazu gehört die Ausführung jedes beliebigen Codes und die Möglichkeit, Änderungen an Request- und Response-Objekten vornehmen zu können. Außerdem kann eine Funktion die Nächste aufrufen unter Verwendung von \texttt{next()}. Wird jener Befehl nicht aufgerufen, kann die Kontrolle nicht an die nächste Middleware-Funktion übergeben werden. Dies bedeutet, dass der Request-Response-Zyklus der Anwendung beendet wird.
+Insgesamt gibt es fünf verschiedene Arten von Middleware, die Express verwenden kann, die im folgenden beschrieben werden. 
+
+\subsubsection{Application-Level-Middleware}
+
+Application-Level-Middleware wird im Zusammenhang mit Instanzen eines App-Objekts genutzt. Durch die Verwendung von \texttt{app.use()} oder \texttt{app.METHOD()} kann diese Art der Middleware verwendet werden. Bisher gezeigte Beispiele sind ebenfalls Beispiele für die Verwendung von Application-Level-Middleware.
+
+\subsubsection{Router-Level-Middleware}
+
+Dieser Typ von Middleware funktioniert generell gleich wie der Application-Level. Der Unterschied beider Typen liegt in der Verwendung der Instanz. Während der Application-Level an eine Instanz eines App-Objekts gebunden ist, verwendet der Router-Level eine Instanz von \texttt{exress.Router()}. Nachdem man das Router-Objekt definiert, kann die Middleware ebenfalls mit \texttt{router.use()} und \texttt{router.METHOD()} verwendet werden. 
+
+Die Instanz wird folgendermaßen verwendet, siehe Listing \ref*{lst:verwendungInstanz}
+
+\begin{lstlisting}[caption={Verwendung der Instanz}, label={lst:verwendungInstanz}]
+    const router = express.Router()
+\end{lstlisting}
+
+\subsubsection{Error-Handling-Middleware}
+
+Ebenfalls lässt sich mit Middleware-Funktionen ein Error-Handling durchführen. Wichtig dabei ist, dass immer vier Argumente angeboten werden müssen, damit eine Middleware als Error-Handling-Middleware erkannt wird. Diese vier Argumente sind \grqq err, req, res, next\glqq{}. 
+Eine Error-Handling-Funktion könnte folgendermaßen aussehen, siehe Listing \ref*{lst:errorHandlingMiddleware}
+
+\begin{lstlisting}[caption={Error-Handling-Middleware}, label={lst:errorHandlingMiddleware}]
+    app.use((err, req, res, next) => {
+	    console.error(err)
+	    res.status(400).send('Bad Request!')
+    })
+\end{lstlisting}
+
+
+\subsubsection{Built-in Middleware}
+
+Express verfügt über drei integrierte, vordefinierte Middleware-Funktionen. Diese sind:
+\begin{itemize}
+    \item \textbf{Express.static}: dient statischen Inhalten wie beispielsweise Bildern und HTML-Dateien
+    \item \textbf{Express.json}: parst Anfragen, die JSON-Payloads enthalten
+    \item \textbf{Express.urlencoded}: parst Anfragen, die URL-kodierte Daten enthalten
+\end{itemize}
+
+\subsubsection{Third-party Middleware}
+
+In Express gibt es die Möglichkeit, Module von Drittanbietern zu integrieren. Dazu muss das gewünschte Node.js-Modul installiert und später in die Anwendung entweder auf Application- oder Router-Level geladen werden. Beispielsweise gibt es eine Drittanbieter-Middleware für das Parsen von Cookies. Diese könnte folgendermaßen geladen werden, siehe Listing \ref*{lst:thirdpartyMiddleware}.
+
+\begin{lstlisting}[caption={Module von Drittanbietern integrieren \cite{nsechs}}, label={lst:thirdpartyMiddleware}]
+    const express = require('express')
+    const app = express()
+    const cookieParser = require('cookie-parser')
+    app.use(cookieParser())
+\end{lstlisting}
+
+
