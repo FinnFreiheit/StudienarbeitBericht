@@ -4,7 +4,7 @@
 
 Folgendes Szenario soll ein Einblick in die Vorteile von \ac{PWAs} aufzeigen. 
 
-Ein junges Startup aus IT-Studenten hat eine Idee für eine Applikation. Ihr Ziel ist es diese Applikation an so viele Nutzer wie möglich zu verbreiten. Die Applikation soll daher für folgende Plattformen, siehe Tabelle \ref{plattformen} erhältlich sein.
+Ein junges Startup aus IT-Studenten hat eine Idee für eine Applikation und möchte diese umsetzen. Ihr Ziel ist es, diese Applikation an so viele Nutzer wie möglich zu verbreiten. Die Applikation soll demnach für folgende Plattformen verfügbar sein - siehe Tabelle \ref{plattformen}.
 
 \begin{table}[!htb]\label{plattformen}
 \begin{tabularx}{\textwidth}{|X|X|}
@@ -26,41 +26,43 @@ Ein junges Startup aus IT-Studenten hat eine Idee für eine Applikation. Ihr Zie
 \caption{Plattformen und die dazu benötigten Programmiersprachen}
 \end{table}
 
-Wie man anhand der Tabelle sehen kann, wird eine Vielzahl an unterschiedlichen Programmiersprachen benötigt, um die Applikation über mehrere Plattformen zu verbreiten. Das junge Startup verfügt leider nicht über die Kapazitäten um die Applikation in jeder dieser Programmiersprachen zu implementieren und zu warten. 
+Wie man anhand der Tabelle sehen kann, kommt eine Vielzahl an unterschiedlichen Programmiersprachen zum Einsatz, um die Applikation über mehrere Plattformen zu verbreiten. Jedoch verfügt das junge Startup nicht über die benötigten Kapazitäten, um die Applikation in jeder dieser Programmiersprachen implementieren und warten zu können. 
 
-Aus diesem Grund entscheidet sich das Startup dafür eine \ac{PWA} zu erstellen. Eine PWA ist eine Webanwendung mit erweiterten Funktionen. Die Besonderheit dieser erweiterten Webanwendung liegt darin, das sie einmal implementiert auf sämtliche Plattformen installiert werden kann. Sie ist somit Plattform unabhängig. 
+Damit die Applikation dennoch an möglichst viele Kunden gelangt, sucht das Startup nach einer anderen Lösung, um die aufwendige Implementierung zu umgehen. Dabei kommt die Idee auf, eine \ac{PWA} zu entwickeln. Eine PWA ist eine Webanwendung mit erweiterten Funktionen. Die Besonderheit liegt darin, dass sie - einmal implementiert - auf sämtliche Plattformen installiert werden kann. Dadurch ist sie plattformunabhängig und die Verwendung sämtlicher Programmiersprachen könnte umgangen werden.
 
-\section{Begriffsklärung}\label{se:Begriffsklaerung}
+Nun stellt sich die Frage, ob es tatsächlich möglich ist, durch den Einsatz einer \ac{PWA} zusätzlichen Entwicklungsaufwand zu umgehen und die Applikation auf den gängigsten Plattformen vollumfänglich auszuführen. Die Antwort soll im Laufe der Arbeit anhand einer selbst entwickelten \ac{PWA} ermittelt werden. Hierbei werden die Plattformen IOS, Android, Google Chrome, Apple Safari, MacOS und Windows untersucht.
 
-der Begriff \textit{Progrssive Web App} setzt sich aus den Begriffen \textit{Web App} und \textit{Progressive Enhancement} zusammen. Eine Web App (deutsch Webanwendung) ist eine mithilfe von JavaScript, HTML und CSS entwickelte Applikation. Der zweite Begriff wurde von Steve Champeon im Jahre 2003 in seiner Publikation mit dem Titel \textit{progressive enhancement and the future of web design} geprägt \cite{Champeon}.
+\section{Begriffserklärung}\label{se:Begriffserklaerung}
 
-Unter dem Begriff \textit{Progressive Enhancement} (deutsch Progressive Verbesserung) verbirgt sich das Ziel Webseiten so zur Verfügung zu stellen, dass jeder Webbrowser in der Lage ist, die grundlegendste Form einer Webseite dazustellen. Hierbei ist es unabhängig über welche Version der Browser oder das Endgerät verfügt. 
-Alle zusätzlichen Funktionalitäten, die eventuell erst mit modernen Browsern und Endgeräte genutzt werden können, werden erst im anschluss in form von Skripten eingebunden. 
+Der Begriff \textit{Progressive Web App} setzt sich aus den Begriffen \textit{Web App} und \textit{Progressive Enhancement} zusammen. Eine Web App (zu deutsch: Webanwendung) ist eine mithilfe von JavaScript, HTML und CSS entwickelte Applikation. Der zweite Begriff entstand durch Steve Champeon im Jahre 2003 in seiner Publikation mit dem Titel \textit{progressive enhancement and the future of web design} \cite{Champeon}.
 
-Um PWAs nutzen zu können werden die neusten Funktionen der modernen Webbrowser benötigt, darunter \textit{service workers} und \textit{web app manifests} (Referenz Kapitel). 
+Unter dem Begriff \textit{Progressive Enhancement} (zu deutsch: Progressive Verbesserung) verbirgt sich das Ziel, Webseiten so zur Verfügung zu stellen, dass jeder Webbrowser in der Lage ist, die grundlegendste Form einer Webseite darzustellen. Hierbei ist es unabhängig davon, über welche Version der Browser oder das Endgerät verfügt. 
+Alle zusätzlichen Funktionalitäten, die sich nur unter Verwendung moderner Browser und Endgeräte nutzen lassen, werden erst im Anschluss in Form von Skripten eingebunden. 
+
+Um PWAs nutzen zu können, werden die neusten Funktionen moderner Webbrowser benötigt, darunter \textit{service workers} und \textit{web app manifests} (Referenz Kapitel). 
 
 Google hat das Konzept von PWAs im Jahr 2015 vorgestellt und ist seit dem maßgeblich an der Entwicklung beteiligt. 
-Das Ziel bei der Entwicklung von PWAs liegt darin die Vorteile von Nativen Applikation mit den Vorteilen von Webanwendung zu kombinieren. 
+Das Ziel bei der Entwicklung von PWAs liegt darin, die Vorteile Nativer Applikationen mit denen der Webanwendung zu kombinieren. 
 
 
-Native Applikation beziehungsweise Plattformspezifische Applikation sind sehr Funktionsreich und zuverlässig. Weitere Vorteile sind, das sie : 
+Native Applikationen beziehungsweise plattformspezifische Applikationen sind sehr funktionsreich und zuverlässig. Weitere Vorteile sind, dass sie : 
 \begin{itemize}
-    \item  Netzwerkunabhängig funktionieren,
+    \item  netzwerkunabhängig funktionieren,
     \item  lokale Dateien aus dem Dateisystem lesen und schreiben können, 
-    \item  auf Hardwareschnittstellen wie USB und bluetooth zugreifen können, 
-    \item  mit Daten des Gerätes interagieren können, wie zum Beispiel Fotos oder aktuell spielende Musik. 
+    \item  auf Hardwareschnittstellen wie USB und Bluetooth zugreifen können, 
+    \item  mit Daten des Geräts interagieren können, wie zum Beispiel Fotos oder aktuell spielende Musik. 
 \end{itemize}
 
 Webapplikationen wiederum sind sehr gut erreichbar, sie können verlinkt, über Suchmaschinen gefunden und geteilt werden. 
 
 Mithilfe von PWAs können Applikation erzeugt werden, die: 
 \begin{itemize}
-    \item Installierbar sind, Kapitel, 
+    \item installierbar sind, Kapitel, 
     \item auf Geräteschnittstellen zugreifen können, Kapitel 
-    \item Netzwerkunabhängig funktionieren, Kapitel
-    \item Push-Notifikations versenden können, Kapitel
+    \item netzwerkunabhängig funktionieren, Kapitel
+    \item Push-Notifications versenden können, Kapitel
 \end{itemize}
 
-PWAs sind somit laut Sam Richard und Pete LePage das beste aus zwei Welten \cite{SamRichard2020}. Mithilfe von progressiver Verbesserung werden die modernen Funktionen von Browsern genutzt um die Vorteile von Plattformspezifischen Anwendungen nutzen zu können. Sind die dafür benötigten Funktionen wie zum Beispiel \textit{service workers} nicht vorhanden, können denoch die Grundfunktionen der Anwendung im Web genutz werden. 
+PWAs sind laut Sam Richard und Pete LePage das Beste aus zwei Welten \cite{SamRichard2020}. Mithilfe von progressiver Verbesserung werden die modernen Funktionen von Browsern genutzt, um die Vorteile von plattformspezifischen Anwendungen nutzen zu können. Sind die dafür benötigten Funktionen wie beispielsweise \textit{service workers} nicht vorhanden, können die Grundfunktionen der Anwendung dennoch im Web genutzt werden. 
 
 \section{Aufbau der Arbeit}\label{se:AufbauDerArbeit}
