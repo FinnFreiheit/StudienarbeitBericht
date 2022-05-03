@@ -20,7 +20,7 @@ Das Kürzel \texttt{CAP} steht für die Bedingungen Konsistenz, Verfügbarkeit u
 \begin{figure}[!htb]
     \centering
     \includegraphics{ConAvaPar.png}
-    \caption{Emmelie \cite{drei}}
+    \caption{CAP-Theorem \cite{drei}}
     \label{img:ConAvaPar}
 \end{figure}
 
@@ -29,13 +29,13 @@ Auf Grundlage des BASE-Konzepts ist das System im Sinne des CAP-Theorems verfüg
 
 \subsection{Modelle}
 
-NoSQL umfasst im Allgemeinen vier verschiedene Modelle, die einen möglichen Aufbau einer NoSQL-Datenbank zeigen.
+NoSQL umfasst im Allgemeinen vier verschiedene Modelle, die einen möglichen Aufbau einer NoSQL-Datenbank zeigen, siehe Abbildung \ref*{img:modell}.
 
 \begin{figure}
     \centering
     \includegraphics{modell.png}
     \label{img:modell}
-    \caption{Emmelie \cite{drei}}
+    \caption{Modelle einer NoSQL Datenbank  \cite{drei}}
 \end{figure}
 
 Auf dem ersten Bild erkennt man den Dokumentspeicher. In diesem Modell werden Daten in Dokumenten hierarchisch in einer Datenbank angeordnet und abgespeichert. Diese Dokumente sind JSON-basiert, was heißt, dass die dort abgespeicherten Daten im JSON-Format vorliegen.
@@ -62,7 +62,7 @@ Außerdem verfügt MongoDB über eine Primär-Sekundär-Replikation, wobei die P
 
 \section{Speicherung der Daten}
 \subsection{JSON-basierte Speicherung}
-Eine Datenbank enthält Kollektionen, die Dokumente umfassen. Diese Dokumente enthalten die zu speichernden Daten \cite[S.30]{zwei} in Form von Schlüssel-Wert-Paaren \cite[S.27]{zwei}. Zur Speicherung wird Binary JSON – kurz BSON – eingesetzt. JSON ist die JavaScript Object Notation und gilt als einer der Standardsprachen für den Datenaustausch im heutigen, modernen Web. Das Format von JSON ist sowohl für Maschinen als auch für den Menschen lesbar. Zudem werden alle Standarddatentypen wie beispielsweise Strings, Zahlenwerte, Boolean-Werte und Arrays unterstützt und können verwendet werden \cite[S.31]{zwei}. 
+Eine Datenbank enthält Kollektionen, die Dokumente umfassen, siehe Abbildung \ref*{img:jsonSpeicherung}. Diese Dokumente enthalten die zu speichernden Daten \cite[S.30]{zwei} in Form von Schlüssel-Wert-Paaren \cite[S.27]{zwei}. Zur Speicherung wird Binary JSON – kurz BSON – eingesetzt. JSON ist die JavaScript Object Notation und gilt als einer der Standardsprachen für den Datenaustausch im heutigen, modernen Web. Das Format von JSON ist sowohl für Maschinen als auch für den Menschen lesbar. Zudem werden alle Standarddatentypen wie beispielsweise Strings, Zahlenwerte, Boolean-Werte und Arrays unterstützt und können verwendet werden \cite[S.31]{zwei}. 
 Ein Vorteil von JSON ist die Möglichkeit, zusammengehörige Daten gruppiert an einem Platz zu speichern. Dadurch sind gewisse Daten einfacher auffindbar, was die Performance der Abfragen verbessert. Außerdem ist es möglich, schemalose Modelle zu verwenden, wodurch Änderungen an einem Schema nie zu Problemen führen können.
 Im Gegenteil zu RDBMS kann für eine Speicherung ein dynamisches Schema gewählt werden. Dies bedeutet, dass Dokumente über unterschiedliche Strukturen oder Felder verfügen oder aber auch ähnliche Felder unterschiedliche Daten speichern können \cite[S.26f.]{zwei}. In Fällen, in denen eine Kollektion Dokumente unterschiedlicher Typen beinhaltet, spricht man von einem polymorphen Schema \cite[S.32]{zwei}.
 
@@ -70,7 +70,7 @@ Im Gegenteil zu RDBMS kann für eine Speicherung ein dynamisches Schema gewählt
     \centering
     \includegraphics[scale=0.6]{jsonSpeicherung.jpg}
     \label{img:jsonSpeicherung}
-    \caption{Emmelie \cite[S.30]{zwei}}
+    \caption{Aufbau von MongoDB \cite[S.30]{zwei}}
 \end{figure}
 
 \subsection{BSON}
