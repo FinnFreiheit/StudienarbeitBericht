@@ -3,14 +3,14 @@
 
 Für die Implementierung der Webanwendung wird ein Framework verwendet. Ein Framework ist ein Programmiergerüst, das verwendet werden kann, um modulare, skalierbare und gut wartbare Applikationen zu entwickeln. In der Webentwicklung ist Angular neben React.js und Vue.js eines der beliebtesten Frameworks \cite{stackoverflow2021}.  
 
-Mit Angular werden komponentenbasierte \ac{SPA} erstellt. Bei einer \textit{Single Page Applikation} wird immer nur eine Seite im Browser geladen. Der Inhalt dieser einen Seite ändert sich je nach Nutzerinteraktion. Dies hat unter anderem einen performanten Vorteil, da nur die benötigten Inhalte berechnet werden müssen. 
+Mit Angular werden komponentenbasierte \ac{SPA} erstellt. Bei einer \textit{Single Page Application} wird immer nur eine Seite im Browser geladen. Der Inhalt dieser Seite ändert sich je nach Nutzerinteraktion. Dies hat unter anderem einen performanten Vorteil, da nur die benötigten Inhalte berechnet werden müssen. 
 Mithilfe des Frameworks können sehr große Webanwendung entwickelt werden. Um die Übersichtlichkeit zu erhöhen, werden die Funktionen der Anwendung in Komponenten aufgeteilt. Die Komponenten sind die Grundbausteine einer Angular-Anwendung. 
 
-Eine Komponente besteht aus einem \textit{Template} und einer \textit{TypeScript-Klasse}. Das Template ist für die Darstellung von Inhalten verantwortlich und besteht aus einer HTML-Datei. Die TypeScript-Klasse verwaltet und manipuliert die Daten, die im Template angezeigt werden. TypeScript ist eine Obermenge von JavaScript und unterstützt eine typsichere und objektorientierte Programmierung \cite{TypeScript2021}. 
+Eine Komponente setzt sich aus einem \textit{Template} und einer \textit{TypeScript-Klasse} zusammen. Das Template ist für die Darstellung von Inhalten verantwortlich und besteht aus einer HTML-Datei. Die TypeScript-Klasse verwaltet und manipuliert die Daten, die im Template angezeigt werden. TypeScript ist eine Obermenge von JavaScript und unterstützt eine typsichere und objektorientierte Programmierung \cite{TypeScript2021}. 
 
-Neben dem Template und der TypeScript-Klasse verfügt eine Komponente über eine Datei, um CSS-Eigenschaften zu deklarieren. Bei der zu erstellenden Angular-Anwendung handelt es sich um \textit{SCSS-Dateien}. SCSS ist eine Stylesheet-Sprache, die die Funktionalitäten von CSS erweitert \cite{Sass2021}. 
+Neben dem Template und der TypeScript-Klasse verfügt eine Komponente über eine Datei, um CSS-Eigenschaften zu deklarieren. Bei der zu erstellenden Angular-Anwendung handelt es sich um \textit{SCSS-Dateien}. SCSS ist eine Stylesheet-Sprache, welche die Funktionalitäten von CSS erweitert \cite{Sass2021}. 
 
-Angular bietet zusätzliche Funktionen, die den Entwickler bei der Implementierung von Webanwendung unterstützen. Einige dieser Funktionen wurden in der Arbeit verwendet und werden im Folgenden genauer erläutert. 
+Angular bietet zusätzliche Funktionen, die den Entwickler bei der Implementierung von Webanwendung unterstützen sollen. Einige dieser Funktionen werden im Laufe der Arbeit verwendet und demnach im Folgenden erläutert. 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -18,12 +18,12 @@ Angular bietet zusätzliche Funktionen, die den Entwickler bei der Implementieru
 
 \textit{Strukturdirektiven} erweitern die Funktionalität von HTML-Elementen. Sie werden im Template verwendet und sind durch einen voranstehenden Stern \texttt{*} markiert. Die \texttt{*ngIf}-Direktive ist ein Vertreter der Strukturdirektiven. Die Direktive wird im HTML-Tag angegeben und somit diesem HTML-Element zugeordnet. 
 Dieses HTML-Element kann durch die Direktive ein- bzw. ausgeblendet werden. Dafür muss der Direktive ein \texttt{boolean} zugewiesen werden, dessen Wahrheitswert darüber bestimmt \cite{Book2020}\cite{NgIf2021}.
-Weitere Strukturdirektiven sind unteranderem \texttt{*ngFor} und \texttt{*ngSwitchCase}. Dabei erlaubt die Strukturdirektive \texttt{*ngFor} ein wiederholtes Einfügen eines HTML-Elementes in den HTML-Code, während die Direktive \texttt{*ngSwitchCase}, ähnlich wie \texttt{*ngIf}, eine Alternative formuliert. 
+Weitere Strukturdirektiven sind unter anderem \texttt{*ngFor} und \texttt{*ngSwitchCase}. Dabei erlaubt die Strukturdirektive \texttt{*ngFor} ein wiederholtes Einfügen eines HTML-Elementes in den HTML-Code, während die Direktive \texttt{*ngSwitchCase} - ähnlich wie \texttt{*ngIf} - eine Alternative formuliert. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Interpolation}
 
-Durch \textit{Interpolation} können Daten (Werte) aus der TypeScript-Klasse ins Template eingebunden werden. Dies geschieht syntaktisch durch zwei geschweifte Klammern. Die Klammern umschließen die Variable aus der TypeScript-Klasse, siehe Listing \ref{lst:interpolation}. Dadurch wird der Wert der Variablen in der Webanwendung angezeigt \cite{Book2020}\cite{interpolation2021}. 
+Durch \textit{Interpolation} können Daten (Werte) aus der TypeScript-Klasse in das Template eingebunden werden. Dies geschieht syntaktisch durch zwei geschweifte Klammern. Die Klammern umschließen die Variable aus der TypeScript-Klasse, siehe Listing \ref{lst:interpolation}. Dadurch wird der Wert der Variablen in der Webanwendung angezeigt \cite{Book2020}\cite{interpolation2021}. 
 \begin{lstlisting}[caption=Interpolation im Template, label=lst:interpolation]
     <p>{{Variable}}</p>
 \end{lstlisting}
@@ -39,8 +39,8 @@ Syntaktisch wird bei einem Property Binding die entsprechende Eigenschaft (Prope
 \section{Event Binding}\label{subsec:eventBinding}
 
 Mit \textit{Event Bindings} kann auf Ereignisse im Template reagiert werden. Mögliche Ereignisse sind das Betätigen (engl. click) eines Knopfes (engl. Button) oder das Betätigen einer bestimmten Eingabetaste (engl. Key). 
-Diese Ereignisse können mit einer Funktion in der TypeScript-Klasse verknüpft werden. Somit stellen Event Bindings den Datenfluss vom Template zur TypeScript-Klasse dar. Sie sind somit der Gegenpart von Property Bindings. 
-Im Listing \ref{lst:eventBinding} wird gezeigt, wie beim Betätigen des Buttons die \texttt{clickFunktion()} in der TypeScript-Klasse aufgerufen wird \cite{Book2020}\cite{eventBinding2021}.
+Diese Ereignisse können mit einer Funktion in der TypeScript-Klasse verknüpft werden. Somit stellen Event Bindings den Datenfluss von dem Template zu der TypeScript-Klasse dar. Dies macht sie zum Gegenpart der Property Bindings. 
+Im Listing \ref{lst:eventBinding} wird gezeigt, wie bei dem Betätigen des Buttons die \texttt{clickFunktion()} in der TypeScript-Klasse aufgerufen wird \cite{Book2020}\cite{eventBinding2021}.
 
 \begin{lstlisting}[caption=Event Binding, label=lst:eventBinding]
     <button (click)="clickFunktion()"> Click me </button>
@@ -48,4 +48,4 @@ Im Listing \ref{lst:eventBinding} wird gezeigt, wie beim Betätigen des Buttons 
 
 \section{Backend Anbindung}
 
-Die Anbindung an das Backend wird in Angular typischerweise in einem \textit{Service} implementiert. Ein \textit{Service} in Angular ist eine TypeScript-Klasse, die einem konkreten Zweck dient. Ein Service sollte möglichst genau eine Sache erledigen. Ein Service kann typischerweise von allen/vielen Komponenten verwendet werden. In einen solchen Service, der die Anbindung an das Backend implementiert, muss in Angular der \texttt{HttpClient}-Service per \textit{dependency injection} injiziert werden. Dieser Service wird durch das Modul \texttt{HttpClientModule} bereitgestellt, welches in die \texttt{app.module.ts} importiert werden muss. Der \texttt{HttpClient}-Service stellt Funktionen \texttt{get()}, \texttt{put()}, \texttt{post()} und \texttt{delete()} in Äquivalenz zu den entsprechenden HTTP-Anfragen (bzw. den REST-Endpunkten) bereit.
+Die Anbindung an das Backend wird in Angular typischerweise in einem \textit{Service} implementiert. Ein \textit{Service} in Angular ist eine TypeScript-Klasse, die einem konkreten Zweck dient. Ein Service sollte möglichst genau eine Sache erledigen. Ein Service kann typischerweise von allen beziehungsweise vielen Komponenten verwendet werden. In einen solchen Service, der die Anbindung an das Backend implementiert, muss in Angular der \texttt{HttpClient}-Service per \textit{dependency injection} injiziert werden. Dieser Service wird durch das Modul \texttt{HttpClientModule} bereitgestellt, welches in die \texttt{app.module.ts} importiert werden muss. Der \texttt{HttpClient}-Service stellt die Funktionen \texttt{get()}, \texttt{put()}, \texttt{post()} und \texttt{delete()} in Äquivalenz zu den entsprechenden HTTP-Anfragen bzw. den REST-Endpunkten bereit.
