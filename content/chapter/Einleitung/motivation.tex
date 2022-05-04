@@ -6,7 +6,7 @@ Folgendes Szenario soll einen Einblick in die Vorteile von \ac{PWAs} geben.
 
 Ein junges Startup aus IT-Studenten hat eine Idee für eine Applikation und möchte diese umsetzen. Ihr Ziel ist es, diese Applikation an so viele Nutzer wie möglich zu verbreiten. Die Applikation soll demnach für folgende Plattformen verfügbar sein - siehe Tabelle \ref{plattformen}.
 
-\begin{table}[!htb]\label{plattformen}
+\begin{table}[!htb]
 \begin{tabularx}{\textwidth}{|X|X|}
     \hline
     \textbf{Plattform} & \textbf{Programmiersprache} \\
@@ -24,13 +24,26 @@ Ein junges Startup aus IT-Studenten hat eine Idee für eine Applikation und möc
     \hline
 \end{tabularx}
 \caption{Plattformen und die dazu benötigten Programmiersprachen}
+\label{plattformen}
 \end{table}
 
 Wie man anhand der Tabelle sehen kann, kommt eine Vielzahl an unterschiedlichen Programmiersprachen zum Einsatz, um die Applikation über mehrere Plattformen zu verbreiten. Jedoch verfügt das junge Startup nicht über die benötigten Kapazitäten, um die Applikation in jeder dieser Programmiersprachen implementieren und warten zu können. 
 
 Damit die Applikation dennoch an möglichst viele Kunden gelangt, sucht das Startup nach einer anderen Lösung, um die aufwendige Implementierung zu umgehen. Dabei kommt die Idee auf, eine \ac{PWA} zu entwickeln. Eine PWA ist eine Webanwendung mit erweiterten Funktionen. Die Besonderheit liegt darin, dass sie - einmal implementiert - auf sämtliche Plattformen installiert werden kann. Dadurch ist sie plattformunabhängig und die Verwendung sämtlicher Programmiersprachen könnte umgangen werden.
 
-Nun stellt sich die Frage, ob es tatsächlich möglich ist, durch den Einsatz einer \ac{PWA} zusätzlichen Entwicklungsaufwand zu umgehen und die Applikation auf den gängigsten Plattformen vollumfänglich auszuführen. Die Antwort soll im Laufe der Arbeit anhand einer selbst entwickelten \ac{PWA} ermittelt werden. Hierbei werden die Plattformen IOS, Android, Google Chrome, Apple Safari, MacOS und Windows untersucht.
+
+\section{Problemstellung}
+
+Die These, das Progressive Web Apps plattformunabhängig und vollumfänglich eingesetzt werden können, wird im verlauf dieser Arbeit untersucht. 
+
+Hierfür wird eine Applikation entwickelt, die die Grundfunktionen einer PWA implementiert. Die Anwendung soll 
+ \begin{itemize}
+     \item installierbar sein,
+     \item offline verfügbar sein
+     \item und Push-Benachrichtigungen ermöglichen 
+ \end{itemize}
+
+ Im Anschluss wird die Anwendung auf den in Tabelle \ref{plattformen} aufgeführten Plattformen ausgeführt und untersucht, ob alle beschriebenen Funktionen vorhanden sind. 
 
 \section{Begriffserklärung}\label{se:Begriffserklaerung}
 
