@@ -2,15 +2,15 @@
 
 \chapter{Progressive Web App}
 
-Wie in Kapitel \ref{se:Begriffsklaerung} erwähnt verfügt eine PWA unter anderem über folgende Funktionen: 
+Wie in Kapitel \ref{se:Begriffsklaerung} erwähnt, verfügt eine PWA unter anderem über folgende Funktionen: 
 \begin{itemize}
     \item Installierbar,
-    \item zugriff auf Geräteschnittstellen, 
+    \item Zugriff auf Geräteschnittstellen, 
     \item Netzwerkunabhängig,
-    \item Push-Notifikations.
+    \item Push-Notifications.
 \end{itemize} 
 
-Im folgenden werden die theoretischen Grundlagen erläutert, die benötigt werden, um diese Funktionalitäten zu realisieren. 
+Im Folgenden werden die theoretischen Grundlagen erläutert, die benötigt werden, um diese Funktionalitäten zu realisieren. 
 
 
 \section{Web-App-Manifest}\label{sec:webappmanifest}
@@ -19,46 +19,46 @@ Im folgenden werden die theoretischen Grundlagen erläutert, die benötigt werde
    \textit{The web app manifest is a JSON file that defines how the PWA should be treated as an installed application, including the look and feel and basic behavior within the operating system \cite{Developers2022}. }
 \end{quote}
 
-Eine PWA kann auf ein Endgerät wie zum Beispiel ein Desktop oder Handy installiert werden. Um diese Funktion zu realisieren, müssen zusätzliche Informationen wie zum Beispiel der Name und das Icon der installierten Applikation in einer Datei festgehalten werden. 
+Eine PWA kann auf ein Endgerät wie zum Beispiel ein Desktop oder Handy installiert werden. Um diese Funktion zu realisieren, müssen zusätzliche Informationen wie beispielsweise der Name und das Icon der installierten Applikation in einer Datei festgehalten werden. 
 
-Bei dieser Datei handelt es sich um das sogenannte Web-App-Manifest. Die Informationen sind im \ac{JSON}-Format\footnote{durch Komma getrennte Schlüssel-Wert paare} angegeben. 
+Bei dieser Datei handelt es sich um das sogenannte Web-App-Manifest. Die Informationen sind im \ac{JSON}-Format\footnote{durch Komma getrennte Schlüssel-Wert-Paare} angegeben. 
 
-Ohne Das Manifest ist die Applikation nicht installierbar, somit ist die Datei eine zwingende Voraussetzung für eine PWA. 
-Das Manifest muss mindestens ein \texttt{name}-Schlüssel und ein \texttt{String}-Wert aufweisen. 
+Ohne das Manifest ist die Applikation nicht installierbar, was die Datei zu einer zwingenden Voraussetzung für eine PWA macht. 
+Das Manifest muss mindestens einen \texttt{name}-Schlüssel und einen \texttt{String}-Wert aufweisen. 
 Neben dem Namen der Applikation kann ein Manifest über folgende Informationen verfügen: 
 
 \subsection{short\_name}
-Unter \texttt{short\_name} kann ein kurzer Name der Applikation angegeben werden. Dieser Name wird verwendet, falls das Endgerät nicht über genügend platz verfügt, um den Originalen Namen anzuzeigen. 
+Unter \texttt{short\_name} kann ein kurzer Name der Applikation angegeben werden. Dieser Name wird verwendet, falls das Endgerät nicht über genügend Platz verfügt, um den originalen Namen anzuzeigen. 
 
 \subsection{icons}
-Unter \texttt{icons} wird ein Array\footnote{Datentyp, das mehrere Werte speichern kann} mit Bildobjekten gespeichert. Ein Bildobjekt besteht aus einem Dateipfad, unter dem das anzuzeigende Bild gespeichert ist, einer Typ Beschreibung des Bildes zum Beispiel \textit{png} oder \textit{svg}, eine Informationen über die Auflösung des Bildes und optional noch eine Angabe  welchem Zweck das Bild dient. 
+Unter \texttt{icons} wird ein Array\footnote{Datentyp, das mehrere Werte speichern kann} mit Bildobjekten gespeichert. Ein Bildobjekt besteht aus einem Dateipfad, unter dem das anzuzeigende Bild gespeichert ist, einer Typbeschreibung des Bildes, zum Beispiel \textit{png} oder \textit{svg}, einer Informationen über die Auflösung des Bildes sowie optional einer Angabe, welchem Zweck das Bild dient. 
 
-Die Gespeicherten Bilder werden als App-Icon auf dem Desktop oder Handy angezeigt. 
+Die gespeicherten Bilder werden als App-Icon auf dem Desktop oder Handy angezeigt. 
 
 \subsection{start\_url}
-Die angegebene \texttt{start\_url} ist jene \ac{URL} die geöffnet wird, sobald der Nutzer das installierte Icon auswählt und somit die Applikation startet. 
+Die angegebene \texttt{start\_url} ist jene \ac{URL} die geöffnet wird, sobald der Nutzer das installierte Icon auswählt und damit die Applikation startet. 
 Wird keine explizite Startadresse angegeben, so wird die URL verwendet, von der die PWA installiert wurde. 
 
 \subsection{display}
 
-Beim Auswählen des Installierten Icons wird die PWA in einem neuem Fenster geöffnet. Unter \texttt{display} kann angegeben werden, wie das Betriebssystem das Fenster darstellen soll. 
+Bei Auswählen des installierten Icons wird die PWA in einem neuem Fenster geöffnet. Unter \texttt{display} kann angegeben werden, wie das Betriebssystem das Fenster darstellen soll. 
 Es kann zwischen \texttt{Fullscreen}, \texttt{Standalone} und \texttt{Minimal User Interface} unterschieden werden. 
-Der unterschied zwischen den einzelnen Auswahlmöglichkeiten liegt bei den Navigationselementen, siehe Abbildung \ref{img:Standalone} und \ref{img:minimalui}.
+Der Unterschied zwischen den einzelnen Auswahlmöglichkeiten liegt bei den Navigationselementen, siehe Abbildung \ref{img:Standalone} und \ref{img:minimalui}.
 
 \begin{figure}[!htb]
     \includegraphics[scale=0.3]{Standalone.png}
-    \caption{display in Standalone Einstellung}
+    \caption{display in "Standalone"-Einstellung}
     \label{img:Standalone}
 \end{figure}
 
 \begin{figure}
     \includegraphics[scale=0.3]{minimalui.png}
-    \caption{display in Minimal User Interface Einstellung}
+    \caption{display in "Minimal User Interface"-Einstellung}
     \label{img:minimalui}
 \end{figure}
 
 \subsection{theme\_color}
-Mit Hilfe dieser Einstellung kann die Farbe der oberen Navigationsleiste angepasst werden, wie in Abbildung \ref{img:themeColor} dargestellt ist. Hierbei ist jedoch darauf zu achten, das die Applikation nicht den meta tag theme-color definiert. 
+Mit Hilfe dieser Einstellung kann die Farbe der oberen Navigationsleiste angepasst werden, wie in Abbildung \ref{img:themeColor} dargestellt ist. Hierbei ist jedoch darauf zu achten, dass die Applikation nicht den Meta-Tag \texttt{theme-color} definiert. 
 
 \begin{figure}[!htb]
     \includegraphics[scale=0.3]{themeColor.png}
@@ -66,9 +66,9 @@ Mit Hilfe dieser Einstellung kann die Farbe der oberen Navigationsleiste angepas
     \label{img:themeColor}
 \end{figure}
 
-\subsection{Debugging vom Manifest}
+\subsection{Debugging des Manifests}
 
-Neben den oben aufgezählten Grundeinstellungen sind viele weitere Möglich. Um nachzuvollziehen, ob alle Einstellungen den Anforderungen entsprechen kann das Manifest mithilfe der Browser Entwicklerwerkzeuge untersucht werden. Unter Google Chrome kann unterm Reiter \textit{Application} das Manifest ausgewählt werden. Darauf hin erhält man folgende Ansicht, siehe Abbildung \ref{img:devManifest}.
+Neben den oben aufgezählten Grundeinstellungen sind viele weitere Optionen möglich. Um nachzuvollziehen, ob alle Einstellungen den Anforderungen entsprechen, kann das Manifest mithilfe der Browser-Entwicklerwerkzeuge untersucht werden. Unter Google Chrome kann unter dem Reiter \textit{Application} das Manifest ausgewählt werden. Daraufhin erhält man folgende Ansicht, siehe Abbildung \ref{img:devManifest}.
 
 \begin{figure}[!htb]
     \centering
@@ -85,25 +85,25 @@ Neben den oben aufgezählten Grundeinstellungen sind viele weitere Möglich. Um 
     \textit{Service workers are a fundamental part of a PWA. They enable fast loading (regardless of the network), offline access, push notifications, and other capabilities \cite{Developers2022a}.}
 \end{quote}
 
-Der \textit{Service Worker} ist ein wichtiger Grundbaustein um Funktionalitäten wie Push-Notifikations, Hintergrund-Synchronisation und die Möglichkeit, auch Offline die Anwendung auszuführen, zu realisieren. 
+Der \textit{Service Worker} ist ein wichtiger Grundbaustein, um Funktionalitäten wie Push-Notifications und Hintergrund-Synchronisation zu realisieren sowie die Möglichkeit, die Anwendung auch offline auszuführen. 
 
-Bei dem \textit{Service Worker} handelt es sich um ein script das im Hintergrund des Browsers, unabhängig von der Webanwendung, läuft \cite{Gaunt2021}. Entstanden sind die service worker aus der Verwendung des Application Caches . Die service Worker \ac{API} wächst kontinuierlich und bietet zunehmende weitere Funktionalitäten.
+Bei einem \textit{Service Worker} handelt es sich um ein Script, das im Hintergrund des Browsers - unabhängig von der Webanwendung - läuft \cite{Gaunt2021}. Entstanden sind die Service Workers aus der Verwendung des Application Caches. Die Service Worker \ac{API} wächst kontinuierlich und bietet zunehmend weitere Funktionalitäten.
 
-Bei der Verwendung eines Service Worker sollten folgenden Eigenschaften berücksichtigt werden: 
+Bei der Verwendung eines Service Workers sollten folgenden Eigenschaften berücksichtigt werden: 
 \begin{itemize}
-    \item Ein service worker kann zwar nicht direkt das \ac{DOM} einer Seite manipulieren, kann aber auf Requests der Seite mit Responses reagieren und die Seite selbst kann darufhin ihr DOM ändern
-    \item Ein service worker ist ein \glqq programmierbarer\grqq{} Proxy, der steuert, wie Requests von der Webseite behandelt werden.
-    \item Service workers verwenden die IndexDB API, um client-seitig strukturierte Daten persistent zu speichern.
-    \item Service workers verwenden Promises. 
+    \item Ein Service Worker kann zwar nicht direkt das \ac{DOM} einer Seite manipulieren, kann aber auf Requests der Seite mit Responses reagieren. Die Seite selbst kann darufhin ihr DOM ändern.
+    \item Ein Service Worker ist ein \glqq programmierbarer\grqq{} Proxy, der steuert, wie Requests von der Webseite behandelt werden.
+    \item Service Workers verwenden die IndexDB-API, um client-seitig strukturierte Daten persistent zu speichern.
+    \item Service Workers verwenden Promises. 
 \end{itemize}
 
 \subsection{Der Lebenszyklus eines Service Workers}
 
  
-Der Service Worker wird vom Browser in einem eigenen Thread unabhängig der Applikation ausgeführt. Dementsprechend besitzt der Service Worker einen eigenen Lebenszyklus, der im folgenden genauer beschrieben wird. 
+Der Service Worker wird von einem Browser in einem eigenen Thread unabhängig von der Applikation ausgeführt. Dementsprechend besitzt der Service Worker einen eigenen Lebenszyklus, der im Folgenden beschrieben wird. 
 
 \subsubsection{Registrieren}
-Der Lebenszyklus eines Service Workers beginnt mit der Registrierung. Dies erfolgt mithilfe der \texttt{register()} Methode in der \texttt{serviceWorker} Eigenschaft des \texttt{navigator}-Objektes \cite{Navigator2022}, siehe Listing \ref{lst:serviceWorker} Zeile 2. Um das Konzept von Progressive Enhancement zu folgen (Abschitt \ref{se:Begriffsklaerung}), sollte vor der Registrierung überprüft werden, ob die Service-Worker-Schnittstellen vorhanden sind. Hierfür wird die \texttt{serviceWorker} Eigenschaft im \texttt{navigator}-Objekt abgefragt, siehe Listing \ref{lst:serviceWorker} Zeile 1. 
+Der Lebenszyklus eines Service Workers beginnt mit der Registrierung. Dies erfolgt mithilfe der \texttt{register()}-Methode in der \texttt{serviceWorker}-Eigenschaft des \texttt{navigator}-Objektes \cite{Navigator2022}, siehe Listing \ref{lst:serviceWorker} Zeile 2. Um dem Konzept des Progressive Enhancements zu folgen (Abschitt \ref{se:Begriffsklaerung}), sollte vor der Registrierung überprüft werden, ob die Service-Worker-Schnittstellen vorhanden sind. Hierfür wird die \texttt{serviceWorker}-Eigenschaft innerhalb des \texttt{navigator}-Objekts abgefragt, siehe Listing \ref{lst:serviceWorker} Zeile 1. 
 
 \begin{lstlisting}[caption = Registrierung des Service Workers, label = lst:serviceWorker, float = !htb]
     if('serviceWorker' in navigator){
@@ -113,24 +113,24 @@ Der Lebenszyklus eines Service Workers beginnt mit der Registrierung. Dies erfol
     }
 \end{lstlisting}
 
-Das Aufrufen der Methode \texttt{register()} gibt ein Promise zurück, welches in Zeile 3 und 4 behandelt wird. 
-Im Erfolgsfall (then-Methode) wird ein Objekt von typ \texttt{ServiceWorkerRegistration} übergeben. Das Objekt verfügt unter anderem über folgende Schnittstellen: 
+Das Aufrufen der \texttt{register()}-Methode gibt einen Promise zurück, welcher in Zeile 3 und 4 behandelt wird. 
+Im Erfolgsfall (then-Methode) wird ein Objekt des Typs \texttt{ServiceWorkerRegistration} übergeben. Das Objekt verfügt unter anderem über folgende Schnittstellen: 
 \begin{itemize}
-    \item mit der \texttt{update()} Methode wird die Aktualisierung des Service Workers ausgelöst,
-    \item die Methode \texttt{unregister()} hebt die Registrierung des Service Workers auf, welches im anschluss vom Browser gelöscht wird,
+    \item mit der \texttt{update()}-Methode wird die Aktualisierung des Service Workers ausgelöst,
+    \item die \texttt{unregister()}-Methode hebt die Registrierung des Service Workers auf, welches im Anschluss durch den Browser gelöscht wird,
     \item die Eingenschaft \texttt{updatefound} wird aufgerufen, sobald der Browser eine neue Version des Service Workers gefunden hat. 
 \end{itemize}
 
 \subsubsection{Installieren}
 
-Mit der Registrierung erfolgt auch die Installation des Service-Worker-Skriptes, welches bei der Registrierung übergeben wurde, siehe Listing \ref{lst:serviceWorker} Zeile 2.
-In der Installationsphase läd der Service Worker Ressourcen vom Webserver und speichert diese Lokal ab. Wichtig ist hierbei das die Installationsphase erst dann beendet werden darf, wenn alle benötigten Ressourcen heruntergeladen wurden. Um dies zu realisieren steht die Methode \texttt{waitUntil()} zur Verfügung, die eine Promise-Kette abarbeitet. Die Methode öffnet den zugehörigen Cache. Im Cache werden durch die \texttt{addAll()}-Methode alle benötigten Ressourcen gespeichert, die normalerweise beim öffnen der Applikation von Webserver angefordert werden. Dies ermöglicht, das die Applikation in Zukunft auch ohne Netzwerkverbindung aus dem lokalen Cache geladen werden kann. 
+Mit der Registrierung erfolgt ebenfalls die Installation des Service-Worker-Skripts, welches bei der Registrierung übergeben wurde, siehe Listing \ref{lst:serviceWorker} Zeile 2.
+In der Installationsphase lädt der Service Worker Ressourcen von dem Webserver und speichert diese lokal ab. Wichtig ist hierbei, dass die Installationsphase erst dann beendet werden darf, wenn alle benötigten Ressourcen heruntergeladen wurden. Um dies zu realisieren, steht die \texttt{waitUntil()}-Methode zur Verfügung, die eine Promise-Kette abarbeitet. Diese Methode öffnet den zugehörigen Cache. Im Cache werden durch die \texttt{addAll()}-Methode alle benötigten Ressourcen gespeichert, die normalerweise bei dem Öffnen der Applikation durch den Webserver angefordert werden. Dies ermöglicht, dass die Applikation in Zukunft auch ohne Netzwerkverbindung aus dem lokalen Cache geladen werden kann. 
 
-In Angular wird in der \textit{ngsw-config.json}-Datei definiert, welche Ressourcen in den Cache gespeichert werden sollen. Die Grundeinstellung sieht folgendermaßen aus, siehe Listing \ref{lst:ngswConfig}. Aus der JSON-Datei wird ersichtlich, das sämtliche JavaScript und CSS Dateien sowie die index.html im Cache gespeichert wird. Zusätzlich werden Dateien, wie zum Beispiel Bilder, aus dem \textit{assets} Verzeichnis gespeichert. 
+In Angular wird in der \textit{ngsw-config.json}-Datei definiert, welche Ressourcen in den Cache gespeichert werden sollen. Die Grundeinstellung wird in Listing \ref{lst:ngswConfig} beschrieben. Aus der JSON-Datei wird ersichtlich, dass sämtliche JavaScript- und CSS-Dateien sowie die index.html innerhalb des Caches gespeichert werden. Zusätzlich werden Dateien wie zum Beispiel Bilder aus dem \textit{assets}-Verzeichnis gespeichert. 
 
 
 
-\begin{lstlisting}[caption={Angular \textit{ngsw-config.json}- Datei zu Angabe der Ressourcen, die durch den Service Worker in den Cache gespeichert werden sollen.}, label=lst:ngswConfig, float=!htb ]
+\begin{lstlisting}[caption={Angular \textit{ngsw-config.json}-Datei zur Angabe der Ressourcen, die durch den Service Worker in den Cache gespeichert werden sollen}, label=lst:ngswConfig, float=!htb ]
     "assetGroups": [
         {
           "name": "app",
@@ -162,12 +162,12 @@ Die im Cache gespeicherten Dateien können mithilfe der Google Chrome Developer 
 
 \subsubsection{Aktivieren}
 
-Nach der Installation geht der Service Worker in den aktiven Zustand über. Ein Aktivierter Service Worker ist in der Lage funktionale Ereignisse zu behandeln wie zum Beispiel das beantworten von HTTP(S) Anfragen oder das Entgegennehmen von Pushbenachrichtigungen. 
-Der Service Worker übernimmt somit die Kontrolle der Applikation. Dies geschieht jedoch erst wenn ein neuer Browser-Kontext geöffnet wird. Würde der Service Worker während der Laufzeit der Webanwendung aktiviert, kontrolliert er alle HTTP(S)-Anfragen der Webanwendung, darunter auch jene deren Ressourcen noch nicht im Cache gespeichert wurden.
+Nach der Installation geht der Service Worker in den aktiven Zustand über. Ein aktivierter Service Worker ist in der Lage, funktionale Ereignisse zu behandeln wie zum Beispiel das Beantworten von HTTP(S) Anfragen oder das Entgegennehmen von Pushbenachrichtigungen. 
+Der Service Worker übernimmt somit die Kontrolle der Applikation. Dies geschieht jedoch erst, wenn ein neuer Browser-Kontext geöffnet wird. Aktiviert man Service Worker während der Laufzeit der Webanwendung, kontrolliert er alle ihrer HTTP(S)-Anfragen, darunter auch jene, deren Ressourcen noch nicht im Cache gespeichert wurden.
 
 \subsubsection{Überschreiben}
 
-Sobald ein neuer Service Worker für einen bestimmten Scope Aktiviert wurde, terminiert der Webbrowser das alte Skript. Der alte Service Worker geht in den zustand \textit{redundant} und wird im weiteren Verlauf entfernt. 
+Sobald ein neuer Service Worker für einen bestimmten Scope aktiviert wurde, terminiert der Webbrowser das alte Skript. Der alte Service Worker geht in den Zustand \textit{redundant} und wird in dem weiteren Verlauf entfernt. 
 
 Unter Apple Safari wird ein registrierter Service Worker automatisch deinstalliert, sobald die Webseite des Service Workers mehrere Wochen nicht aufgerufen wurde. 
 
@@ -175,7 +175,7 @@ Unter Apple Safari wird ein registrierter Service Worker automatisch deinstallie
 \begin{figure}[!htb]
     \centering
     \includegraphics[scale=0.3]{CacheDevTools.png}
-    \caption{Google Chrome Developer Tools zum einsehen der im Cache gespeicherten Dateien.}
+    \caption{Google Chrome Developer Tools zum Einsehen der im Cache gespeicherten Dateien}
     \label{img:CacheDevTools}
 \end{figure}
 
@@ -195,19 +195,19 @@ Unter Apple Safari wird ein registrierter Service Worker automatisch deinstallie
 
 
 \clearpage
-\section{Push-Notifikations}
+\section{Push-Notifications}
 
-Eine Notifikation ist eine Nachricht, die auf dem Endgerät des Nutzers angezeigt wird. Dies kann als Reaktion auf eine Nutzereingabe geschehen, es kann jedoch auch unabhängig vom Nutzer eine Nachricht von einem Server \glqq gepusht\grqq{} werden und das auch ohne das die Applikation aktiv ist.  Um push Notifikations zu erzeugen werden zwei APIs benötigt. Die \textit{Notifikations API} visualisiert die Nachricht für den Nutzer und die \textit{Push API} erlaubt es den Service Worker, Kapitel \ref{sec:ServiceWorker}, Nachrichten zu verwalten, die vom Server gesendet wurden, während die Applikation nicht aktiv war. 
+Eine Notification ist eine Nachricht, die auf dem Endgerät des Nutzers angezeigt wird. Dies kann als Reaktion auf eine Nutzereingabe geschehen. Es kann jedoch auch unabhängig von dem Nutzer eine Nachricht von einem Server \glqq gepusht\grqq{} werden. Die ist auch ohne das Aktivsein der Applikation möglich.  Um Push-Notifications zu erzeugen, werden zwei APIs benötigt. Die \textit{Notifications API} visualisiert die Nachricht für den Nutzer. Die \textit{Push API} erlaubt es wiederum dem Service Worker (Kapitel \ref{sec:ServiceWorker}) Nachrichten zu verwalten, die durch den Server gesendet wurden, während die Applikation inaktiv war. 
 
-Neben dem Frontend, Backend und Service Worker sind an der Push-Kommunikation noch der Push-Service und Push-Dienst beteiligt. Jeder Browserhersteller hat einen eigenen Push-Dienst (eng. unser agent) implementiert. Google Chrome verwendet  \textit{Firebase Cloud Messaging}, Mozilla Firefox den \textit{Mozilla Push Service} und Microsoft Edge verwendet die \textit{Windows Push Notification Services}. Der Push-Dienst nimmt die Pushnachrichten vom Push-Service entgegen, und leitet diese an den Service Worker weiter. Die Kommunikation mit den Push-Diensten ist durch die \ac{IETF} spezifiziert \cite{rfc8030}. Somit müssen keine gesonderten Implementierung für die Einzelnen Push-Dienste vorgenommen werden. 
+Neben Frontend, Backend und Service Worker sind an der Push-Kommunikation zudem der Push-Service sowie der Push-Dienst beteiligt. Jeder Browserhersteller hat einen eigenen Push-Dienst (eng. unser agent) implementiert. Google Chrome verwendet \textit{Firebase Cloud Messaging}, Mozilla Firefox den \textit{Mozilla Push Service} und Microsoft Edge die \textit{Windows Push Notification Services}. Der Push-Dienst nimmt die Pushnachrichten des Push-Services entgegen und leitet diese an den Service Worker weiter. Die Kommunikation mit den Push-Diensten ist durch die \ac{IETF} spezifiziert \cite{rfc8030}. Somit müssen keine gesonderten Implementierungen für die einzelnen Push-Dienste vorgenommen werden. 
 
-Wie genau die einzelnen Kommunikationspartner miteinander interagieren ist in dem Sequenzdiagramm in Abbildung \ref{img:sequenceDiagram} dargestellt, und wird im folgendem genauer erläutert. 
+Wie die einzelnen Kommunikationspartner im Genauen miteinander interagieren ist in dem Sequenzdiagramm in Abbildung \ref{img:sequenceDiagram} dargestellt und wird im Folgendem erläutert. 
 
 \newpage
 \begin{figure}[!htb]
     \centering
     \includegraphics{Push_sequence_diagram.png}
-    \caption{Sequenzdiagramm für die Ereignisse einer Anmeldung, push Nachrichttransfer und Abmeldung \cite{PushW3}}
+    \caption{Sequenzdiagramm für die Ereignisse einer Anmeldung, eines Push-Nachrichttransfers und einer Abmeldung \cite{PushW3}}
     \label{img:sequenceDiagram}
 \end{figure}
 \newpage
@@ -215,10 +215,10 @@ Wie genau die einzelnen Kommunikationspartner miteinander interagieren ist in de
 
 \subsection{Push-Registrierung}\label{sec:pushRegistrirung}
 
-Um Push-Nachrichten empfangen zu können, muss die Webanwendung über den Webbrowser eine Push-Registrierung beim Push-Dienst beantragen. Die Beantragung erfolgt über die PushAPI die über den ServiceWorker, genauer den \texttt{ServiceWorkerRegistration} zur Verfügung gestellt wird. Aus diesem Grund ist es zwingend notwendig, das der Service Worker registriert ist. 
-Bei der Registrierung sollte das Konzept von \textit{Progressive Enhancement} berücksichtigt werden, indem die Browserkompatibilität vor der Registrierung abgefragt wird, siehe Listing \ref{lst:regPush}. Diese Abfrage ist wichtig, da der Apple Safari Browser keine Push-Funktionen unterstützt, siehe Abbildung \ref{img:PushManagerBrowser} (b).
+Um Push-Nachrichten empfangen zu können, muss die Webanwendung über den Webbrowser eine Push-Registrierung bei dem Push-Dienst beantragen. Diese Beantragung erfolgt über die PushAPI, die über den ServiceWorker - genauer die \texttt{ServiceWorkerRegistration} - zur Verfügung gestellt wird. Aus diesem Grund ist es zwingend notwendig, dass der Service Worker registriert ist. 
+Bei der Registrierung sollte das Konzept des \textit{Progressive Enhancements} berücksichtigt werden, indem die Browserkompatibilität vor der Registrierung abgefragt wird, siehe Listing \ref{lst:regPush}. Diese Abfrage ist von Bedeutung, da der Apple Safari Browser keine Push-Funktionen unterstützt, siehe Abbildung \ref{img:PushManagerBrowser} (b).
 
-\begin{lstlisting}[caption={Push-Registrierung unter Berücksichtigung der Konzepte von Progressive Enhancement}, label={lst:regPush}, float={!htb}]
+\begin{lstlisting}[caption={Push-Registrierung unter Berücksichtigung der Konzepte des Progressive Enhancements}, label={lst:regPush}, float={!htb}]
     if('serviceWorker' in navigator){
         navigator.serviceWorker.register('sw.js');
         navigator.serviceWorker.ready.then(registration => {
@@ -234,18 +234,18 @@ Bei der Registrierung sollte das Konzept von \textit{Progressive Enhancement} be
     \subfloat[][]{\includegraphics[scale=0.4]{PushManagerChrome.png}}
     \qquad
     \subfloat[][]{\includegraphics[scale=0.4]{PushManagerSafari.png}}
-    \caption{Überprüfung der Pushnachricht Funktionalitäten in den Browsern(a) Google Chrome  , (b) Apple Safari}
+    \caption{Überprüfung der Pushnachricht-Funktionalitäten in den Browsern (a) Google Chrome, (b) Apple Safari}
     \label{img:PushManagerBrowser}
 \end{figure}
 
-Falls der Browser über die nötigen Funktionen verfügt, kann die \texttt{subscribe()}-Methode von \texttt{ServiceWorkerRegistration} aufgerufen werden, welches eine Objekt vom Typ \texttt{PushSubscription} zurück gibt. 
-Die PushSubscription verfügt über ein Konfigurationsobjekt mit zwei Eigenschaften. Die erste Eigenschaft mit dem Namen \texttt{userVisibleOnly}, ist eine boolsche Eigenschaft, die  beschreibt, ob Pushnachrichten immer zu einer für den Anwender sichtbaren Meldung führt. Diese Eigenschaft hat standardmäßig den Wert \texttt{false}. Dies führt aber bei dem Browser Google Chrome zu Komplikationen, da der Browser aus Gründen der Datensicherheit keine sogenannte \textit{Silent Push} Nachrichten zulässt. Daher sollte diese Eigenschaft auf den Wert \texttt{true} geändert werden. 
+Falls der Browser über die nötigen Funktionen verfügt, kann die \texttt{subscribe()}-Methode der \texttt{ServiceWorkerRegistration} aufgerufen werden, welches ein Objekt des Typs \texttt{PushSubscription} zurückgibt. 
+Die PushSubscription verfügt über ein Konfigurationsobjekt mit zwei Eigenschaften. Die erste Eigenschaft trägt den Namen \texttt{userVisibleOnly} und ist eine boolsche Eigenschaft, die  beschreibt, ob Pushnachrichten immer zu einer für den Anwender sichtbaren Meldung führen. Diese hat standardmäßig den Wert \texttt{false}. Innerhalb des Browsers Google Chrome führt das jedoch zu Komplikationen, da der Browser aus Gründen der Datensicherheit keine sogenannte \textit{Silent Push} Nachrichten zulässt. Daher sollte diese Eigenschaft auf den Wert \texttt{true} geändert werden. 
 
-Die zweite Eigenschaft des Konfigurationsobjektes hat den Namen \texttt{applicationServerKey}. Diese Eigenschaft wird benötigt um die Nachrichten zwischen Push-Dienst und Anwendung zu verschlüsseln. Zur Verschlüsselung wird das \ac{VAPID} Protokoll verwendet, das von IETF spezifiziert wurde \cite{rfc8292}. Die Verschlüsselung benötigt einen öffentlichen und einen privaten Schlüssel. Der öffentliche Schlüssel ist unter der \texttt{applicationServerKey} Eigenschaft gespeichert. Der private Schlüssel wird wiederum im Backend der Anwendung hinterlegt. 
+Die zweite Eigenschaft des Konfigurationsobjekts bezeichnet man als \texttt{applicationServerKey}. Diese Eigenschaft wird benötigt, um die Nachrichten zwischen dem Push-Dienst und der Anwendung zu verschlüsseln. Zur Verschlüsselung wird das \ac{VAPID}-Protokoll verwendet, das von der IETF spezifiziert wurde \cite{rfc8292}. Die Verschlüsselung benötigt einen öffentlichen und einen privaten Schlüssel. Der öffentliche Schlüssel ist unter der \texttt{applicationServerKey}-Eigenschaft gespeichert. Der private Schlüssel wird wiederum in dem Backend der Anwendung hinterlegt. 
 
-Um die Registrierung abzuschließen, muss der Anwender sein Einverständnis zum Empfangen von Push-Benachrichtigungen geben. Für die Abfrage öffnet der Browser einmalig ein Dialogfenster. Wird keine Einverständnis von Nutzer erteilt, so wird auf diesem speziellen System nie wieder danach gefragt. Der Anwender müsste die Berechtigung manuell über das zugehörige Webseitenmenü erteilen, falls er sich umentscheiden sollte. 
+Um die Registrierung abzuschließen, muss der Anwender sein Einverständnis zum Empfangen von Push-Benachrichtigungen geben. Für die Abfrage öffnet der Browser einmalig ein Dialogfenster. Wird keine Einverständnis des Nutzers erteilt, so wird auf diesem speziellen System in keinem Fall erneut danach gefragt. Der Anwender müsste die Berechtigung manuell über das zugehörige Webseitenmenü erteilen, sollte er sich umentscheiden. 
 
-Nachdem die Berechtigung von dem Nutzer erteilt wurde, ist die Registrierung abgeschlossen. Die Anwendung ist nun in der Lage Push-Nachrichten zu empfangen. 
+Nachdem die Berechtigung durch den Nutzer erteilt wurde, ist die Registrierung abgeschlossen. Die Anwendung ist nun in der Lage Push-Nachrichten zu empfangen. 
 
 \subsection{Informationsaustausch}
 
@@ -254,43 +254,43 @@ Nachdem die Berechtigung von dem Nutzer erteilt wurde, ist die Registrierung abg
 
 \section{Progressive Web Apps in Angular}
 
-Angular (Abschnitt \ref{Angular}) eignet sich sehr gut um eine PWA zu entwickeln, da beides Entwicklungen von Google sind. 
-Um aus einer Angular Anwendung eine PWA zu erstellen, muss das Paket \texttt{@angular/pwa} über das \ac{CLI} hinzugefügt werden.
-Durch das hinzufügen des Paketes werden im Hintergrund folgende Veränderungen an dem Projekt durchgeführt: 
+Angular (Abschnitt \ref{Angular}) ist geeignet, um eine PWA zu entwickeln, da sowohl das Framework als auch die Progressive Webanwendung Entwicklungen von Google sind. 
+Um aus einer Angular-Anwendung eine PWA zu erstellen, muss das Paket \texttt{@angular/pwa} über das \ac{CLI} hinzugefügt werden.
+Durch das Hinzufügen des Pakets werden im Hintergrund folgende Veränderungen an dem Projekt durchgeführt: 
 \begin{itemize}
-    \item Das Paket \texttt{@angular/service-worker} wird zum Projekt hinzugefügt,
+    \item Das Paket \texttt{@angular/service-worker} wird zu dem Projekt hinzugefügt,
     \item der Build Support für den Service Worker wird in der Angular CLI aktiviert,
-    \item das \texttt{ServiceWorkerModule} wird im \texttt{AppModule} importiert,
-    \item die Datei index.html wird um ein Link zum Web App Manifest (Abschitt \ref{sec:webappmanifest}) und um relevante Meta-Tags ergänzt,
+    \item das \texttt{ServiceWorkerModule} wird in dem \texttt{AppModule} importiert,
+    \item die Datei index.html wird um einen Link zu dem Web App Manifest (Abschitt \ref{sec:webappmanifest}) und um relevante Meta-Tags ergänzt,
     \item Icon-Dateien werden erzeugt und verlinkt,
     \item die Konfigurationsdatei \textit{ngsw-config.json} für den Service Worker wird erzeugt. 
 \end{itemize}
 
-Im anschluss kann die Applikation alle Grundfunktionen einer PWA ausführen. Die Anwendung kann installiert werden. Im Web App Manifest steht der Projektname und das unter \texttt{assets} abgespeicherte Angular Icon wird als App-Icon verwendet. Nach dem erstmaligen öffnen der Applikation im Browser wird der Service Worker Installiert. Anschließend kann die Webseite auch ohne Netzwerkverbindung geladen werden.  
+Im Anschluss kann die Applikation alle Grundfunktionen einer PWA ausführen. Die Anwendung kann installiert werden. Innerhalb des Web App Manifests steht der Projektname und das unter \texttt{assets} abgespeicherte Angular-Icon wird als App-Icon verwendet. Nach dem erstmaligen Öffnen der Applikation in dem Browser wird der Service Worker installiert. Anschließend kann die Webseite auch ohne Netzwerkverbindung geladen werden.  
 
 
 
 \section{PWA für IOS}
 
-Apple unterstützt die Entwicklung von PWAs nicht. PWAs stellen  eine Möglichkeit dar, um Apps für das IPhon zu Installieren, die sich nicht im App Store befinden. Im Jahr 2020 hat Apple mit dem App Store ein Umsatz von 643 Milliarden US-Doller erwirtschaftet \cite{Kirchenbauer2021}. Apple erhält 30\% Provision, wenn eine App gekauft oder wenn In-App Käufe abgeschlossen werden. Durch PWAs könnte diese Einnahmequelle wegfallen. 
+Apple unterstützt die Entwicklung von PWAs nicht. PWAs stellen  eine Möglichkeit dar, um Apps für das iPhone zu installieren, die sich nicht in dem App Store befinden. Im Jahr 2020 hat Apple mit dem App Store einen Umsatz von 643 Milliarden US-Dollar erwirtschaftet \cite{Kirchenbauer2021}. Apple erhält 30\% Provision, wenn Apps gekauft oder In-App-Käufe abgeschlossen werden. Durch den Einsatz von PWAs könnte diese Einnahmen reduziert werden.
 
-Durch zusätzliche Einstellungen können PWAs auf dem Homescreen von IOS Geräten installiert werde. Im \texttt{head} der \texttt{index.html} muss der Dateipfad zum verwendeten Icon angegeben werden, da dieser Pfad nicht aus dem Web-App-Manifest ausgelesen wird. 
-Des weiteren muss in einem \texttt{meta-tag} angegeben werden, das die Webanwendung als App genutzt werden kann. Diese zusätzlichen Angaben ermöglichen es die Applikation zu installieren, Apple beschränkt jedoch die volle Funktionsumfang der PWAs. Durch ein Softwareupdate hat Apple eine Zwangslöschung für lokal beschreibbare Speicherfunktionen eingeführt \cite{t3n2020}. Eine PWA nutzt diesen lokalen Speicher um Daten zu speichern. 
-Auch der Service Worker wird von Safari nicht vollständig unterstützt. Safari ermöglicht weder Push-Nachrichten noch Hintergrund Synchronisation \cite{mediaevent}. 
+Durch zusätzliche Einstellungen können PWAs auf dem Homescreen von IOS Geräten installiert werden. In dem \texttt{head} der \texttt{index.html} muss der Dateipfad zu dem verwendeten Icon angegeben werden, da dieser nicht aus dem Web-App-Manifest ausgelesen wird. 
+Des weiteren muss in einem \texttt{Meta-Tag} angegeben werden, dass die Webanwendung als App genutzt werden kann. Diese zusätzlichen Angaben ermöglichen es, die Applikation zu installieren. Apple beschränkt jedoch die Nutzung des vollen Funktionsumfangs der PWAs. Durch ein Softwareupdate hat Apple eine Zwangslöschung für lokal beschreibbare Speicherfunktionen eingeführt \cite{t3n2020}. Eine PWA nutzt diesen lokalen Speicher um Daten zu speichern. 
+Auch der Service Worker wird von Safari nicht vollständig unterstützt. Safari ermöglicht weder Push-Nachrichten noch Hintergrund-Synchronisation \cite{mediaevent}. 
 
 
 
-\section{Endgerät Emulation }
+\section{Endgerät-Emulation}
 
-Um eine PWA Lokal auf Endgeräten zu testen, können diese Emuliert werden.           
-Um ein Android Handy zu Emuliere, kann das Programm \textit{Android Studio} verwendet werden. In Android Studio kann mithilfe des \ac{AVD Manager} ein Virtuelles Handy gestartet werden, Abbildung \ref{Android1} a. Im Emuliertem Handy kann der Browser geöffnet werden. Um auf die Lokale IP-Adresse des Rechners zugreifen zu können muss im Browser des Handys diese (\texttt{10.0.2.2:8080}) IP-Adresse eingegeben werden, Abbildung \ref{Android1} b. Daraufhin öffnet sich die Anwendung, die unter Einstellung installiert werden kann, Abbildung \ref{Android2} a. Die Anwendung wird darauf hin zum Startbildschirm hinzugefügt, Abbildung \ref{Android2} b.  
+Um eine PWA Lokal auf Endgeräten zu testen, können diese emuliert werden.           
+Um ein Android-Handy zu emulieren, kann das Programm \textit{Android Studio} verwendet werden. In Android Studio kann mithilfe des \ac{AVD Managers} ein virtuelles Handy gestartet werden, Abbildung \ref{Android1} a. In dem emuliertem Handy kann der Browser geöffnet werden. Um auf die lokale IP-Adresse des Rechners zugreifen zu können, muss innerhalb des Browsers auf dem Handy die IP-Adresse \texttt{10.0.2.2:8080} eingegeben werden, Abbildung \ref{Android1} b. Daraufhin öffnet sich die Anwendung, die unter Einstellung installiert werden kann, Abbildung \ref{Android2} a. Die Anwendung wird im Anschluss zu dem Startbildschirm hinzugefügt, Abbildung \ref{Android2} b.  
 
 \begin{figure}[!htb]
     \centering
     \subfloat[][]{\includegraphics[scale=0.4]{emuliertHandy.png}}
     \qquad
     \subfloat[][]{\includegraphics[scale=0.4]{PWABrowser.png}}
-    \caption{(a) Emuliertes Android Handy in Android Studio, (b) PWA im Browser geöffnet}
+    \caption{(a) emuliertes Android Handy in Android Studio, (b) PWA in dem Browser geöffnet}
     \label{Android1}
 \end{figure}
 
@@ -299,6 +299,6 @@ Um ein Android Handy zu Emuliere, kann das Programm \textit{Android Studio} verw
     \subfloat[][]{\includegraphics[scale=0.4]{InstallationPWA.png}}
     \qquad
     \subfloat[][]{\includegraphics[scale=0.4]{pwaInstalliert.png}}
-    \caption{(a) Installation der PWA unter Android, (b) Installierte PWA }
+    \caption{(a) Installation der PWA unter Android, (b) installierte PWA }
     \label{Android2}
 \end{figure}
