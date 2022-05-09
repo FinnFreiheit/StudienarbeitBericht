@@ -243,11 +243,36 @@ Die PushSubscription verfügt über ein Konfigurationsobjekt mit zwei Eigenschaf
 
 Die zweite Eigenschaft des Konfigurationsobjekts bezeichnet man als \texttt{applicationServerKey}. Diese Eigenschaft wird benötigt, um die Nachrichten zwischen dem Push-Dienst und der Anwendung zu verschlüsseln. Zur Verschlüsselung wird das \ac{VAPID}-Protokoll verwendet, das von der IETF spezifiziert wurde \cite{rfc8292}. Die Verschlüsselung benötigt einen öffentlichen und einen privaten Schlüssel. Der öffentliche Schlüssel ist unter der \texttt{applicationServerKey}-Eigenschaft gespeichert. Der private Schlüssel wird wiederum in dem Backend der Anwendung hinterlegt. 
 
-Um die Registrierung abzuschließen, muss der Anwender sein Einverständnis zum Empfangen von Push-Benachrichtigungen geben. Für die Abfrage öffnet der Browser einmalig ein Dialogfenster. Wird keine Einverständnis des Nutzers erteilt, so wird auf diesem speziellen System in keinem Fall erneut danach gefragt. Der Anwender müsste die Berechtigung manuell über das zugehörige Webseitenmenü erteilen, sollte er sich umentscheiden. 
+Um die Registrierung abzuschließen, muss der Anwender sein Einverständnis zum Empfangen von Push-Benachrichtigungen geben. Für die Abfrage öffnet der Browser einmalig ein Dialogfenster. Wird kein Einverständnis vom Nutzer erteilt, so wird auf diesem speziellen System, in keinem Fall, erneut danach gefragt. Der Anwender müsste die Berechtigung manuell über das zugehörige Webseitenmenü erteilen, sollte er sich umentscheiden. 
 
 Nachdem die Berechtigung durch den Nutzer erteilt wurde, ist die Registrierung abgeschlossen. Die Anwendung ist nun in der Lage Push-Nachrichten zu empfangen. 
 
 \subsection{Informationsaustausch}
+
+Nach einer erfolgreichen Registrierung erhält der Anwender ein Subscription-Objekt vom Typ \texttt{PushSubscription}.
+Das Subscription-Objekt wird dem Backend übergeben. Jeder Anwender, der die Pushbenachrichtigung abonniert hat, besitzt ein eigenes Subscription-Objekt, welches im Backend der Anwendung verwaltet wird. 
+Die Subscription-Objekte sind für jeden Anwender einzigartig, da das Subscription-Objekt über die Eigenschaft \texttt{endpoint} verfügt. Hinter dieser Eigenschaft, befindet sich die URL des API-Endpunktes vom Push-Dienst. Der Browserspezifische Push-Dienst versendet die Push-Nachricht an der Service Worker und somit an den Anwender. 
+
+Die API-Endpunkte der Push-Dienste sind standardisiert. Über den Endpunkt kann nun eine Benachrichtigungen durch das Backend angestoßen werden. Hierbei empfehlt es sich eine Web-Push-Bibliothek zu verwenden, um die standardisierte Kommunikation über den Endpunkt mit dem Push-Dienst zu erleichtern. 
+
+\subsection{Zusammenfassung Push-Notifikation}
+
+Im folgenden Szenario werden die einzelnen Schritte zusammengefasst, um eine Push-Nachricht zu erhalten. Hierfür wird von einer Zeitschrift-Webseite ausgegangen. Der Nutzer besucht die Webseite zum ersten mal über den Browser \textit{Chrome}. Automatisch wird der Service Worker im Hintergrund installiert. Der Nutzer wird nach der Einwilligung zum erhalten von Push-Nachrichten gefragt, und bestätigt diese. Durch die Bestätigung, wird ein Objekt vom Typ \texttt{PushSubscription} erzeugt und an das Backend der Zeitschrift-Webseite gesendet. Das \texttt{PushSubscription} Objekt verfügt über die URL eines API-Endpunktes. Der Endpunkt ermöglicht die Kommunikation zum Push-Dienst von Google mit dem Namen \textit{Firebase Cloud Messaging}. 
+Im Backend wird das \texttt{PushSubscription}-Objekt in einer Datenbank abgelegt. 
+
+Die Zeitschrift-Firma möchte nun alle Abonnenten darüber informieren, das sie einen neuen Artikel erstellt haben. Dafür wird im Backend über alle in der Datenbank gespeicherten \texttt{PushSubscripten}-Objekte iteriert. Über das \texttt{Web-Push-Protokoll} und dem im \texttt{PushSubscription}-Objekt hinterlegten Endpunkten wird die Nachricht, das ein neuer Artikel hochgeladen wurde an die Push-Dienste gesendet. 
+
+Die Push-Dienste leiten diese Nachricht an den Nutzer über den Service Worker weiter oder speichern diese, falls der Nutzer nicht erreichbar ist. 
+
+
+\subsection{Push-Notification unter Apple}
+
+Wie bereits mehrfach erwähnt, unterstützt Apple weder im Browser noch im IOS-Betriebssystem die Push-API.
+Der Browser Safari bietet als Alternative \textit{Safari Push Notifications}. Um Safari Push Notification versenden zu können, muss das Backend mit dem \ac*{APNs} kommunizieren. Die Kommunikation erfolgt jedoch \textbf{nicht} über das standardisierte Web-Push-Protokoll.
+
+Die APNs Kommunikation erfordert, das der Entwickler sich beim Apple Developer Programm registriert und eine Push-ID für die Webanwendung anlegt. Anschließend muss der Entwickler ein \ac*{TLS}-Clientzertifikat anfordern. In der Safari Umgebung wird anstelle des \texttt{PushSubscription}-Objektes ein \texttt{Device-Token} erzeugt, um Pushbenachrichtigungen zu versenden. 
+
+Es ist somit ein erhöhter Programmieraufwand nötig, um Push-Notifications für Apple-Umgebungen zu realisieren.
 
 
 
