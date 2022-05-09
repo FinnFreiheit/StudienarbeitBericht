@@ -3,7 +3,7 @@
 
 \section{Überblick}
 Node.js ist eine hochskalierbare Low-Level-Plattform. Unter Verwendung einer JavaScript-Laufzeitumgebung können Netzwerkanwendungen aufgebaut werden \cite[S.1]{neins}. Node.js verwendet JavaScript als serverseitige Programmiersprache \cite[S.3]{neins} und arbeitet asynchron und ereignisgesteuert \cite{nzwei}. 
-Außerdem setzt es standardmäßig keine Betriebssystem-Threads ein, die in ihrer Umsetzung recht ineffizient sind. Dies bedeutet für Projekte, dass es keine Gefahr der Entstehung von Deadlocks gibt \cite{nzwei}. Zudem beinhaltet Node.js Frameworks, mit deren Einsatz eine Echtzeit-Kommunikation von Client und Server möglich ist \cite[S.3]{neins}.
+Außerdem setzt es standardmäßig Betriebssystem-Threads nie gleichzeitig ein, sondern arbeitet zu jedem Zeitpunkt mit nur einem Haupt-Thread. Dies bedeutet für Projekte, dass es keine Gefahr der Entstehung von Deadlocks gibt, da sich die Threads nicht gegenseitig blockieren können \cite{nzwei}. Zudem beinhaltet Node.js Frameworks, mit deren Einsatz eine Echtzeit-Kommunikation von Client und Server möglich ist \cite[S.3]{neins}.
 
 \section{Charakteristika}
 
