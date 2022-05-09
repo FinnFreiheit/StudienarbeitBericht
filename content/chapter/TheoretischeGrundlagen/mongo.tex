@@ -24,8 +24,7 @@ Das Kürzel \texttt{CAP} steht für die Bedingungen Konsistenz, Verfügbarkeit u
     \label{img:ConAvaPar}
 \end{figure}
 
-Laut dem Theorem können jedoch immer nur zwei der drei Bedingungen gleichzeitig erfüllt werden. Auf dieser Theorie basiert BASE. Darunter versteht man die grundsätzliche Verfügbarkeit, den weichen Zustand und die letztendliche Konsistenz (eng: Basically Available, Soft state, Eventual consistency). 
-Auf Grundlage des BASE-Konzepts ist das System im Sinne des CAP-Theorems verfügbar. Außerdem verändert sich der Zustand des Systems mit der Zeit, auch wenn dieses keine Eingaben erhält. Dies steht jedoch nicht im Gegensatz zur letztlichen Konsistenz. Auf lange Sicht wird das System einen konsistenten Zustand erreichen, vorausgesetzt, in dieser Zeit werden keine Daten an das System gesendet \cite[S.15f]{zwei}.
+Laut dem Theorem können jedoch immer nur zwei der drei Bedingungen gleichzeitig erfüllt werden \cite[S.15f]{zwei}. NoSQL möchte vor allem immer verfügbar sein. Im Notfall verzichtet eine NoSQL-Datenbank zuerst auf die Konsistenz der Daten, bevor die Verfügbarkeit eingeschränkt wird. SQL-Datenbanken dagegen stellen die Konsistenz in den Vordergrund. Bevor diese verloren geht, wird auf die Verfügbarkeit verzichtet.
 
 \subsection{Modelle}
 
