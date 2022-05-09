@@ -14,7 +14,8 @@ Hierbei wird die asynchrone Verarbeitung deutlich. Jene Funktionen von Node.js, 
 \subsection{Ereignisschleife}
 
 Node.js arbeitet ereignisorientiert. Muss in einem Moment keine Aufgabe ausgeführt werden, schläft die JavaScript-Laufzeitumgebung und wartet auf ein neues Ereignis. Dabei arbeitet Node.js nicht mit Ereignissen in Form von Mausklicks oder Tastaturanschlägen, sondern mit Datenbankverbindungen oder dem Öffnen von Dateien. 
-Für diesen Prozess ist die Ereignisschleife verantwortlich, eine Endlosschleife, die in jeder Iteration das Vorhandensein von neuen Ereignissen prüft. Sie muss erkennen, wann eine neue Aufgabe ausgeführt werden muss. Sobald ein Ereignis ausgelöst wird, führt die Schleife die zugehörige Aufgabe. Währenddessen kann jeder beliebige Logik in die Callback-Funktion geschrieben werden \cite[S.3]{neins}.
+Für diesen Prozess ist die Ereignisschleife verantwortlich, eine Endlosschleife, die in jeder Iteration das Vorhandensein von neuen Ereignissen prüft. Sie muss erkennen, wann eine neue Aufgabe ausgeführt werden muss. Sobald ein Ereignis ausgelöst wird, führt die Schleife die zugehörige Aufgabe. Währenddessen kann jeder beliebige Logik in die Callback-Funktion schreiben \cite[S.3]{neins}.
+Neben der Ereignisschleife gibt es den Worker Pool, der sich um den restlichen Workload kümmert. Während die Ereignisschleife außer für Callback-Funktionen nur für Anfragen verantwortlich ist, die nicht blockieren können, laufen innerhalb des Worker Pools Aufgaben, die nicht in jedem Fall nicht-blockierend sind. ( @misc{node.js, title={Don't block the event loop (or the worker pool)}, url={https://nodejs.org/en/docs/guides/dont-block-the-event-loop/}, journal={Node.js}, author={Node.js}} )
 
 \section{Vorteile durch die Nutzung von JavaScript}
 
