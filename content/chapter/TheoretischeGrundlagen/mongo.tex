@@ -82,7 +82,7 @@ Wie auch die Primärschlüssel in RDBMS werden Identifier in Dokumenten benötig
 
 
 \subsection{Dateiupload}
-MongoDB ist in der Lage, Daten bis zu einer Größe von 16Mb in Binärformat zu speichern. Um dennoch größere Dateien wie beispielsweise Bilder speichern zu können, müssen diese in \textit{chunks} zerlegt und in dieser Form gespeichert werden. Dazu enthält MongoDB eine Spezifikation namens GridFS. ( @misc{gridfs - mongodb manual, title={GridFS}, url={https://www.mongodb.com/docs/manual/core/gridfs/}, journal={GridFS - MongoDB Manual}} ) Bilder sind FormData-Objects im \texttt{multipart/form-data}-Format. Um Objekte dieser Form einsetzen zu können, verwendet man eine Middleware, die als Multer bezeichnet wird. ( @misc{npm, title={Multer}, url={https://www.npmjs.com/package/multer}, journal={npm}} )
+MongoDB ist in der Lage, Daten bis zu einer Größe von 16Mb in Binärformat zu speichern. Um dennoch größere Dateien wie beispielsweise Bilder speichern zu können, müssen diese in \textit{chunks} zerlegt und in dieser Form gespeichert werden. Dazu enthält MongoDB eine Spezifikation namens GridFS \cite{gridfs}.  Bilder sind FormData-Objects im \texttt{multipart/form-data}-Format. Um Objekte dieser Form einsetzen zu können, verwendet man eine Middleware, die als Multer bezeichnet wird \cite{multer}. 
 
 Zur gemeinsamen Verwendung von Multer und GridFS werden folgende drei Pakete benötigt:
 \begin{itemize}
@@ -91,4 +91,4 @@ Zur gemeinsamen Verwendung von Multer und GridFS werden folgende drei Pakete ben
     \item gridfs-stream
 \end{itemize}
 
-Um Daten zu speichern, verwendet GridFS zwei Collections, \texttt{fs.files} und \texttt{fs.chunks}. In der ersten Collection sind die Metadaten der Datei enthalten wie beispielsweise der Name oder die Größe. Die chunks-Collection enthält die tatsächliche Datei, die in Chunks der Größe von 255kB zerlegt wurde. Diese werden als durchnummerierte separate Dokumente abgespeichert und später der Reihe nach zusammengesetzt, möchte man die Datei wieder abrufen. ( @misc{ganguli_2018, title={Uploading and retrieving a file from gridfs using Multer}, url={https://medium.com/@kavitanambissan/uploading-and-retrieving-a-file-from-gridfs-using-multer-958dfc9255e8}, journal={Medium}, publisher={Medium}, author={Ganguli, Kavita Nambissan}, year={2018}, month={Nov}} ) 
+Um Daten zu speichern, verwendet GridFS zwei Collections, \texttt{fs.files} und \texttt{fs.chunks}. In der ersten Collection sind die Metadaten der Datei enthalten wie beispielsweise der Name oder die Größe. Die chunks-Collection enthält die tatsächliche Datei, die in Chunks der Größe von 255kB zerlegt wurde. Diese werden als durchnummerierte separate Dokumente abgespeichert und später der Reihe nach zusammengesetzt, möchte man die Datei wieder abrufen \cite{ganguli}. 
