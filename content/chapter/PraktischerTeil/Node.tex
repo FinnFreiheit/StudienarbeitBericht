@@ -8,7 +8,7 @@
 Mithilfe des Routings kann auf die Daten innerhalb der MongoDB zugegriffen werden. Dazu werden verschiedene Endpunkte benötigt. Die verwendeten Endpunkte sind in der folgenden Tabelle definiert.
 
 \begin{table}[!htb]
-\begin{tabularx}{\textwidth}{|x|X|X|}
+\begin{tabularx}{\textwidth}{|X|X|X|}
     \hline
     \textbf{Method} & \textbf{URL} & \textbf{Description} \\
     \hline
@@ -31,7 +31,18 @@ Mithilfe des Routings kann auf die Daten innerhalb der MongoDB zugegriffen werde
     \hline
     DELETE & /users/:id & delete user specified by id\\
     \hline
-    \hline
+\end{tabularx}
+\caption{user Endpunkte}
+\label{endpunkte}
+\end{table}
+
+\begin{table}[!htb]
+    \begin{tabularx}{\textwidth}{|X|X|X|}
+        \hline
+        \textbf{Method} & \textbf{URL} & \textbf{Description} \\
+        \hline
+        \hline
+
     GET & /comments & get all comments\\
     \hline
     GET & /comments/:id & get comment by id\\
@@ -44,7 +55,17 @@ Mithilfe des Routings kann auf die Daten innerhalb der MongoDB zugegriffen werde
     \hline
     DELETE & /comments/:id & delete comment specified by id\\
     \hline
-    \hline
+\end{tabularx}
+\caption{comments Endpunkte}
+\label{commentsendpunkte}
+\end{table}
+
+\begin{table}[!htb]
+    \begin{tabularx}{\textwidth}{|X|X|X|}
+        \hline
+        \textbf{Method} & \textbf{URL} & \textbf{Description} \\
+        \hline
+        \hline
     GET & /posts & get all posts\\
     \hline
     GET & /posts/:id & get picture by id\\
@@ -61,7 +82,18 @@ Mithilfe des Routings kann auf die Daten innerhalb der MongoDB zugegriffen werde
     \hline
     DELETE & /posts/:id & delete post specified by id\\
     \hline
-    \hline
+\end{tabularx}
+\caption{posts Endpunkte}
+\label{postsendpunkte}
+\end{table}
+
+\begin{table}[!htb]
+    \begin{tabularx}{\textwidth}{|X|X|X|}
+        \hline
+        \textbf{Method} & \textbf{URL} & \textbf{Description} \\
+        \hline
+        \hline
+
     GET & /likes & get all likes\\
     \hline
     GET & /likes/:id & get like by id\\
@@ -74,15 +106,17 @@ Mithilfe des Routings kann auf die Daten innerhalb der MongoDB zugegriffen werde
     \hline
     DELETE & /likes/:id & delete like specified by id\\
     \hline
+
 \end{tabularx}
-\caption{Endpunkte}
-\label{endpunkte}
+\caption{likes Endpunkte}
+\label{likes endpunkte}
 \end{table}
 
+\clearpage
 \subsection{Request-Funktionen}
 Innerhalb eines Routing-Files werden alle Responses auf mögliche http-Anfragen des Clients festgelegt. Grundlegend sehen die jeweiligen GET-, POST-, PATCH- und DELETE-Funktionen gleich aus, weshalb im Folgenden zu jeder Anfrage ein Beispiel erläutert wird.
 
-\begin{lstlisting}[caption=GET-Request, label=lst:getrequest]
+\begin{lstlisting}[caption=GET-Request, label=lst:getrequest, float=!htb]
     router.get('/users/id/:id', async(req, res) => {
         try {
             const user = await User.findOne({ _id: req.params.id });
@@ -99,7 +133,7 @@ Innerhalb eines Routing-Files werden alle Responses auf mögliche http-Anfragen 
 
 Mit der obigen Beispiel-Funktion wird ein User über seine ID unter Verwendung der http-Request-Methode GET aus der Datenbank ausgelesen. Der zugehörige Endpunkt ist \texttt{/users/id/:id}. Unter \texttt{:id} kann der Client später den Identifier des Users einfügen, um anhand dessen die Daten dieses Users herauszufinden. Nach dem Pfeil wird die Callback-Funktion definiert. Sie beschreibt, wie der Server auf die Anfrage reagieren soll. Dabei soll er zunächst probieren, den der ID zugeordneten User zu finden. Findet der Server diesen User in der Datenbank, wird er mit allen enthaltenen Daten zurückgegeben. Ist dies nicht der Fall, wird ein Error geworfen und die Konsole enthält die Information \texttt{User does not exist!}.
 
-\begin{lstlisting}[caption=POST-Request, label=lst:postrequest]
+\begin{lstlisting}[caption=POST-Request, label=lst:postrequest,float=!htb]
     router.post('/users', async(req, res) => {
         const newUser = new User({
             _id: req.params.id,
@@ -114,7 +148,7 @@ Mit der obigen Beispiel-Funktion wird ein User über seine ID unter Verwendung d
 
 In obigem Code kann man eine POST-Anfrage an den Endpunkt \texttt{/users} erkennen. Im Zuge dieser Anfrage wird ein JSON-Objekt gesendet, dessen Inhalte über \texttt{req.body.*} aufgerufen werden können. Mit den enthaltenen Daten wird ein neuer User in der Datenbank angelegt. Zusätzlich erstellt MongoDB automatisch eine ID und weißt sie dem neuen User zu.
 
-\begin{lstlisting}[caption=PATCH-Request, label=lst:patchrequest]
+\begin{lstlisting}[caption=PATCH-Request, label=lst:patchrequest,float=!htb]
     router.patch('/users/:id', async(req, res) => {
         try {
             const user = await User.findOne({ _id: req.params.id })
@@ -138,7 +172,7 @@ In obigem Code kann man eine POST-Anfrage an den Endpunkt \texttt{/users} erkenn
 
 In diesem Beispiel kann man eine PATCH-Anfrage erkennen, mit der die Daten eines Users über seine ID aktualisiert werden können. Mit der Anfrage an den Endpunkt \texttt{/users/:id} wird ebenfalls ein JSON-Objekt gesendet, welches die neuen Daten enthält. Findet der Server in diesem Objekt neue Daten zu einem Schlüssel, wird dessen alter Wert überschrieben. Ist der Server nicht in der Lage einen User mit der eingegebenen ID zu finden, wird ein Error geworfen.
 
-\begin{lstlisting}[caption=DELETE-Request, label=lst:deleterequest]
+\begin{lstlisting}[caption=DELETE-Request, label=lst:deleterequest,float=!htb]
     router.delete('/users/:id', async(req, res) => {
         try {
             await User.deleteOne({ _id: req.params.id })
