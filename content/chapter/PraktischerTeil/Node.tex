@@ -83,3 +83,73 @@ Mithilfe des Routings kann auf die Daten innerhalb der MongoDB zugegriffen werde
 
 \subsubsection{Request-Funktionen}
 Innerhalb eines Routing-Files werden alle Responses auf mögliche http-Anfragen des Clients festgelegt. Grundlegend sehen die jeweiligen GET-, POST-, PATCH- und DELETE-Funktionen gleich aus, weshalb im Folgenden zu jeder Anfrage ein Beispiel erläutert wird.
+
+\begin{lstlisting}[caption=GET-Request, label=lst:getrequest]
+    router.get('/users/id/:id', async(req, res) => {
+        try {
+            const user = await User.findOne({ _id: req.params.id });
+            console.log(req.params);
+            res.send(user);
+        } catch {
+            res.status(404);
+            res.send({
+             error: "User does not exist!"
+            });
+        }
+    });
+\end{lstlisting}
+
+Mit der obigen Beispiel-Funktion wird ein User über seine ID unter Verwendung der http-Request-Methode GET aus der Datenbank ausgelesen. Der zugehörige Endpunkt ist \texttt{/users/id/:id}. Unter \texttt{:id} kann der Client später den Identifier des Users einfügen, um anhand dessen die Daten dieses Users herauszufinden. Nach dem Pfeil wird die Callback-Funktion definiert. Sie beschreibt, wie der Server auf die Anfrage reagieren soll. Dabei soll er zunächst probieren, den der ID zugeordneten User zu finden. Findet der Server diesen User in der Datenbank, wird er mit allen enthaltenen Daten zurückgegeben. Ist dies nicht der Fall, wird ein Error geworfen und die Konsole enthält die Information \texttt{User does not exist!}.
+
+\begin{lstlisting}[caption=POST-Request, label=lst:postrequest]
+    router.post('/users', async(req, res) => {
+        const newUser = new User({
+            _id: req.params.id,
+            username: req.body.username,
+            password: req.body.password,
+            pictureId: req.body.pictureId,
+        })
+        await newUser.save();
+        res.send(newUser);
+    });
+\end{lstlisting}
+
+In obigem Code kann man eine POST-Anfrage an den Endpunkt \texttt{/users} erkennen. Im Zuge dieser Anfrage wird ein JSON-Objekt gesendet, dessen Inhalte über \texttt{req.body.*} aufgerufen werden können. Mit den enthaltenen Daten wird ein neuer User in der Datenbank angelegt. Zusätzlich erstellt MongoDB automatisch eine ID und weißt sie dem neuen User zu.
+
+\begin{lstlisting}[caption=PATCH-Request, label=lst:patchrequest]
+    router.patch('/users/:id', async(req, res) => {
+        try {
+            const user = await User.findOne({ _id: req.params.id })
+
+            if (req.body.username) {
+                user.username = req.body.username
+            }
+
+            if (req.body.password) {
+                user.password = req.body.password
+            }
+
+            await User.updateOne({ _id: req.params.id }, user);
+            res.send(user)
+        } catch {
+            res.status(404)
+            res.send({ error: "User does not exist!" })
+        }
+    });
+\end{lstlisting}
+
+In diesem Beispiel kann man eine PATCH-Anfrage erkennen, mit der die Daten eines Users über seine ID aktualisiert werden können. Mit der Anfrage an den Endpunkt \texttt{/users/:id} wird ebenfalls ein JSON-Objekt gesendet, welches die neuen Daten enthält. Findet der Server in diesem Objekt neue Daten zu einem Schlüssel, wird dessen alter Wert überschrieben. Ist der Server nicht in der Lage einen User mit der eingegebenen ID zu finden, wird ein Error geworfen.
+
+\begin{lstlisting}[caption=DELETE-Request, label=lst:deleterequest]
+    router.delete('/users/:id', async(req, res) => {
+        try {
+            await User.deleteOne({ _id: req.params.id })
+            res.status(204).send()
+        } catch {
+            res.status(404)
+            res.send({ error: "User does not exist!" })
+        }
+    });
+\end{lstlisting}
+
+In dem letzten Beispiel wird eine DELETE-Anfrage beschrieben. Mit dieser wird über den Endpunkt \texttt{/users/:id} ein User anhand seiner ID gelöscht. Findet der Server diesen User in der Datenbank, kann er ihn löschen und den Success-http-Status \texttt{204} zurücksenden. Im Fehlerfall wird ein Error geworfen und der Error-Status \texttt{404} gesendet.
