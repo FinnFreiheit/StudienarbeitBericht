@@ -62,3 +62,11 @@ Für die Speicherung der Daten in der MongoDB werden vier Schemata entwickelt. E
 \caption{Like-Schema}
 \label{likeschema}
 \end{table}
+
+Unter Verwendung von 
+
+\begin{lstlisting}[caption=Erstellen eines neuen Schemas, label=lst:schema]
+    const schema = new mongoose.Schema({})
+\end{lstlisting}
+
+lässt sich ein neues Schema erstellen. Die Definition der Schlüssel-Wert-Paare findet innerhalb der geschwungenen Klammern statt.
