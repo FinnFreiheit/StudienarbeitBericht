@@ -126,6 +126,109 @@ Im Erfolgsfall (then-Methode) wird ein Objekt des Typs \texttt{ServiceWorkerRegi
 Mit der Registrierung erfolgt ebenfalls die Installation des Service-Worker-Skripts, welches bei der Registrierung übergeben wurde, siehe Listing \ref{lst:serviceWorker} Zeile 2.
 In der Installationsphase lädt der Service Worker Ressourcen von dem Webserver und speichert diese lokal ab. Wichtig ist hierbei, dass die Installationsphase erst dann beendet werden darf, wenn alle benötigten Ressourcen heruntergeladen wurden. Um dies zu realisieren, steht die \texttt{waitUntil()}-Methode zur Verfügung, die eine Promise-Kette abarbeitet. Diese Methode öffnet den zugehörigen Cache. Im Cache werden durch die \texttt{addAll()}-Methode alle benötigten Ressourcen gespeichert, die normalerweise bei dem Öffnen der Applikation durch den Webserver angefordert werden. Dies ermöglicht, dass die Applikation in Zukunft auch ohne Netzwerkverbindung aus dem lokalen Cache geladen werden kann. 
 
+
+
+Die im Cache gespeicherten Dateien können mithilfe der Google Chrome Developer Tools unter dem Reiter \textit{Application} eingesehen werden. 
+
+\subsubsection{Aktivieren}
+
+Nach der Installation geht der Service Worker in den aktiven Zustand über. Ein aktivierter Service Worker ist in der Lage, funktionale Ereignisse zu behandeln wie zum Beispiel das Beantworten von HTTP(S) Anfragen oder das Entgegennehmen von Pushbenachrichtigungen. 
+Der Service Worker übernimmt somit die Kontrolle der Applikation. Dies geschieht jedoch erst, wenn ein neuer Browser-Kontext geöffnet wird. Aktiviert man Service Worker während der Laufzeit der Webanwendung, kontrolliert er alle ihrer HTTP(S)-Anfragen, darunter auch jene, deren Ressourcen noch nicht im Cache gespeichert wurden.
+
+\subsubsection{Überschreiben}
+
+Sobald ein neuer Service Worker für einen bestimmten Scope aktiviert wurde, terminiert der Webbrowser das alte Skript. Der alte Service Worker geht in den Zustand \textit{redundant} und wird in dem weiteren Verlauf entfernt. 
+
+Unter Apple Safari wird ein registrierter Service Worker automatisch deinstalliert, sobald die Webseite des Service Workers mehrere Wochen nicht aufgerufen wurde. 
+
+
+\section{Push-Notifications}
+
+Eine Notification ist eine Nachricht, die auf dem Endgerät des Nutzers angezeigt wird. Dies kann als Reaktion auf eine Nutzereingabe geschehen. Es kann jedoch auch unabhängig von dem Nutzer eine Nachricht von einem Server \glqq gepusht\grqq{} werden. Die ist auch ohne das Aktivsein der Applikation möglich.  Um Push-Notifications zu erzeugen, werden zwei APIs benötigt. Die \textit{Notifications API} visualisiert die Nachricht für den Nutzer. Die \textit{Push API} erlaubt es wiederum dem Service Worker (Kapitel \ref{sec:ServiceWorker}) Nachrichten zu verwalten, die durch den Server gesendet wurden, während die Applikation inaktiv war. 
+
+Neben Frontend, Backend und Service Worker sind an der Push-Kommunikation zudem der Push-Service sowie der Push-Dienst beteiligt. Jeder Browserhersteller hat einen eigenen Push-Dienst (eng. unser agent) implementiert. Google Chrome verwendet \textit{Firebase Cloud Messaging}, Mozilla Firefox den \textit{Mozilla Push Service} und Microsoft Edge die \textit{Windows Push Notification Services}. Der Push-Dienst nimmt die Pushnachrichten des Push-Services entgegen und leitet diese an den Service Worker weiter. Die Kommunikation mit den Push-Diensten ist durch die \ac{IETF} spezifiziert \cite{rfc8030}. Somit müssen keine gesonderten Implementierungen für die einzelnen Push-Dienste vorgenommen werden. 
+
+Wie die einzelnen Kommunikationspartner im Genauen miteinander interagieren ist in dem Sequenzdiagramm in Abbildung \ref{img:sequenceDiagram} dargestellt und wird im Folgendem erläutert. 
+
+\newpage
+\begin{figure}[!htb]
+    \centering
+    \includegraphics{Push_sequence_diagram.png}
+    \caption{Sequenzdiagramm für die Ereignisse einer Anmeldung, eines Push-Nachrichttransfers und einer Abmeldung \cite{PushW3}}
+    \label{img:sequenceDiagram}
+\end{figure}
+\newpage
+
+
+\subsection{Push-Registrierung}\label{sec:pushRegistrirung}
+
+Um Push-Nachrichten empfangen zu können, muss die Webanwendung über den Webbrowser eine Push-Registrierung bei dem Push-Dienst beantragen. Diese Beantragung erfolgt über die PushAPI, die über den ServiceWorker - genauer die \texttt{ServiceWorkerRegistration} - zur Verfügung gestellt wird. Aus diesem Grund ist es zwingend notwendig, dass der Service Worker registriert ist. 
+Bei der Registrierung sollte das Konzept des \textit{Progressive Enhancements} berücksichtigt werden, indem die Browserkompatibilität vor der Registrierung abgefragt wird, siehe Listing \ref{lst:regPush}. 
+
+\begin{lstlisting}[caption={Push-Registrierung unter Berücksichtigung der Konzepte des Progressive Enhancements}, label={lst:regPush}, float={!htb}]
+    if('serviceWorker' in navigator){
+        navigator.serviceWorker.register('sw.js');
+        navigator.serviceWorker.ready.then(registration => {
+            if('PushManager' in window){
+                registerForPush(registration.pushManager);
+            }
+        });
+    }
+\end{lstlisting}
+
+
+
+Falls der Browser über die nötigen Funktionen verfügt, kann die \texttt{subscribe()}-Methode der \texttt{ServiceWorkerRegistration} aufgerufen werden, welches ein Objekt des Typs \texttt{PushSubscription} zurückgibt. 
+Die PushSubscription verfügt über ein Konfigurationsobjekt mit zwei Eigenschaften. Die erste Eigenschaft trägt den Namen \texttt{userVisibleOnly} und ist eine boolsche Eigenschaft, die  beschreibt, ob Pushnachrichten immer zu einer für den Anwender sichtbaren Meldung führen. Diese hat standardmäßig den Wert \texttt{false}. Innerhalb des Browsers Google Chrome führt das jedoch zu Komplikationen, da der Browser aus Gründen der Datensicherheit keine sogenannte \textit{Silent Push} Nachrichten zulässt. Daher sollte diese Eigenschaft auf den Wert \texttt{true} geändert werden. 
+
+Die zweite Eigenschaft des Konfigurationsobjekts bezeichnet man als \texttt{applicationServerKey}. Diese Eigenschaft wird benötigt, um die Nachrichten zwischen dem Push-Dienst und der Anwendung zu verschlüsseln. Zur Verschlüsselung wird das \ac{VAPID}-Protokoll verwendet, das von der IETF spezifiziert wurde \cite{rfc8292}. Die Verschlüsselung benötigt einen öffentlichen und einen privaten Schlüssel. Der öffentliche Schlüssel ist unter der \texttt{applicationServerKey}-Eigenschaft gespeichert. Der private Schlüssel wird wiederum in dem Backend der Anwendung hinterlegt. 
+
+Um die Registrierung abzuschließen, muss der Anwender sein Einverständnis zum Empfangen von Push-Benachrichtigungen geben. Für die Abfrage öffnet der Browser einmalig ein Dialogfenster. Wird kein Einverständnis vom Nutzer erteilt, so wird auf diesem speziellen System, in keinem Fall, erneut danach gefragt. Der Anwender müsste die Berechtigung manuell über das zugehörige Webseitenmenü erteilen, sollte er sich umentscheiden. 
+
+Nachdem die Berechtigung durch den Nutzer erteilt wurde, ist die Registrierung abgeschlossen. Die Anwendung ist nun in der Lage Push-Nachrichten zu empfangen. 
+
+\subsection{Informationsaustausch}
+
+Nach einer erfolgreichen Registrierung erhält der Anwender ein Subscription-Objekt vom Typ \texttt{PushSubscription}.
+Das Subscription-Objekt wird dem Backend übergeben. Jeder Anwender, der die Pushbenachrichtigung abonniert hat, besitzt ein eigenes Subscription-Objekt, welches im Backend der Anwendung verwaltet wird. 
+Die Subscription-Objekte sind für jeden Anwender einzigartig, da das Subscription-Objekt über die Eigenschaft \texttt{endpoint} verfügt. Hinter dieser Eigenschaft, befindet sich die URL des API-Endpunktes vom Push-Dienst. Der Browserspezifische Push-Dienst versendet die Push-Nachricht an der Service Worker und somit an den Anwender. 
+
+Die API-Endpunkte der Push-Dienste sind standardisiert. Über den Endpunkt kann nun eine Benachrichtigungen durch das Backend angestoßen werden. Hierbei empfehlt es sich eine Web-Push-Bibliothek zu verwenden, um die standardisierte Kommunikation über den Endpunkt mit dem Push-Dienst zu erleichtern. 
+
+\subsection{Zusammenfassung Push-Notifikation}
+
+Im folgenden Szenario werden die einzelnen Schritte zusammengefasst, um eine Push-Nachricht zu erhalten. Hierfür wird von einer Zeitschrift-Webseite ausgegangen. Der Nutzer besucht die Webseite zum ersten mal über den Browser \textit{Chrome}. Automatisch wird der Service Worker im Hintergrund installiert. Der Nutzer wird nach der Einwilligung zum erhalten von Push-Nachrichten gefragt, und bestätigt diese. Durch die Bestätigung, wird ein Objekt vom Typ \texttt{PushSubscription} erzeugt und an das Backend der Zeitschrift-Webseite gesendet. Das \texttt{PushSubscription} Objekt verfügt über die URL eines API-Endpunktes. Der Endpunkt ermöglicht die Kommunikation zum Push-Dienst von Google mit dem Namen \textit{Firebase Cloud Messaging}. 
+Im Backend wird das \texttt{PushSubscription}-Objekt in einer Datenbank abgelegt. 
+
+Die Zeitschrift-Firma möchte nun alle Abonnenten darüber informieren, das sie einen neuen Artikel erstellt haben. Dafür wird im Backend über alle in der Datenbank gespeicherten \texttt{PushSubscripten}-Objekte iteriert. Über das \texttt{Web-Push-Protokoll} und dem im \texttt{PushSubscription}-Objekt hinterlegten Endpunkten wird die Nachricht, das ein neuer Artikel hochgeladen wurde an die Push-Dienste gesendet. 
+
+Die Push-Dienste leiten diese Nachricht an den Nutzer über den Service Worker weiter oder speichern diese, falls der Nutzer nicht erreichbar ist. 
+
+
+
+
+
+
+
+\section{Progressive Web Apps in Angular}
+
+Angular (Abschnitt \ref{Angular}) ist geeignet, um eine PWA zu entwickeln, da sowohl das Framework als auch die Progressive Webanwendung Entwicklungen von Google sind. 
+Um aus einer Angular-Anwendung eine PWA zu erstellen, muss das Paket \texttt{@angular/pwa} über das \ac{CLI} hinzugefügt werden.
+Durch das Hinzufügen des Pakets werden im Hintergrund folgende Veränderungen an dem Projekt durchgeführt: 
+\begin{itemize}
+    \item Das Paket \texttt{@angular/service-worker} wird zu dem Projekt hinzugefügt,
+    \item der Build Support für den Service Worker wird in der Angular CLI aktiviert,
+    \item das \texttt{ServiceWorkerModule} wird in dem \texttt{AppModule} importiert,
+    \item die Datei index.html wird um einen Link zu dem Web App Manifest (Abschitt \ref{sec:webappmanifest}) und um relevante Meta-Tags ergänzt,
+    \item Icon-Dateien werden erzeugt und verlinkt,
+    \item die Konfigurationsdatei \textit{ngsw-config.json} für den Service Worker wird erzeugt. 
+\end{itemize}
+
+Im Anschluss kann die Applikation alle Grundfunktionen einer PWA ausführen. Die Anwendung kann installiert werden. Innerhalb des Web App Manifests steht der Projektname und das unter \texttt{assets} abgespeicherte Angular-Icon wird als App-Icon verwendet. Nach dem erstmaligen Öffnen der Applikation in dem Browser wird der Service Worker installiert. Anschließend kann die Webseite auch ohne Netzwerkverbindung geladen werden. 
+
+
+\section{ToDo}
+
 In Angular wird in der \textit{ngsw-config.json}-Datei definiert, welche Ressourcen in den Cache gespeichert werden sollen. Die Grundeinstellung wird in Listing \ref{lst:ngswConfig} beschrieben. Aus der JSON-Datei wird ersichtlich, dass sämtliche JavaScript- und CSS-Dateien sowie die index.html innerhalb des Caches gespeichert werden. Zusätzlich werden Dateien wie zum Beispiel Bilder aus dem \textit{assets}-Verzeichnis gespeichert. 
 
 
@@ -157,173 +260,38 @@ In Angular wird in der \textit{ngsw-config.json}-Datei definiert, welche Ressour
 \end{lstlisting}
 
 
-Die im Cache gespeicherten Dateien können mithilfe der Google Chrome Developer Tools unter dem Reiter \textit{Application} eingesehen werden, siehe Abbildung \ref{img:CacheDevTools}. Da es sich in der Abbildung um eine Angular-Anwendung handelt, können die in der \textit{ngsw-config.json}-Datei angegebene Ressourcen wiedergefunden werden.   
 
-
-\subsubsection{Aktivieren}
-
-Nach der Installation geht der Service Worker in den aktiven Zustand über. Ein aktivierter Service Worker ist in der Lage, funktionale Ereignisse zu behandeln wie zum Beispiel das Beantworten von HTTP(S) Anfragen oder das Entgegennehmen von Pushbenachrichtigungen. 
-Der Service Worker übernimmt somit die Kontrolle der Applikation. Dies geschieht jedoch erst, wenn ein neuer Browser-Kontext geöffnet wird. Aktiviert man Service Worker während der Laufzeit der Webanwendung, kontrolliert er alle ihrer HTTP(S)-Anfragen, darunter auch jene, deren Ressourcen noch nicht im Cache gespeichert wurden.
-
-\subsubsection{Überschreiben}
-
-Sobald ein neuer Service Worker für einen bestimmten Scope aktiviert wurde, terminiert der Webbrowser das alte Skript. Der alte Service Worker geht in den Zustand \textit{redundant} und wird in dem weiteren Verlauf entfernt. 
-
-Unter Apple Safari wird ein registrierter Service Worker automatisch deinstalliert, sobald die Webseite des Service Workers mehrere Wochen nicht aufgerufen wurde. 
-
-
-\begin{figure}[!htb]
-    \centering
-    \includegraphics[scale=0.3]{CacheDevTools.png}
-    \caption{Google Chrome Developer Tools zum Einsehen der im Cache gespeicherten Dateien}
-    \label{img:CacheDevTools}
-\end{figure}
-
-\begin{figure}[!htb]
-    \centering
-    \includegraphics[scale=0.4]{swonline.png}
-    \caption{Laden einer Applikation ohne Service Worker}
-    \label{img:swonline}
-\end{figure}
-
-\begin{figure}[!htb]
-    \centering
-    \includegraphics[scale=0.4]{swoffline.png}
-    \caption{Laden einer Applikation ohne Internetverbindung}
-    \label{img:swoffline}
-\end{figure}
-
-
-\clearpage
-\section{Push-Notifications}
-
-Eine Notification ist eine Nachricht, die auf dem Endgerät des Nutzers angezeigt wird. Dies kann als Reaktion auf eine Nutzereingabe geschehen. Es kann jedoch auch unabhängig von dem Nutzer eine Nachricht von einem Server \glqq gepusht\grqq{} werden. Die ist auch ohne das Aktivsein der Applikation möglich.  Um Push-Notifications zu erzeugen, werden zwei APIs benötigt. Die \textit{Notifications API} visualisiert die Nachricht für den Nutzer. Die \textit{Push API} erlaubt es wiederum dem Service Worker (Kapitel \ref{sec:ServiceWorker}) Nachrichten zu verwalten, die durch den Server gesendet wurden, während die Applikation inaktiv war. 
-
-Neben Frontend, Backend und Service Worker sind an der Push-Kommunikation zudem der Push-Service sowie der Push-Dienst beteiligt. Jeder Browserhersteller hat einen eigenen Push-Dienst (eng. unser agent) implementiert. Google Chrome verwendet \textit{Firebase Cloud Messaging}, Mozilla Firefox den \textit{Mozilla Push Service} und Microsoft Edge die \textit{Windows Push Notification Services}. Der Push-Dienst nimmt die Pushnachrichten des Push-Services entgegen und leitet diese an den Service Worker weiter. Die Kommunikation mit den Push-Diensten ist durch die \ac{IETF} spezifiziert \cite{rfc8030}. Somit müssen keine gesonderten Implementierungen für die einzelnen Push-Dienste vorgenommen werden. 
-
-Wie die einzelnen Kommunikationspartner im Genauen miteinander interagieren ist in dem Sequenzdiagramm in Abbildung \ref{img:sequenceDiagram} dargestellt und wird im Folgendem erläutert. 
-
-\newpage
-\begin{figure}[!htb]
-    \centering
-    \includegraphics{Push_sequence_diagram.png}
-    \caption{Sequenzdiagramm für die Ereignisse einer Anmeldung, eines Push-Nachrichttransfers und einer Abmeldung \cite{PushW3}}
-    \label{img:sequenceDiagram}
-\end{figure}
-\newpage
-
-
-\subsection{Push-Registrierung}\label{sec:pushRegistrirung}
-
-Um Push-Nachrichten empfangen zu können, muss die Webanwendung über den Webbrowser eine Push-Registrierung bei dem Push-Dienst beantragen. Diese Beantragung erfolgt über die PushAPI, die über den ServiceWorker - genauer die \texttt{ServiceWorkerRegistration} - zur Verfügung gestellt wird. Aus diesem Grund ist es zwingend notwendig, dass der Service Worker registriert ist. 
-Bei der Registrierung sollte das Konzept des \textit{Progressive Enhancements} berücksichtigt werden, indem die Browserkompatibilität vor der Registrierung abgefragt wird, siehe Listing \ref{lst:regPush}. Diese Abfrage ist von Bedeutung, da der Apple Safari Browser keine Push-Funktionen unterstützt, siehe Abbildung \ref{img:PushManagerBrowser} (b).
-
-\begin{lstlisting}[caption={Push-Registrierung unter Berücksichtigung der Konzepte des Progressive Enhancements}, label={lst:regPush}, float={!htb}]
-    if('serviceWorker' in navigator){
-        navigator.serviceWorker.register('sw.js');
-        navigator.serviceWorker.ready.then(registration => {
-            if('PushManager' in window){
-                registerForPush(registration.pushManager);
-            }
-        });
-    }
-\end{lstlisting}
-
-\begin{figure}[!htb]
-    \centering
-    \subfloat[][]{\includegraphics[scale=0.4]{PushManagerChrome.png}}
-    \qquad
-    \subfloat[][]{\includegraphics[scale=0.4]{PushManagerSafari.png}}
-    \caption{Überprüfung der Pushnachricht-Funktionalitäten in den Browsern (a) Google Chrome, (b) Apple Safari}
-    \label{img:PushManagerBrowser}
-\end{figure}
-
-Falls der Browser über die nötigen Funktionen verfügt, kann die \texttt{subscribe()}-Methode der \texttt{ServiceWorkerRegistration} aufgerufen werden, welches ein Objekt des Typs \texttt{PushSubscription} zurückgibt. 
-Die PushSubscription verfügt über ein Konfigurationsobjekt mit zwei Eigenschaften. Die erste Eigenschaft trägt den Namen \texttt{userVisibleOnly} und ist eine boolsche Eigenschaft, die  beschreibt, ob Pushnachrichten immer zu einer für den Anwender sichtbaren Meldung führen. Diese hat standardmäßig den Wert \texttt{false}. Innerhalb des Browsers Google Chrome führt das jedoch zu Komplikationen, da der Browser aus Gründen der Datensicherheit keine sogenannte \textit{Silent Push} Nachrichten zulässt. Daher sollte diese Eigenschaft auf den Wert \texttt{true} geändert werden. 
-
-Die zweite Eigenschaft des Konfigurationsobjekts bezeichnet man als \texttt{applicationServerKey}. Diese Eigenschaft wird benötigt, um die Nachrichten zwischen dem Push-Dienst und der Anwendung zu verschlüsseln. Zur Verschlüsselung wird das \ac{VAPID}-Protokoll verwendet, das von der IETF spezifiziert wurde \cite{rfc8292}. Die Verschlüsselung benötigt einen öffentlichen und einen privaten Schlüssel. Der öffentliche Schlüssel ist unter der \texttt{applicationServerKey}-Eigenschaft gespeichert. Der private Schlüssel wird wiederum in dem Backend der Anwendung hinterlegt. 
-
-Um die Registrierung abzuschließen, muss der Anwender sein Einverständnis zum Empfangen von Push-Benachrichtigungen geben. Für die Abfrage öffnet der Browser einmalig ein Dialogfenster. Wird kein Einverständnis vom Nutzer erteilt, so wird auf diesem speziellen System, in keinem Fall, erneut danach gefragt. Der Anwender müsste die Berechtigung manuell über das zugehörige Webseitenmenü erteilen, sollte er sich umentscheiden. 
-
-Nachdem die Berechtigung durch den Nutzer erteilt wurde, ist die Registrierung abgeschlossen. Die Anwendung ist nun in der Lage Push-Nachrichten zu empfangen. 
-
-\subsection{Informationsaustausch}
-
-Nach einer erfolgreichen Registrierung erhält der Anwender ein Subscription-Objekt vom Typ \texttt{PushSubscription}.
-Das Subscription-Objekt wird dem Backend übergeben. Jeder Anwender, der die Pushbenachrichtigung abonniert hat, besitzt ein eigenes Subscription-Objekt, welches im Backend der Anwendung verwaltet wird. 
-Die Subscription-Objekte sind für jeden Anwender einzigartig, da das Subscription-Objekt über die Eigenschaft \texttt{endpoint} verfügt. Hinter dieser Eigenschaft, befindet sich die URL des API-Endpunktes vom Push-Dienst. Der Browserspezifische Push-Dienst versendet die Push-Nachricht an der Service Worker und somit an den Anwender. 
-
-Die API-Endpunkte der Push-Dienste sind standardisiert. Über den Endpunkt kann nun eine Benachrichtigungen durch das Backend angestoßen werden. Hierbei empfehlt es sich eine Web-Push-Bibliothek zu verwenden, um die standardisierte Kommunikation über den Endpunkt mit dem Push-Dienst zu erleichtern. 
-
-\subsection{Zusammenfassung Push-Notifikation}
-
-Im folgenden Szenario werden die einzelnen Schritte zusammengefasst, um eine Push-Nachricht zu erhalten. Hierfür wird von einer Zeitschrift-Webseite ausgegangen. Der Nutzer besucht die Webseite zum ersten mal über den Browser \textit{Chrome}. Automatisch wird der Service Worker im Hintergrund installiert. Der Nutzer wird nach der Einwilligung zum erhalten von Push-Nachrichten gefragt, und bestätigt diese. Durch die Bestätigung, wird ein Objekt vom Typ \texttt{PushSubscription} erzeugt und an das Backend der Zeitschrift-Webseite gesendet. Das \texttt{PushSubscription} Objekt verfügt über die URL eines API-Endpunktes. Der Endpunkt ermöglicht die Kommunikation zum Push-Dienst von Google mit dem Namen \textit{Firebase Cloud Messaging}. 
-Im Backend wird das \texttt{PushSubscription}-Objekt in einer Datenbank abgelegt. 
-
-Die Zeitschrift-Firma möchte nun alle Abonnenten darüber informieren, das sie einen neuen Artikel erstellt haben. Dafür wird im Backend über alle in der Datenbank gespeicherten \texttt{PushSubscripten}-Objekte iteriert. Über das \texttt{Web-Push-Protokoll} und dem im \texttt{PushSubscription}-Objekt hinterlegten Endpunkten wird die Nachricht, das ein neuer Artikel hochgeladen wurde an die Push-Dienste gesendet. 
-
-Die Push-Dienste leiten diese Nachricht an den Nutzer über den Service Worker weiter oder speichern diese, falls der Nutzer nicht erreichbar ist. 
-
-
-\subsection{Push-Notification unter Apple}
-
-Wie bereits mehrfach erwähnt, unterstützt Apple weder im Browser noch im IOS-Betriebssystem die Push-API.
-Der Browser Safari bietet als Alternative \textit{Safari Push Notifications}. Um Safari Push Notification versenden zu können, muss das Backend mit dem \ac*{APNs} kommunizieren. Die Kommunikation erfolgt jedoch \textbf{nicht} über das standardisierte Web-Push-Protokoll.
-
-Die APNs Kommunikation erfordert, das der Entwickler sich beim Apple Developer Programm registriert und eine Push-ID für die Webanwendung anlegt. Anschließend muss der Entwickler ein \ac*{TLS}-Clientzertifikat anfordern. In der Safari Umgebung wird anstelle des \texttt{PushSubscription}-Objektes ein \texttt{Device-Token} erzeugt, um Pushbenachrichtigungen zu versenden. 
-
-Es ist somit ein erhöhter Programmieraufwand nötig, um Push-Notifications für Apple-Umgebungen zu realisieren.
-
-
-
-
-\section{Progressive Web Apps in Angular}
-
-Angular (Abschnitt \ref{Angular}) ist geeignet, um eine PWA zu entwickeln, da sowohl das Framework als auch die Progressive Webanwendung Entwicklungen von Google sind. 
-Um aus einer Angular-Anwendung eine PWA zu erstellen, muss das Paket \texttt{@angular/pwa} über das \ac{CLI} hinzugefügt werden.
-Durch das Hinzufügen des Pakets werden im Hintergrund folgende Veränderungen an dem Projekt durchgeführt: 
-\begin{itemize}
-    \item Das Paket \texttt{@angular/service-worker} wird zu dem Projekt hinzugefügt,
-    \item der Build Support für den Service Worker wird in der Angular CLI aktiviert,
-    \item das \texttt{ServiceWorkerModule} wird in dem \texttt{AppModule} importiert,
-    \item die Datei index.html wird um einen Link zu dem Web App Manifest (Abschitt \ref{sec:webappmanifest}) und um relevante Meta-Tags ergänzt,
-    \item Icon-Dateien werden erzeugt und verlinkt,
-    \item die Konfigurationsdatei \textit{ngsw-config.json} für den Service Worker wird erzeugt. 
-\end{itemize}
-
-Im Anschluss kann die Applikation alle Grundfunktionen einer PWA ausführen. Die Anwendung kann installiert werden. Innerhalb des Web App Manifests steht der Projektname und das unter \texttt{assets} abgespeicherte Angular-Icon wird als App-Icon verwendet. Nach dem erstmaligen Öffnen der Applikation in dem Browser wird der Service Worker installiert. Anschließend kann die Webseite auch ohne Netzwerkverbindung geladen werden.  
-
-
-
-\section{PWA für IOS}
-
-Apple unterstützt die Entwicklung von PWAs nicht. PWAs stellen  eine Möglichkeit dar, um Apps für das iPhone zu installieren, die sich nicht in dem App Store befinden. Im Jahr 2020 hat Apple mit dem App Store einen Umsatz von 643 Milliarden US-Dollar erwirtschaftet \cite{Kirchenbauer2021}. Apple erhält 30\% Provision, wenn Apps gekauft oder In-App-Käufe abgeschlossen werden. Durch den Einsatz von PWAs könnte diese Einnahmen reduziert werden.
-
-Durch zusätzliche Einstellungen können PWAs auf dem Homescreen von IOS Geräten installiert werden. In dem \texttt{head} der \texttt{index.html} muss der Dateipfad zu dem verwendeten Icon angegeben werden, da dieser nicht aus dem Web-App-Manifest ausgelesen wird. 
-Des weiteren muss in einem \texttt{Meta-Tag} angegeben werden, dass die Webanwendung als App genutzt werden kann. Diese zusätzlichen Angaben ermöglichen es, die Applikation zu installieren. Apple beschränkt jedoch die Nutzung des vollen Funktionsumfangs der PWAs. Durch ein Softwareupdate hat Apple eine Zwangslöschung für lokal beschreibbare Speicherfunktionen eingeführt \cite{t3n2020}. Eine PWA nutzt diesen lokalen Speicher um Daten zu speichern. 
-Auch der Service Worker wird von Safari nicht vollständig unterstützt. Safari ermöglicht weder Push-Nachrichten noch Hintergrund-Synchronisation \cite{mediaevent}. 
 
 
 
 \section{Endgerät-Emulation}
 
-Um eine PWA Lokal auf Endgeräten zu testen, können diese emuliert werden.           
-Um ein Android-Handy zu emulieren, kann das Programm \textit{Android Studio} verwendet werden. In Android Studio kann mithilfe des \ac{AVD Managers} ein virtuelles Handy gestartet werden, Abbildung \ref{Android1} a. In dem emuliertem Handy kann der Browser geöffnet werden. Um auf die lokale IP-Adresse des Rechners zugreifen zu können, muss innerhalb des Browsers auf dem Handy die IP-Adresse \texttt{10.0.2.2:8080} eingegeben werden, Abbildung \ref{Android1} b. Daraufhin öffnet sich die Anwendung, die unter Einstellung installiert werden kann, Abbildung \ref{Android2} a. Die Anwendung wird im Anschluss zu dem Startbildschirm hinzugefügt, Abbildung \ref{Android2} b.  
+Um eine PWA Lokal auf Endgeräten zu testen, können diese emuliert werden.   
+
+\subsection{Android}
+Um ein Android-Handy zu emulieren, kann das Programm \textit{Android Studio} verwendet werden. In Android Studio kann mithilfe des \ac{AVD Managers} ein virtuelles Handy gestartet werden, Abbildung \ref{Android1}. In dem emuliertem Handy kann der Browser geöffnet werden. Um auf die lokale IP-Adresse des Rechners zugreifen zu können, muss innerhalb des Browsers auf dem Handy die IP-Adresse \texttt{10.0.2.2:8080} eingegeben werden. 
 
 \begin{figure}[!htb]
     \centering
-    \subfloat[][]{\includegraphics[scale=0.4]{emuliertHandy.png}}
-    \qquad
-    \subfloat[][]{\includegraphics[scale=0.4]{PWABrowser.png}}
-    \caption{(a) emuliertes Android Handy in Android Studio, (b) PWA in dem Browser geöffnet}
+    \includegraphics[scale=0.4]{emuliertHandy.png}
+    \caption {Emuliertes Android Handy in Android Studio}
     \label{Android1}
 \end{figure}
 
-\begin{figure}[!htb]
+\subsection{IOS}
+
+Um ein IOS-Gerät zu emulieren, wird das Programm XCode benötigt, welches jedoch nur auf einem MacOS Gerät installiert werden kann. In XCode kann ein einfaches \texttt{HelloWorld} IOS-Projekt erstellt werden. Wird dieses Ausgeführt öffnet sich automatisch ein emuliertes iPhone, siehe Abbildung \ref{img:emuIOS}.
+
+\begin{figure}
     \centering
-    \subfloat[][]{\includegraphics[scale=0.4]{InstallationPWA.png}}
-    \qquad
-    \subfloat[][]{\includegraphics[scale=0.4]{pwaInstalliert.png}}
-    \caption{(a) Installation der PWA unter Android, (b) installierte PWA }
-    \label{Android2}
+    \includegraphics[scale=0.4]{emulirtesIOS.png}
+    \caption{Emuliertes IPhone in XCode}
+    \label{img:emuIOS}
 \end{figure}
+
+\subsection{ngrok}
+
+
+ToDO 
+
+

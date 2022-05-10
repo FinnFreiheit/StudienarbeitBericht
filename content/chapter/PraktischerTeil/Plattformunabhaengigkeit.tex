@@ -1,0 +1,63 @@
+%!TEX root = ../../main.tex
+\chapter{Untersuchung der Plattformunabhängigkeit}
+
+Um die These,dass Progressive Web Apps plattformunabhängig und vollumfänglich eingesetzt werden können, aus Abschnitt \ref{Problemstellung} zu untersuchen, wird die Entwickelte Anwendung auf den gängigsten Plattformen ausgeführt und die Funktionen:
+\begin{itemize}
+    \item installierbar,
+    \item offline verfügbar,
+    \item zugriff auf Geräteschnittstellen und
+    \item Push-Benachrichtigungen
+\end{itemize} 
+werden untersucht. 
+
+\section{Google Chrome und Android}
+
+\subsubsection*{Installierbar}
+
+Um die PWA in dem Browser Google Chrome zu installieren, muss der Download-Button in der Suchleiste des Browsers ausgewählt werden, siehe Abbildung \ref{installChrome}.
+
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[scale=0.4]{installChromePfeil.png}
+    \caption{Die PWA im Browser Google Chrome installieren}
+    \label{installChrome}
+\end{figure}
+
+\subsubsection{offline verfügbar}
+ToDo 
+
+siehe Abbildung \ref{img:CacheDevTools}. Da es sich in der Abbildung um eine Angular-Anwendung handelt, können die in der \textit{ngsw-config.json}-Datei angegebene Ressourcen wiedergefunden werden.   
+
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[scale=0.3]{CacheDevTools.png}
+    \caption{Google Chrome Developer Tools zum Einsehen der im Cache gespeicherten Dateien}
+    \label{img:CacheDevTools}
+\end{figure}
+
+
+\section{Apple Safari und IOS}
+
+Apple unterstützt die Entwicklung von PWAs nicht. PWAs stellen  eine Möglichkeit dar, um Apps für das iPhone zu installieren, die sich nicht in dem App Store befinden. Im Jahr 2020 hat Apple mit dem App Store einen Umsatz von 643 Milliarden US-Dollar erwirtschaftet \cite{Kirchenbauer2021}. Apple erhält 30\% Provision, wenn Apps gekauft oder In-App-Käufe abgeschlossen werden. Durch den Einsatz von PWAs könnte diese Einnahmen reduziert werden.
+
+Durch zusätzliche Einstellungen können PWAs auf dem Homescreen von IOS Geräten installiert werden. In dem \texttt{head} der \texttt{index.html} muss der Dateipfad zu dem verwendeten Icon angegeben werden, da dieser nicht aus dem Web-App-Manifest ausgelesen wird. 
+Des weiteren muss in einem \texttt{Meta-Tag} angegeben werden, dass die Webanwendung als App genutzt werden kann. Diese zusätzlichen Angaben ermöglichen es, die Applikation zu installieren. 
+
+Apple unterstützt weder im Browser noch im IOS-Betriebssystem die Push-API. Im Browser Safari ist der Push-Manager nicht implementiert, siehe Abbildung \ref{img:PushManagerBrowser}, somit sind Push-Benachrichtigungen wie unter Google Chrome nicht möglich. 
+
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[scale=0.4]{PushManagerSafari.png}
+    \caption{Apple Safari verfügt nicht über ein Push-Manager und ist somit nicht in der Lage Push-Nachrichten zu erhalten}
+    \label{img:PushManagerBrowser}
+\end{figure}
+
+
+Der Browser Safari bietet als Alternative \textit{Safari Push Notifications}. Um Safari Push Notification versenden zu können, muss das Backend mit dem \ac*{APNs} kommunizieren. Die Kommunikation erfolgt jedoch \textbf{nicht} über das standardisierte Web-Push-Protokoll.
+
+Die APNs Kommunikation erfordert, das der Entwickler sich beim Apple Developer Programm registriert und eine Push-ID für die Webanwendung anlegt. Anschließend muss der Entwickler ein \ac*{TLS}-Clientzertifikat anfordern. In der Safari Umgebung wird anstelle des \texttt{PushSubscription}-Objektes ein \texttt{Device-Token} erzeugt, um Pushbenachrichtigungen zu versenden. 
+
+Es ist somit ein erhöhter Programmieraufwand nötig, um Push-Notifications für Apple-Umgebungen zu realisieren.
+
+
+Apple beschränkt jedoch die Nutzung des vollen Funktionsumfangs der PWAs. Durch ein Softwareupdate hat Apple eine Zwangslöschung für lokal beschreibbare Speicherfunktionen eingeführt \cite{t3n2020}. Eine PWA nutzt diesen lokalen Speicher um Daten zu sichern.
