@@ -1,1 +1,85 @@
+%!TEX root = ../../main.tex
+\section{Node.js}
 
+\subsection{Routing}
+
+\subsubsection{Endpunkte}
+
+Mithilfe des Routings kann auf die Daten innerhalb der MongoDB zugegriffen werden. Dazu werden verschiedene Endpunkte benötigt. Die verwendeten Endpunkte sind in der folgenden Tabelle definiert.
+
+\begin{table}[!htb]
+\begin{tabularx}{\textwidth}{|x|X|X|}
+    \hline
+    \textbf{Method} & \textbf{URL} & \textbf{Description} \\
+    \hline
+    \hline
+    GET & /users & get all users\\
+    \hline
+    GET & /users/id/:id & get user by id\\
+    \hline
+    GET & /users/id/:id/username & get username of user specified by id\\
+    \hline 
+    GET & /users/id/:id/password & get password of user specified by id\\
+    \hline
+    GET & /users/id/:id/pictureID & get pictureId of user specified by id\\
+    \hline
+    GET & /users/login & together with the path a json file is sent, that includes the username and password given at login, afterwards it is checked whether there is one user with this username and password\\
+    \hline
+    POST & /users & create new user\\
+    \hline
+    PATCH & /users/:id & update user by id\\
+    \hline
+    DELETE & /users/:id & delete user specified by id\\
+    \hline
+    \hline
+    GET & /comments & get all comments\\
+    \hline
+    GET & /comments/:id & get comment by id\\
+    \hline
+    GET & /comments/:id/userid & get userId of user who wrote the comment specified by id\\
+    \hline
+    GET & /comments/:id/message & get message of comment specified by id\\
+    \hline
+    GET & /comments/:id/pictureid & get id of picture the comment specified by id is commented under\\
+    \hline
+    POST & /comments & create new comment\\
+    \hline
+    DELETE & /comments/:id & delete comment specified by id\\
+    \hline
+    \hline
+    GET & /posts & get all posts\\
+    \hline
+    GET & /posts/:id & get picture by id\\
+    \hline
+    GET & /posts/:id/caption & get caption of post specified by id\\
+    \hline
+    GET & /posts/:id/picture & get picture of post specified by id\\
+    \hline
+    GET & /posts/:id/geoloc & get geolocation of post specified by id\\
+    \hline
+    POST & /posts & create new post\\
+    \hline
+    PATCH & /posts/:id & update post by id\\
+    \hline
+    DELETE & /posts/:id & delete post specified by id\\
+    \hline
+    \hline
+    GET & /likes & get all likes\\
+    \hline
+    GET & /likes/:id & get like by id\\
+    \hline
+    GET & /likes/:id/userid & get id of user who gave the like specified by id \\
+    \hline
+    GET & /likes/:id/pictureid & get id of picture the like specified by id is given to\\
+    \hline
+    POST & /likes & create new like\\
+    \hline
+    DELETE & /likes/:id & delete like specified by id\\
+    \hline
+\end{tabularx}
+\caption{Endpunkte}
+\label{endpunkte}
+\end{table}
+
+\subsubsection{Request-Funktionen}
+Innerhalb eines Routing-Files werden alle Responses auf mögliche http-Anfragen des Clients festgelegt. Grundlegend sehen die jeweiligen GET-, POST-, PATCH- und DELETE-Funktionen gleich aus, weshalb im Folgenden zu jeder Anfrage ein Beispiel erläutert wird.
