@@ -1,5 +1,16 @@
 %!TEX root = ../../main.tex
 \chapter{MongoDB}
+\section{Mongoose}
+Die Verbindung der Datenbank mit der Express-Webanwendung kann mithilfe des Moduls Mongoose hergestellt werden, einem objektorientierten JavaScript-Framework, das eine einfach zu verwendene Schnittstelle zwischen Node.js und MongoDB darstellt. Die Verbindung wird in der \texttt{server.js}-Datei hergestellt und sieht folgendermaßen aus:
+
+\begin{lstlisting}[caption=Herstellen der Verbindung zu MongoDB, label=lst:url]
+    mongoose.connect('mongodb://127.0.0.1:27017', { useNewUrlParser: true, useUnifiedTopology: true });
+\end{lstlisting}
+
+Anstelle von \texttt{127.0.0.1} lässt sich auch {localhost} verwenden. Dabei können jedoch Probleme auftreten, sollt die Adresse geändert worden sein.
+
+Mongoose arbeitet schema-basiert, weshalb sich die Verwendung von Schemata in Objekten zur Datenspeicherung anbietet.
+
 \section{Schemata}
 Für die Speicherung der Daten in der MongoDB werden vier Schemata entwickelt. Ein Schema ist ein JSON-Objekt, das die Struktur der zu speichernden Daten vorgibt. Für die Erstellung der PWA werden Schemata für einen User, einen Post, einen Kommentar und einen Like benötigt. Diese sollen folgende Daten enthalten:
 
