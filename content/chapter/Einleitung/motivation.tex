@@ -39,6 +39,7 @@ Die These, dass Progressive Web Apps plattformunabhängig und vollumfänglich ei
 Hierfür wird eine Applikation entwickelt, die die Grundfunktionen einer PWA implementiert. Die Anwendung soll 
  \begin{itemize}
      \item installierbar sein,
+     \item auf Geräteschnittstellen zugreifen können,
      \item offline verfügbar sein und
      \item Push-Benachrichtigungen ermöglichen. 
  \end{itemize}
@@ -52,7 +53,7 @@ Der Begriff \textit{Progressive Web App} setzt sich aus den Begriffen \textit{We
 Unter dem Begriff \textit{Progressive Enhancement} (zu deutsch: Progressive Verbesserung) verbirgt sich das Ziel, Webseiten so zur Verfügung zu stellen, dass jeder Webbrowser in der Lage ist, die grundlegendste Form einer Webseite darzustellen. Hierbei ist es unabhängig davon, über welche Version der Browser oder das Endgerät verfügt. 
 Alle zusätzlichen Funktionalitäten, die sich nur unter Verwendung moderner Browser und Endgeräte nutzen lassen, werden erst im Anschluss in Form von Skripten eingebunden. 
 
-Um PWAs nutzen zu können, werden die neusten Funktionen moderner Webbrowser benötigt, darunter \textit{service workers} und \textit{web app manifests} (Referenz Kapitel). 
+Um PWAs nutzen zu können, werden die neusten Funktionen moderner Webbrowser benötigt, darunter \textit{service workers}(Abschitt \ref{sec:ServiceWorker}) und \textit{web app manifests}(Abschnitt \ref{sec:webappmanifest}). 
 
 Google hat das Konzept von PWAs im Jahr 2015 vorgestellt und ist seit dem maßgeblich an der Entwicklung beteiligt. 
 Das Ziel bei der Entwicklung von PWAs liegt darin, die Vorteile Nativer Applikationen mit denen der Webanwendung zu kombinieren. 
@@ -70,10 +71,10 @@ Webapplikationen wiederum sind sehr gut erreichbar, sie können verlinkt, über 
 
 Mithilfe von PWAs können Applikation erzeugt werden, die: 
 \begin{itemize}
-    \item installierbar sind, Kapitel, 
-    \item auf Geräteschnittstellen zugreifen können, Kapitel 
-    \item netzwerkunabhängig funktionieren, Kapitel
-    \item Push-Notifications versenden können, Kapitel
+    \item installierbar sind, Abschitt \ref{sec:webappmanifest} 
+    \item auf Geräteschnittstellen zugreifen können, Abschnitt \ref{sec:Geraeteschnittstelle} 
+    \item netzwerkunabhängig funktionieren, Abschitt \ref{sec:ServiceWorker} und Abschnitt \ref{sec:pwaAngular}
+    \item Push-Notifications versenden können, Abschitt \ref{sec:ThPushNotifikations}
 \end{itemize}
 
 PWAs sind laut Sam Richard und Pete LePage das Beste aus zwei Welten \cite{SamRichard2020}. Mithilfe von progressiver Verbesserung werden die modernen Funktionen von Browsern genutzt, um die Vorteile von plattformspezifischen Anwendungen nutzen zu können. Sind die dafür benötigten Funktionen wie beispielsweise \textit{service workers} nicht vorhanden, können die Grundfunktionen der Anwendung dennoch im Web genutzt werden. 

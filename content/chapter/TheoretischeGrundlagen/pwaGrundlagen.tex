@@ -2,7 +2,7 @@
 
 \chapter{Progressive Web App}
 
-Wie in Kapitel \ref{se:Begriffsklaerung} erwähnt, verfügt eine PWA unter anderem über folgende Funktionen: 
+Wie in Kapitel \ref{se:Begriffserklaerung} erwähnt, verfügt eine PWA unter anderem über folgende Funktionen: 
 \begin{itemize}
     \item Installierbar,
     \item Zugriff auf Geräteschnittstellen, 
@@ -142,7 +142,10 @@ Sobald ein neuer Service Worker für einen bestimmten Scope aktiviert wurde, ter
 Unter Apple Safari wird ein registrierter Service Worker automatisch deinstalliert, sobald die Webseite des Service Workers mehrere Wochen nicht aufgerufen wurde. 
 
 
-\section{Push-Notifications}
+
+\section{Geräteschnittstellen}\label{sec:Geraeteschnittstelle}
+
+\section{Push-Notifications}\label{sec:ThPushNotifikations}
 
 Eine Notification ist eine Nachricht, die auf dem Endgerät des Nutzers angezeigt wird. Dies kann als Reaktion auf eine Nutzereingabe geschehen. Es kann jedoch auch unabhängig von dem Nutzer eine Nachricht von einem Server \glqq gepusht\grqq{} werden. Die ist auch ohne das Aktivsein der Applikation möglich.  Um Push-Notifications zu erzeugen, werden zwei APIs benötigt. Die \textit{Notifications API} visualisiert die Nachricht für den Nutzer. Die \textit{Push API} erlaubt es wiederum dem Service Worker (Kapitel \ref{sec:ServiceWorker}) Nachrichten zu verwalten, die durch den Server gesendet wurden, während die Applikation inaktiv war. 
 
@@ -205,12 +208,7 @@ Die Zeitschrift-Firma möchte nun alle Abonnenten darüber informieren, das sie 
 Die Push-Dienste leiten diese Nachricht an den Nutzer über den Service Worker weiter oder speichern diese, falls der Nutzer nicht erreichbar ist. 
 
 
-
-
-
-
-
-\section{Progressive Web Apps in Angular}
+\section{Progressive Web Apps in Angular}\label{sec:pwaAngular}
 
 Angular (Abschnitt \ref{Angular}) ist geeignet, um eine PWA zu entwickeln, da sowohl das Framework als auch die Progressive Web Apps Entwicklungen von Google sind. 
 Um aus einer Angular-Anwendung eine PWA zu erstellen, muss das Paket \texttt{@angular/pwa} über das \ac{CLI} hinzugefügt werden.
@@ -226,13 +224,15 @@ Durch das Hinzufügen des Pakets werden im Hintergrund folgende Veränderungen a
 
 Im Anschluss kann die Applikation alle Grundfunktionen einer PWA ausführen. Die Anwendung kann installiert werden. Innerhalb des Web App Manifests steht der Projektname und das unter \texttt{assets} abgespeicherte Angular-Icon wird als App-Icon verwendet. Nach dem erstmaligen Öffnen der Applikation in dem Browser wird der Service Worker installiert. 
 
-Angular unterstützt den Entwickler beim Cachen von Daten und Dateien durch eine Konfigurationsdatei mit dem Namen \texttt{ngsw-config.json}. Die Grundeinstellung wird in Listing \ref{lst:ngswConfig} beschrieben. Unter \texttt{assetGroups} werden Ressourcen angegeben, die teil der Angular-Anwendung sind und im Cache gespeichert werden. Aus der Datei kann entnommen werden, das die \texttt{index.html}, das webmanifest, alle css und JavaScript-Dateien sowie alle Inhalte aus dem \textit{assets}-Verzeichnis im Cache gespeichert werden. 
+Angular unterstützt den Entwickler beim Cachen von Daten und Dateien durch eine Konfigurationsdatei mit dem Namen \textit{ngsw-config.json}. Die Grundeinstellung wird in Listing \ref{lst:ngswConfig} beschrieben. Unter \texttt{assetGroups} werden Ressourcen angegeben, die teil der Angular-Anwendung sind und im Cache gespeichert werden. Aus der Datei kann entnommen werden, das die \textit{index.html}, das webmanifest, alle css und JavaScript-Dateien sowie alle Inhalte aus dem \textit{assets}-Verzeichnis im Cache gespeichert werden. 
 Somit kann die Applikation auch ohne Netzwerkverbindung gestartet werden, da alle benötigten Ressourcen im Cache hinterlegt sind. 
 
 Zusätzlich zu den Ressourcen der Angular-Anwendung können auch 
 die Antworten von API-Anfragen im Cache gespeichert werden.
 Hierfür werden unter der Eigenschaft \texttt{dataGroups} URL-Pfade von API-Endpunkten angegeben. Sobald der Service Worker eine API-Anfrage des Nutzer weiterleitet, der mit einem URL-Pfad aus \texttt{dataGroups} übereinstimmt, wird die Antwort im Cache gespeichert. 
-Somit ist der Service Worker in der Lage auch ohne Netzwerkverbindung die API-Anfrage aus dem Cache zu beantworten. Hierbei kann zwischen zwei Cache-Strategien unterschieden werden.
+Somit ist der Service Worker in der Lage auch ohne Netzwerkverbindung die API-Anfrage aus dem Cache zu beantworten. 
+
+Es kann zwischen zwei Cache-Strategien unterschieden werden.
 Bei der \texttt{freshness}-Strategie wird jede API-Anfrage an den Entsprechenden Endpunkt weitergeleitet. 
 Die Daten werden erst dann aus dem Cache bezogen, wenn der Endpunkt nicht erreichbar ist. Diese Strategie wird gewählt, wenn sich die Angefragten Daten regelmäßig ändern. 
 Bei der \texttt{performance}-Strategie werden die Daten immer aus dem Cache geladen. Die Daten aus dem Cache werden in regelmäßigen abständen aktualisiert. Das Laden aus dem Cache ist deutlich schneller als ein Netzwerkzugriff. Diese Strategie eignet sich besonders für Daten die nicht oft geändert werden. 
