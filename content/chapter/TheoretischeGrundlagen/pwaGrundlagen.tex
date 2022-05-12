@@ -145,6 +145,14 @@ Unter Apple Safari wird ein registrierter Service Worker automatisch deinstallie
 
 \section{Geräteschnittstellen}\label{sec:Geraeteschnittstelle}
 
+Die Eigenschaft von PWAs auf Geräteschnittstellen zugreifen zu können wird anhand der Geolocation-API gezeigt. 
+Die Geolocation-Schnittstelle ist über das Navigator-Objekt erreichbar, welches bereits beim Service Worker zum Einsatz kam. Die Schnittstelle stellt drei Methoden zur Verfügung: 
+\begin{itemize}
+    \item \texttt{getCurrentPosition()}: Ruft einmalig die Position des Anwenders ab und gibt im Erfolgsfall ein Objekt mit der Position des Anwenders zurück. 
+    \item \texttt{watchPosition()}: Die Methode registriert eine Callback-Funktion, die aufgerufen wird, sobald sich die Anwenderposition verändert. 
+    \item \texttt{clearWatch()}: löscht die unter \texttt{watchPosition()} beschriebene registrierte Callback-Funktion. 
+\end{itemize}
+
 \section{Push-Notifications}\label{sec:ThPushNotifikations}
 
 Eine Notification ist eine Nachricht, die auf dem Endgerät des Nutzers angezeigt wird. Dies kann als Reaktion auf eine Nutzereingabe geschehen. Es kann jedoch auch unabhängig von dem Nutzer eine Nachricht von einem Server \glqq gepusht\grqq{} werden. Die ist auch ohne das Aktivsein der Applikation möglich.  Um Push-Notifications zu erzeugen, werden zwei APIs benötigt. Die \textit{Notifications API} visualisiert die Nachricht für den Nutzer. Die \textit{Push API} erlaubt es wiederum dem Service Worker (Kapitel \ref{sec:ServiceWorker}) Nachrichten zu verwalten, die durch den Server gesendet wurden, während die Applikation inaktiv war. 
@@ -272,7 +280,7 @@ Bei der \texttt{performance}-Strategie werden die Daten immer aus dem Cache gela
 
 Um eine PWA Lokal auf Endgeräten zu testen, können diese emuliert werden.   
 
-\subsection{Android}
+\subsubsection{Android}
 Um ein Android-Handy zu emulieren, kann das Programm \textit{Android Studio} verwendet werden. In Android Studio kann mithilfe des \ac{AVD Managers} ein virtuelles Handy gestartet werden, Abbildung \ref{Android1}. In dem emuliertem Handy kann der Browser geöffnet werden. Um auf die lokale IP-Adresse des Rechners zugreifen zu können, muss innerhalb des Browsers auf dem Handy die IP-Adresse \texttt{10.0.2.2:8080} eingegeben werden. 
 
 \begin{figure}[!htb]
@@ -282,7 +290,7 @@ Um ein Android-Handy zu emulieren, kann das Programm \textit{Android Studio} ver
     \label{Android1}
 \end{figure}
 
-\subsection{IOS}
+\subsubsection{IOS}
 
 Um ein IOS-Gerät zu emulieren, wird das Programm XCode benötigt, welches jedoch nur auf einem MacOS Gerät installiert werden kann. In XCode kann ein einfaches \texttt{HelloWorld} IOS-Projekt erstellt werden. Wird dieses Ausgeführt öffnet sich automatisch ein emuliertes iPhone, siehe Abbildung \ref{img:emuIOS}.
 
@@ -293,9 +301,8 @@ Um ein IOS-Gerät zu emulieren, wird das Programm XCode benötigt, welches jedoc
     \label{img:emuIOS}
 \end{figure}
 
-\subsection{ngrok}
+\subsubsection{ngrok}
+Das das Werkzeug ngrok ist es auch möglich die PWA auf dem eigenen Endgerät zu Simulieren. Ngrok stellt lokale Endpunkte wie \texttt{localhost} unter eine öffentlich erreichbare Adresse zur Verfügung.
 
-
-ToDO 
 
 
