@@ -27,19 +27,19 @@ Ohne das Manifest ist die Applikation nicht installierbar, was die Datei zu eine
 Das Manifest muss mindestens einen \texttt{name}-Schlüssel und einen \texttt{String}-Wert aufweisen. 
 Neben dem Namen der Applikation kann ein Manifest über folgende Informationen verfügen: 
 
-\subsection{short\_name}
+\subsubsection{short\_name}
 Unter \texttt{short\_name} kann ein kurzer Name der Applikation angegeben werden. Dieser Name wird verwendet, falls das Endgerät nicht über genügend Platz verfügt, um den originalen Namen anzuzeigen. 
 
-\subsection{icons}
+\subsubsection{icons}
 Unter \texttt{icons} wird ein Array\footnote{Datentyp, das mehrere Werte speichern kann} mit Bildobjekten gespeichert. Ein Bildobjekt besteht aus einem Dateipfad, unter dem das anzuzeigende Bild gespeichert ist, einer Typbeschreibung des Bildes, zum Beispiel \textit{png} oder \textit{svg}, einer Informationen über die Auflösung des Bildes sowie optional einer Angabe, welchem Zweck das Bild dient. 
 
 Die gespeicherten Bilder werden als App-Icon auf dem Desktop oder Handy angezeigt. 
 
-\subsection{start\_url}
+\subsubsection{start\_url}
 Die angegebene \texttt{start\_url} ist jene \ac{URL} die geöffnet wird, sobald der Nutzer das installierte Icon auswählt und damit die Applikation startet. 
 Wird keine explizite Startadresse angegeben, so wird die URL verwendet, von der die PWA installiert wurde. 
 
-\subsection{display}
+\subsubsection{display}
 
 Bei Auswählen des installierten Icons wird die PWA in einem neuem Fenster geöffnet. Unter \texttt{display} kann angegeben werden, wie das Betriebssystem das Fenster darstellen soll. 
 Es kann zwischen \texttt{Fullscreen}, \texttt{Standalone} und \texttt{Minimal User Interface} unterschieden werden. 
@@ -57,7 +57,7 @@ Der Unterschied zwischen den einzelnen Auswahlmöglichkeiten liegt bei den Navig
     \label{img:minimalui}
 \end{figure}
 
-\subsection{theme\_color}
+\subsubsection{theme\_color}
 Mit Hilfe dieser Einstellung kann die Farbe der oberen Navigationsleiste angepasst werden, wie in Abbildung \ref{img:themeColor} dargestellt ist. Hierbei ist jedoch darauf zu achten, dass die Applikation nicht den Meta-Tag \texttt{theme-color} definiert. 
 
 \begin{figure}[!htb]
@@ -103,7 +103,7 @@ Bei der Verwendung eines Service Workers sollten folgenden Eigenschaften berück
 Der Service Worker wird von einem Browser in einem eigenen Thread unabhängig von der Applikation ausgeführt. Dementsprechend besitzt der Service Worker einen eigenen Lebenszyklus, der im Folgenden beschrieben wird. 
 
 \subsubsection{Registrieren}
-Der Lebenszyklus eines Service Workers beginnt mit der Registrierung. Dies erfolgt mithilfe der \texttt{register()}-Methode in der \texttt{serviceWorker}-Eigenschaft des \texttt{navigator}-Objektes \cite{Navigator2022}, siehe Listing \ref{lst:serviceWorker} Zeile 2. Um dem Konzept des Progressive Enhancements zu folgen (Abschitt \ref{se:Begriffsklaerung}), sollte vor der Registrierung überprüft werden, ob die Service-Worker-Schnittstellen vorhanden sind. Hierfür wird die \texttt{serviceWorker}-Eigenschaft innerhalb des \texttt{navigator}-Objekts abgefragt, siehe Listing \ref{lst:serviceWorker} Zeile 1. 
+Der Lebenszyklus eines Service Workers beginnt mit der Registrierung. Dies erfolgt mithilfe der \texttt{register()}-Methode in der \texttt{serviceWorker}-Eigenschaft des \texttt{navigator}-Objektes \cite{Navigator2022}, siehe Listing \ref{lst:serviceWorker} Zeile 2. Um dem Konzept des Progressive Enhancements zu folgen (Abschitt \ref{se:Begriffserklaerung}), sollte vor der Registrierung überprüft werden, ob die Service-Worker-Schnittstellen vorhanden sind. Hierfür wird die \texttt{serviceWorker}-Eigenschaft innerhalb des \texttt{navigator}-Objekts abgefragt, siehe Listing \ref{lst:serviceWorker} Zeile 1. 
 
 \begin{lstlisting}[caption = Registrierung des Service Workers, label = lst:serviceWorker, float = !htb]
     if('serviceWorker' in navigator){
@@ -113,7 +113,7 @@ Der Lebenszyklus eines Service Workers beginnt mit der Registrierung. Dies erfol
     }
 \end{lstlisting}
 
-Das Aufrufen der \texttt{register()}-Methode gibt einen Promise zurück, welcher in Zeile 3 und 4 behandelt wird. 
+Das Aufrufen der \texttt{register()}-Methode gibt einen Promise zurück, welcher in Zeile 3 und 4 behandelt wird.\\ 
 Im Erfolgsfall (then-Methode) wird ein Objekt des Typs \texttt{ServiceWorkerRegistration} übergeben. Das Objekt verfügt unter anderem über folgende Schnittstellen: 
 \begin{itemize}
     \item mit der \texttt{update()}-Methode wird die Aktualisierung des Service Workers ausgelöst,
@@ -189,10 +189,11 @@ Bei der Registrierung sollte das Konzept des \textit{Progressive Enhancements} b
 
 
 
-Falls der Browser über die nötigen Funktionen verfügt, kann die \texttt{subscribe()}-Methode der \texttt{ServiceWorkerRegistration} aufgerufen werden, welches ein Objekt des Typs \texttt{PushSubscription} zurückgibt. 
-Die PushSubscription verfügt über ein Konfigurationsobjekt mit zwei Eigenschaften. Die erste Eigenschaft trägt den Namen \texttt{userVisibleOnly} und ist eine boolsche Eigenschaft, die  beschreibt, ob Pushnachrichten immer zu einer für den Anwender sichtbaren Meldung führen. Diese hat standardmäßig den Wert \texttt{false}. Innerhalb des Browsers Google Chrome führt das jedoch zu Komplikationen, da der Browser aus Gründen der Datensicherheit keine sogenannte \textit{Silent Push} Nachrichten zulässt. Daher sollte diese Eigenschaft auf den Wert \texttt{true} geändert werden. 
+Falls der Browser über die nötigen Funktionen verfügt, kann die \texttt{subscribe()}-Methode der \texttt{ServiceWorkerRegistration} aufgerufen werden,\\
+welches ein Objekt des Typs \texttt{PushSubscription} zurückgibt. 
+Die PushSubscription verfügt über ein Konfigurationsobjekt mit zwei Eigenschaften. Die erste Eigenschaft trägt den Namen \texttt{userVisibleOnly} und ist eine \textit{boolsche} Eigenschaft, die  beschreibt, ob Pushnachrichten immer zu einer für den Anwender sichtbaren Meldung führen. Diese hat standardmäßig den Wert \texttt{false}. Innerhalb des Browsers Google Chrome führt das jedoch zu Komplikationen, da der Browser aus Gründen der Datensicherheit keine sogenannte \textit{Silent Push} Nachrichten zulässt. Daher sollte diese Eigenschaft auf den Wert \texttt{true} geändert werden. 
 
-Die zweite Eigenschaft des Konfigurationsobjekts bezeichnet man als \texttt{applicationServerKey}. Diese Eigenschaft wird benötigt, um die Nachrichten zwischen dem Push-Dienst und der Anwendung zu verschlüsseln. Zur Verschlüsselung wird das \ac{VAPID}-Protokoll verwendet, das von der IETF spezifiziert wurde \cite{rfc8292}. Die Verschlüsselung benötigt einen öffentlichen und einen privaten Schlüssel. Der öffentliche Schlüssel ist unter der \texttt{applicationServerKey}-Eigenschaft gespeichert. Der private Schlüssel wird wiederum in dem Backend der Anwendung hinterlegt. 
+Die zweite Eigenschaft des Konfigurationsobjekts bezeichnet man als\\ \texttt{applicationServerKey}. Diese Eigenschaft wird benötigt, um die Nachrichten zwischen dem Push-Dienst und der Anwendung zu verschlüsseln. Zur Verschlüsselung wird das \ac{VAPID}-Protokoll verwendet, das von der IETF spezifiziert wurde \cite{rfc8292}. Die Verschlüsselung benötigt einen öffentlichen und einen privaten Schlüssel. Der öffentliche Schlüssel ist unter der \texttt{applicationServerKey}-Eigenschaft gespeichert. Der private Schlüssel wird wiederum in dem Backend der Anwendung hinterlegt. 
 
 Um die Registrierung abzuschließen, muss der Anwender sein Einverständnis zum Empfangen von Push-Benachrichtigungen geben. Für die Abfrage öffnet der Browser einmalig ein Dialogfenster. Wird kein Einverständnis vom Nutzer erteilt, so wird auf diesem speziellen System, in keinem Fall, erneut danach gefragt. Der Anwender müsste die Berechtigung manuell über das zugehörige Webseitenmenü erteilen, sollte er sich umentscheiden. 
 

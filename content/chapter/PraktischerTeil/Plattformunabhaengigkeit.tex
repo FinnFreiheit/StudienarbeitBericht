@@ -1,29 +1,12 @@
 %!TEX root = ../../main.tex
 \chapter{Bewertung der Plattformunabhängigkeit}
 
-
-\section{Apple Safari und IOS}
-
 Apple unterstützt die Entwicklung von PWAs nicht. PWAs stellen  eine Möglichkeit dar, um Apps für das iPhone zu installieren, die sich nicht in dem App Store befinden. Im Jahr 2020 hat Apple mit dem App Store einen Umsatz von 643 Milliarden US-Dollar erwirtschaftet \cite{Kirchenbauer2021}. Apple erhält 30\% Provision, wenn Apps gekauft oder In-App-Käufe abgeschlossen werden. Durch den Einsatz von PWAs könnte diese Einnahmen reduziert werden.
 
-Durch zusätzliche Einstellungen können PWAs auf dem Homescreen von IOS Geräten installiert werden. In dem \texttt{head} der \texttt{index.html} muss der Dateipfad zu dem verwendeten Icon angegeben werden, da dieser nicht aus dem Web-App-Manifest ausgelesen wird. 
-Des weiteren muss in einem \texttt{Meta-Tag} angegeben werden, dass die Webanwendung als App genutzt werden kann. Diese zusätzlichen Angaben ermöglichen es, die Applikation zu installieren. 
+Google ist maßgeblich an der Entwicklung von PWAs beteiligt. Dementsprechend Funktionieren PWAs im Google-Ökosystem am besten. Besonders gut ist die Unterstützung von PWAs bei der Installation zu beobachten. In Google Chrome wird nur ein Klick auf den sehr präsenten Button in der Suchleiste benötigt und unter Android wird den Anwender aktiv gefragt ob er die PWA installieren möchte. Auch sämtliche Funktionen wie Push-Notifications, Caching und Geräteschnittstellen werden vollumfänglich unterstützt. 
+Google unterstützt nicht nur die Anwender von PWAs sondern auch die Entwickler. In dem von Google entwickelten Webframework Angular benötigt es nur wenige befehle um eine bereits existierende Angular-Webanwendung in eine PWA zu erweitern. 
 
-Apple unterstützt weder im Browser noch im IOS-Betriebssystem die Push-API. Im Browser Safari ist der Push-Manager nicht implementiert, siehe Abbildung \ref{img:PushManagerBrowser}, somit sind Push-Benachrichtigungen wie unter Google Chrome nicht möglich. 
-
-\begin{figure}[!htb]
-    \centering
-    \includegraphics[scale=0.4]{PushManagerSafari.png}
-    \caption{Apple Safari verfügt nicht über ein Push-Manager und ist somit nicht in der Lage Push-Nachrichten zu erhalten}
-    \label{img:PushManagerBrowser}
-\end{figure}
+Obwohl PWAs nicht vollumfänglich im Apple-Ökosystem verwendet werden können sind wir dennoch davon überzeugt, das sie in Zukunft immer mehr an Bedeutung gewinnen werden. Durch die Entwicklung einer PWA waren wir in der Lage eine Anwendung für den Rechner, Web und das Smartphone zu entwickeln und zu installieren. Als Programmiersprache wurde JavaScript verwendet. JavaScript ist laut der Umfrage von Stack Overflow bereits seit neun Jahren im Folge die beliebteste Programmiersprache. Im Jahr 2021 haben 64\% der befragten Entwickler angegeben JavaScript zu verwenden.
+Im Gegensatz verwendeten nur 35\% Java, 27\% C\# und 5\% Swift \cite{stackoverflow2021}. 
 
 
-Der Browser Safari bietet als Alternative \textit{Safari Push Notifications}. Um Safari Push Notification versenden zu können, muss das Backend mit dem \ac*{APNs} kommunizieren. Die Kommunikation erfolgt jedoch \textbf{nicht} über das standardisierte Web-Push-Protokoll.
-
-Die APNs Kommunikation erfordert, das der Entwickler sich beim Apple Developer Programm registriert und eine Push-ID für die Webanwendung anlegt. Anschließend muss der Entwickler ein \ac*{TLS}-Clientzertifikat anfordern. In der Safari Umgebung wird anstelle des \texttt{PushSubscription}-Objektes ein \texttt{Device-Token} erzeugt, um Pushbenachrichtigungen zu versenden. 
-
-Es ist somit ein erhöhter Programmieraufwand nötig, um Push-Notifications für Apple-Umgebungen zu realisieren.
-
-
-Apple beschränkt jedoch die Nutzung des vollen Funktionsumfangs der PWAs. Durch ein Softwareupdate hat Apple eine Zwangslöschung für lokal beschreibbare Speicherfunktionen eingeführt \cite{t3n2020}. Eine PWA nutzt diesen lokalen Speicher um Daten zu sichern.

@@ -69,3 +69,20 @@ Wird nun eine HTTP-Post Anfrage an diesen Endpunkt gesendet, iteriert die Funkti
     \caption{Push-Nachricht, mit dem Payload aus Listing \ref{lst:payload}}
     \label{img:notificationBanner}
 \end{figure}
+
+
+Apple unterstützt weder im Browser noch im IOS-Betriebssystem die Push-API. Im Browser Safari ist der Push-Manager nicht implementiert, siehe Abbildung \ref{img:PushManagerBrowser}, somit sind Push-Benachrichtigungen wie unter Google Chrome nicht möglich. 
+
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[scale=0.4]{PushManagerSafari.png}
+    \caption{Apple Safari verfügt nicht über ein Push-Manager und ist somit nicht in der Lage Push-Nachrichten zu erhalten}
+    \label{img:PushManagerBrowser}
+\end{figure}
+
+
+Der Browser Safari bietet als Alternative \textit{Safari Push Notifications}. Um Safari Push Notification versenden zu können, muss das Backend mit dem \ac*{APNs} kommunizieren. Die Kommunikation erfolgt jedoch \textbf{nicht} über das standardisierte Web-Push-Protokoll.
+
+Die APNs Kommunikation erfordert, das der Entwickler sich beim Apple Developer Programm registriert und eine Push-ID für die Webanwendung anlegt. Anschließend muss der Entwickler ein \ac*{TLS}-Clientzertifikat anfordern. In der Safari Umgebung wird anstelle des \texttt{PushSubscription}-Objektes ein \texttt{Device-Token} erzeugt, um Pushbenachrichtigungen zu versenden. 
+
+Es ist somit ein erhöhter Programmieraufwand nötig, um Push-Notifications für Apple-Umgebungen zu realisieren.
