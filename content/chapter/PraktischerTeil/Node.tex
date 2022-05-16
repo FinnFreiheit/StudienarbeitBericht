@@ -14,23 +14,23 @@ Mithilfe des Routings kann auf die Daten innerhalb der MongoDB zugegriffen werde
     \textbf{Method} & \textbf{URL} & \textbf{Description} \\
     \hline
     \hline
-    GET & /users & get all users\\
+    GET & /users & alle User abrufen\\
     \hline
-    GET & /users/id/:id & get user by id\\
+    GET & /users/id/:id & User über ID abrufen\\
     \hline
-    GET & /users/id/:id/username & get username of user specified by id\\
+    GET & /users/id/:id/username & Username eines User über ID abrufen\\
     \hline 
-    GET & /users/id/:id/password & get password of user specified by id\\
+    GET & /users/id/:id/password & Passwort eines User über ID abrufen\\
     \hline
-    GET & /users/id/:id/pictureID & get pictureId of user specified by id\\
+    GET & /users/id/:id/pictureID & PictureID eines User über ID abrufen\\
     \hline
-    GET & /users/login & together with the path a json file is sent, that includes the username and password given at login, afterwards it is checked whether there is one user with this username and password\\
+    GET & /users/login & Zusammen mit dem Pfad wird ein JSON-Objekt gesendet, das den Usernamen und das Passwort enthält, die am Login übergeben wurden. Damit wird überprüft, ob ein User mit diesen Daten vorhanden ist.\\
     \hline
-    POST & /users & create new user\\
+    POST & /users & User erstellen\\
     \hline
-    PATCH & /users/:id & update user by id\\
+    PATCH & /users/:id & User über ID updaten\\
     \hline
-    DELETE & /users/:id & delete user specified by id\\
+    DELETE & /users/:id & User über ID löschen\\
     \hline
 \end{tabularx}
 \caption{User Endpunkte}
@@ -44,17 +44,17 @@ Mithilfe des Routings kann auf die Daten innerhalb der MongoDB zugegriffen werde
         \hline
         \hline
 
-    GET & /comments & get all comments\\
+    GET & /comments & alle Kommentare abrufen\\
     \hline
-    GET & /comments/:id & get comment by id\\
+    GET & /comments/:id & Kommentar über ID abrufen\\
     \hline
-    GET & /comments/:id/username & get username of user who wrote the comment specified by id\\
+    GET & /comments/:id/username & Usernamen des Users, der den Kommentar geschrieben hat, über ID abrufen\\
     \hline
-    GET & /comments/:id/message & get message of comment specified by id\\
+    GET & /comments/:id/message & Inhalt des Kommentars über ID abrufen\\
     \hline
-    POST & /comments & create new comment\\
+    POST & /comments & Kommentar erstellen\\
     \hline
-    DELETE & /comments/:id & delete comment specified by id\\
+    DELETE & /comments/:id & Kommentar über ID erstellen\\
     \hline
 \end{tabularx}
 \caption{Comments Endpunkte}
@@ -67,21 +67,21 @@ Mithilfe des Routings kann auf die Daten innerhalb der MongoDB zugegriffen werde
         \textbf{Method} & \textbf{URL} & \textbf{Description} \\
         \hline
         \hline
-    GET & /posts & get all posts\\
+    GET & /posts & alle Posts abrufen\\
     \hline
-    GET & /posts/:id & get picture by id\\
+    GET & /posts/:id & Post über ID abrufen\\
     \hline
-    GET & /posts/:id/caption & get caption of post specified by id\\
+    GET & /posts/:id/caption & Unterschrift des Posts über ID abrufen\\
     \hline
-    GET & /posts/:id/picture & get picture of post specified by id\\
+    GET & /posts/:id/picture & Bild eines Posts über ID abrufen\\
     \hline
-    GET & /posts/:id/geoloc & get geolocation of post specified by id\\
+    GET & /posts/:id/geoloc & Geolocation eines Posts über ID abrufen\\
     \hline
-    POST & /posts & create new post\\
+    POST & /posts & Post erstellen\\
     \hline
-    PATCH & /posts/:id & update post by id\\
+    PATCH & /posts/:id & Post über ID updaten\\
     \hline
-    DELETE & /posts/:id & delete post specified by id\\
+    DELETE & /posts/:id & Post über ID löschen\\
     \hline
 \end{tabularx}
 \caption{Posts Endpunkte}
@@ -95,17 +95,17 @@ Mithilfe des Routings kann auf die Daten innerhalb der MongoDB zugegriffen werde
         \hline
         \hline
 
-    GET & /likes & get all likes\\
+    GET & /likes & alle Likes abrufen\\
     \hline
-    GET & /likes/:id & get like by id\\
+    GET & /likes/:id & Like über ID abrufen\\
     \hline
-    GET & /likes/:id/userid & get id of user who gave the like specified by id \\
+    GET & /likes/:id/userid & ID des Users, der Like gegeben hat, über ID abrufen\\
     \hline
-    GET & /likes/:id/pictureid & get id of picture the like specified by id is given to\\
+    GET & /likes/:id/pictureid & ID des Bilds, für das der Like gegeben wurde, über ID abrufen\\
     \hline
-    POST & /likes & create new like\\
+    POST & /likes & Like erstellen\\
     \hline
-    DELETE & /likes/:id & delete like specified by id\\
+    DELETE & /likes/:id & Like über ID löschen\\
     \hline
 
 \end{tabularx}
