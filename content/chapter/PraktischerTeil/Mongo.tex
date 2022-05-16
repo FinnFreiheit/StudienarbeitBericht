@@ -14,21 +14,23 @@ Mongoose arbeitet schema-basiert, weshalb sich die Verwendung von Schemata in Ob
 \section{Schemata}
 Für die Speicherung der Daten in der MongoDB werden vier Schemata entwickelt. Ein Schema ist ein JSON-Objekt, das die Struktur der zu speichernden Daten vorgibt. Für die Erstellung der PWA werden Schemata für einen User, einen Post, einen Kommentar und einen Like benötigt. Diese sollen folgende Daten enthalten:
 
+
 \begin{table}[!htb]
-\begin{tabularx}{\textwidth}{|c|c|}
-    \cline{1-2}
-    \multicolumn{2}{c}{\textbf{User}}\\
-    \cline{1-2}
-    username & string\\
-    \cline{1-2}
-    password & string\\
-    \cline{1-2}
-    pictureID & string[]\\
-    \cline{1-2}
-\end{tabularx}
+    \begin{tabularx}{\textwidth}{|c|c|}
+        \cline{1-2}
+        \multicolumn{2}{c}{\textbf{User}}\\
+        \cline{1-2}
+        username & string\\
+        \cline{1-2}
+        password & string\\
+        \cline{1-2}
+        pictureID & string[]\\
+        \cline{1-2}
+    \end{tabularx}
 \caption{User-Schema}
 \label{userschema}
 \end{table}
+
 
 
 \begin{table}[!htb]
