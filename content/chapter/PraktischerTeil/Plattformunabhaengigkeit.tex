@@ -26,3 +26,30 @@ Im Gegensatz verwendeten nur 35\% Java, 27\% C\# und 5\% Swift \cite{stackoverfl
     \end{tabular}
     \caption{Zusammenfassung des Funktionsreichtums der PWA bei unterschiedlichen Plattformen}
 \end{table}
+
+\section{Installierbarkeit}
+Installierbar ist die PWA nicht in allen Browsern, dafür auf allen Geräten. 
+In Google Chrome ist die Installation leicht durchzuführen und kann über einen Klick auf den Download-Button gestartet werden.
+Im Gegensatz dazu lässt sich eine PWA in Safari auf einem MacOS-System nicht installieren. Möchte man die PWA auf einem MacOS-Rechner installieren, muss deshalb ein anderer Browser wie beispielsweise Google Chrome installiert werden. Über diesen kann die Installation der PWA nicht nur auf Windows, sondern auch auf MacOS durchgeführt werden.
+Unter Safari auf einem iOS-Gerät lässt sich eine PWA wiederum installieren. Android unterstützt die Installierbarkeit einer PWA ebenfalls. Nach Öffnen der Anwendung wird der Benutzer direkt gefragt, ob er die Anwendung installieren möchte. Der Aufwand der Installation auf einem iOS-Gerät ist etwas größer als auf einem Android-Gerät, da weitere Einstellungen in der App-Entwicklung vorgenommen werden müssen, dennoch erhält man mit einigen Schritten mehr dasselbe Ergebnis.
+Insgesamt lässt sich sagen, dass Google Chrome sowohl auf Windows und Android als auch auf MacOS die Installation recht leicht und intuitiv gestaltet während sie von Safari nicht reibungslos unterstützt wird. Dennoch lassen sich auch hier über einige Umwege PWAs installieren. 
+
+\section{Zugriff auf Geräteschnittstellen}
+Der Zugriff auf die Geräteschnittstellen stellt weder auf den Betriebssystemen noch in den Browsern Probleme dar. Sowohl die Geolocation als auch der Kamerazugriff funktionieren einwandfrei.
+
+\section{Netzwerkunabhängigkeit}
+Die Netzwerkunabhängigkeit wird von Google Chrome auf MacOS, Windows und Android sowie Safari auf MacOS unterstützt. Für diese Plattformen werden die Daten erfolgreich in dem Cache gespeichert werden, wodurch die PWAs offline funktionabel sind.
+Apple beschränkt jedoch die offline-Funktionen einer PWA auf iOS-Geräten. Durch ein Softwareupdate hat Apple eine Zwangslöschung für lokal beschreibbare Speicherfunktionen nach einer gewissen Zeit eingeführt. Eine PWA nutzt diesen lokalen Speicher, um Daten zu sichern. Über einen bestimmten Zeitraum kann die PWA deshalb als solche netzwerkunabhängig benutzt werden, muss nach Löschen der Daten aber erneut in den Cache geladen werden.
+
+\section{Push-Notifications}
+PWA-eigene Push-Nachrichten sind nur für Chrome auf MacOS, Windows und Android verfügbar. Safari auf MacOS- und iOS-Geräten lässt dies jedoch nicht zu. Es ist zwar möglich, Push-Nachrichten zu erhalten, diese stammen jedoch von dem Apple-Service Safari Push Notifications. 
+
+\section{Apple und Google im Vergleich}
+Apple unterstützt die Entwicklung von PWAs nicht. PWAs stellen eine Möglichkeit dar, um Apps für das iPhone zu installieren, die nicht aus dem App Store stammen. Apple erhält 30\% Provision, wenn Apps gekauft oder In-App-Käufe abgeschlossen werden und hat dadurch im Jahr 2020 allein mit dem App Store einen Umsatz von 643 Milliarden US-Dollar erwirtschaftet \cite{Kirchenbauer2021}. Durch den Einsatz von PWAs könnten diese Einnahmen reduziert werden.
+Google hingegen ist maßgeblich an der Entwicklung von PWAs beteiligt. Dementsprechend funktionieren diese innerhalb des Google-Ökosystems am besten. Besonders gut ist die Unterstützung der PWAs bei der Installation zu beobachten. In Google Chrome wird nur ein Klick auf den sehr präsenten Button in der Suchleiste benötigt. Unter Android wird der Anwender aktiv gefragt, ob er die PWA installieren möchte. Auch sämtliche Funktionen wie Push-Notifications, Caching und der Zugriff auf Geräteschnittstellen werden vollumfänglich unterstützt.
+Google unterstützt nicht nur die Anwender von PWAs sondern auch die Entwickler. In dem von Google entwickelten Webframework Angular benötigt es nur wenige Befehle, um eine bereits existierende Angular-Webanwendung in eine PWA umzusetzen. 
+
+
+
+\chapter{Ausblick}
+Obwohl PWAs nicht vollumfänglich innerhalb des Apple-Ökosystems verwendet werden können, ist es wahrscheinlich, dass sie in Zukunft immer mehr an Bedeutung gewinnen werden. Durch die Entwicklung einer PWA ist man in der Lage, eine Anwendung für den Rechner, das Web und das Smartphone zu entwickeln und zu installieren. Dabei vereinen sich die Vorteile einer responsiven Website mit denen einer nativen App.
