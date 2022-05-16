@@ -3,52 +3,122 @@
 
 Die Funktionalitäten der Progressiven Webanwendungen sollen durch das folgende Diagramm mit einzelnen Use Cases beschrieben werden.
 
-\begin{figure}
+\begin{figure}[!htb]
     \centering
     \includegraphics[width=\textwidth]{uc.jpeg}
     \caption{UML-Use-Case-Diagramm der Anwendung}
     \label{img:uc}
 \end{figure}
 
-UC-1:
-Startet man die Progressive Web App gelangt man zunächst zum Login, da sich ein Benutzer einloggen muss, um die PWA verwenden zu können. Hier muss ein Benutzer seinen Benutzernamen sowie sein Passwort eingeben.
+\clearpage
 
-Login-Bild
+UC-1:
+Startet man die Progressive Web App gelangt man zunächst zum Login, da sich ein Benutzer einloggen muss, um die PWA verwenden zu können. Hier muss ein Benutzer seinen Benutzernamen sowie sein Passwort eingeben, Abbildung \ref{uc1}.
+
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=\textwidth]{ucLogin.png}
+    \caption{UC-1: Login}
+    \label{uc1}
+\end{figure}
+
+\clearpage
 
 UC-2: 
-Hat man noch keinen User angelegt, kann man sich neu registrieren. Bei Klicken des \texttt{Create an account}-Buttons wird man auf eine neue Seite geleitet, um dort einen User anzulegen. Dafür muss ein Benutzername und ein Passwort gewählt werden. Nachdem das Passwort wiederholt wurde, kann man sich anmelden und hat einen neuen User registriert. 
+Hat man noch keinen User angelegt, kann man sich neu registrieren. Bei Klicken des \texttt{Create an account}-Buttons wird man auf eine neue Seite geleitet, um dort einen User anzulegen. Dafür muss ein Benutzername und ein Passwort gewählt werden. Nachdem das Passwort wiederholt wurde, kann man sich anmelden und hat einen neuen User registriert, Abbildung \ref{uc2}. 
 
-Registrierung-Bild
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=\textwidth]{ucReg.png}
+    \caption{UC-2: Registrierung}
+    \label{uc2}
+\end{figure}
 
-Die folgenden Use Cases basieren auf einer erfolgreichen Anmeldung. Nach der Anmeldung gelangt man auf die Hauptseite.
+\clearpage
 
-Hauptseite-Bild
+Die folgenden Use Cases basieren auf einer erfolgreichen Anmeldung. Nach der Anmeldung gelangt man auf die Hauptseite, Abbildung \ref{uchome}.
+
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=\textwidth]{ucHome.png}
+    \caption{Hauptseite der Anwendung}
+    \label{uchome}
+\end{figure}
+
+\newpage
 
 UC-3: 
-Durch das Upload-Icon am unteren rechten Rande der PWA kann ein Benutzer selbst Posts hochladen und sie anderen anzeigen lassen. Durch klicken des Icons gelangt man auf eine neue Seite. Dort lässt sich ein Bild per Drag and Drop in ein Feld ziehen, das im Anschluss gepostet werden kann. \\
+Durch das Upload-Icon am unteren rechten Rande der PWA kann ein Benutzer selbst Posts hochladen und sie anderen anzeigen lassen. Durch klicken des Icons gelangt man auf eine neue Seite. Dort lässt sich ein Bild per Drag and Drop in ein Feld ziehen, das im Anschluss gepostet werden kann, Abbildung \ref{uc3}. \\
+
+
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=\textwidth]{ucUpload.png}
+    \caption{UC-3: Ein Foto per Drag and Drop hochladen.}
+    \label{uc3}
+\end{figure}
+
+\newpage
 
 UC-4:
-Über das Herz-Icon unterhalb des Bildes, das zu sehen ist, kann ein Benutzer den Post liken, der ihm gerade angezeigt wird.\\
+Über das Herz-Icon unterhalb des Bildes, das zu sehen ist, kann ein Benutzer den Post liken, der ihm gerade angezeigt wird, Abbildung \ref{uc4}.\\
+
 
 UC-5:
-Am rechten oberen Rand des Herz-Icons ist eine Zahl sichtbar, die aussagt, wie viele Likes der Post bereits erhalten hat.\\
+Am rechten oberen Rand des Herz-Icons ist eine Zahl sichtbar, die aussagt, wie viele Likes der Post bereits erhalten hat, Abbildung \ref{uc4}.\\
+
+\begin{figure}[!htb]
+    \centering
+    \includegraphics{ucLikes.png}
+    \caption{UC-4 und UC-5: Herz-Icon um ein Foto zu Liken und sich Likes anzeigen zu lassen}
+    \label{uc4}
+\end{figure}
+
+\newpage
 
 UC-6:
-Neben dem Herz-Icon befindet sich das Kommentar-Icon, eine Sprechblase, über das man den Bereich der Kommentare erreichen kann. Klickt man darauf, wird man zu einer neuen Seite geleitet, auf der die Kommentare anderer User zu diesem Post zu sehen sind. \\
+Neben dem Herz-Icon befindet sich das Kommentar-Icon, eine Sprechblase, über das man den Bereich der Kommentare erreichen kann. Klickt man darauf, wird man zu einer neuen Seite geleitet, auf der die Kommentare anderer User zu diesem Post zu sehen sind, Abbildung \ref{uc6}. \\
 
+    
 UC-7:
-Ebenso kann man auf der Kommentar-Seite unten in einem Schreibfeld selbst einen Kommentar eingeben und über \texttt{send} posten.
+Ebenso kann man auf der Kommentar-Seite unten in einem Schreibfeld selbst einen Kommentar eingeben und über \texttt{send} posten, Abbildung \ref{uc6}.
 
-Kommentar-Bild
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=\textwidth]{ucKommentare.png}
+    \caption{UC-6 und UC-7: Kommentare zu einem Foto anzeigen lassen und ein Kommentar erstellen}
+    \label{uc6}
+\end{figure}
+
+\newpage
+
 
 UC-8:
-Auf der Hauptseite kann man mit den Pfeilen, die sich am linken und rechten Rand des angezeigten Bildes befinden, zu anderen Posts wechseln und sich neue Bilder anzeigen lassen.\\
+Auf der Hauptseite kann man mit den Pfeilen, die sich am linken und rechten Rand des angezeigten Bildes befinden, zu anderen Posts wechseln und sich neue Bilder anzeigen lassen, \ref{uchome}.\\
 
 UC-9:
-Über das Geolocation-Icon kann man sich die aktuelle Position des Benutzers anzeigen lassen. Diese beinhaltet Längen- und Breitengrad.\\
+Über das Geolocation-Icon kann man sich die aktuelle Position des Benutzers anzeigen lassen. Diese beinhaltet Längen- und Breitengrad, \ref{uc9}.\\
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=\textwidth]{ucGeo.png}
+    \caption{UC-9: Den aktuellen Position in Längen- und Breitengrad anzeigen lassen.  }
+    \label{uc9}
+\end{figure}
+
+\newpage
 
 UC-10:
-Durch Klicken auf das Kamera-Icon kann ein Benutzer über die PWA auf die geräteintegrierte Kamera zugreifen und Bilder aufnehmen.\\
+Durch Klicken auf das Kamera-Icon kann ein Benutzer über die PWA auf die geräteintegrierte Kamera zugreifen und Bilder aufnehmen, Abbildung \ref{uc10}.\\
+
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=\textwidth]{ucKamera.png}
+    \caption{UC-10: Zugriff auf die Kamera des Endgerätes}
+    \label{uc10}
+\end{figure}
+
 
 UC-11:
 Durch Klicken auf den \texttt{SUBCRIBE TO PUSH}-Button in der rechten oberen Ecke der Hauptseite kann der Benutzer Push-Nachrichten aktivieren.
+
+
