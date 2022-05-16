@@ -1,17 +1,54 @@
 %!TEX root = ../../main.tex
 \chapter{Funktionalitäten}
 
-Startet man die Progressive Web App gelangt man zunächst zum Login. Hier muss man den eigenen Benutzernamen sowie das Passwort eingeben, um weiter zu gelangen. Hat man noch keinen User angelegt, kann man sich neu registrieren. Bei Klicken des \texttt{Create an account}-Buttons wird man auf eine neue Seite geleitet, um dort einen User anzulegen. Dafür muss ein Benutzername und ein Passwort gewählt werden. Nachdem das Passwort wiederholt wurde, kann man sich anmelden und hat einen neuen User registriert.
-
-Auf der Hauptseite befindet sich in der Mitte ein Bild, das von einem User in die PWA hochgeladen wurde. Darunter kann man über das Herz den Post liken sowie die Anzahl der Likes, die das Bild bereits erhalten hat, sehen. Daneben befindet sich eine Sprechblase, über die man den Bereich der Kommentare erreichen kann. Klickt man darauf, wird man zu einer neuen Seite geleitet, auf der die Kommentare anderer User zu diesem Post zu sehen sind. Ebenso kann man unten in einem Schreibfeld selbst einen Kommentar eingeben und über \texttt{send} posten. Klickt man erneut auf die Sprechblase, gelangt man zurück zur Hauptseite. Hier kann man mit den Pfeilen, die sich am linken und rechten Rand des Bildes befinden, zu anderen Posts wechseln und sich neue Bilder anzeigen lassen.
-
-Außerdem kann man rechts oben über den \texttt{Subscribe to push}-Button Push-Nachrichten aktivieren. 
-
-Zuletzt kann man - sofern man angemeldet ist - selbst Posts hochladen und sie anderen anzeigen lassen. Dazu wählt man das Upload-Icon im unteren rechten Rand der PWA aus und gelangt auf eine neue Seite. Dort lässt sich per Drag and Drop ein Bild reinziehen, das im Anschluss gepostet werden kann. 
+Die Funktionalitäten der Progressiven Webanwendungen sollen durch das folgende Diagramm mit einzelnen Use Cases beschrieben werden.
 
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{uc.jpeg}
-    \caption{UML use case Diagramm der Anwendung}
+    \caption{UML-Use-Case-Diagramm der Anwendung}
     \label{img:uc}
 \end{figure}
+
+UC-1:
+Startet man die Progressive Web App gelangt man zunächst zum Login, da sich ein Benutzer einloggen muss, um die PWA verwenden zu können. Hier muss ein Benutzer seinen Benutzernamen sowie sein Passwort eingeben.
+
+Login-Bild
+
+UC-2: 
+Hat man noch keinen User angelegt, kann man sich neu registrieren. Bei Klicken des \texttt{Create an account}-Buttons wird man auf eine neue Seite geleitet, um dort einen User anzulegen. Dafür muss ein Benutzername und ein Passwort gewählt werden. Nachdem das Passwort wiederholt wurde, kann man sich anmelden und hat einen neuen User registriert. 
+
+Registrierung-Bild
+
+Die folgenden Use Cases basieren auf einer erfolgreichen Anmeldung. Nach der Anmeldung gelangt man auf die Hauptseite.
+
+Hauptseite-Bild
+
+UC-3: 
+Durch das Upload-Icon am unteren rechten Rande der PWA kann ein Benutzer selbst Posts hochladen und sie anderen anzeigen lassen. Durch klicken des Icons gelangt man auf eine neue Seite. Dort lässt sich ein Bild per Drag and Drop in ein Feld ziehen, das im Anschluss gepostet werden kann. \\
+
+UC-4:
+Über das Herz-Icon unterhalb des Bildes, das zu sehen ist, kann ein Benutzer den Post liken, der ihm gerade angezeigt wird.\\
+
+UC-5:
+Am rechten oberen Rand des Herz-Icons ist eine Zahl sichtbar, die aussagt, wie viele Likes der Post bereits erhalten hat.\\
+
+UC-6:
+Neben dem Herz-Icon befindet sich das Kommentar-Icon, eine Sprechblase, über das man den Bereich der Kommentare erreichen kann. Klickt man darauf, wird man zu einer neuen Seite geleitet, auf der die Kommentare anderer User zu diesem Post zu sehen sind. \\
+
+UC-7:
+Ebenso kann man auf der Kommentar-Seite unten in einem Schreibfeld selbst einen Kommentar eingeben und über \texttt{send} posten.
+
+Kommentar-Bild
+
+UC-8:
+Auf der Hauptseite kann man mit den Pfeilen, die sich am linken und rechten Rand des angezeigten Bildes befinden, zu anderen Posts wechseln und sich neue Bilder anzeigen lassen.\\
+
+UC-9:
+Über das Geolocation-Icon kann man sich die aktuelle Position des Benutzers anzeigen lassen. Diese beinhaltet Längen- und Breitengrad.\\
+
+UC-10:
+Durch Klicken auf das Kamera-Icon kann ein Benutzer über die PWA auf die geräteintegrierte Kamera zugreifen und Bilder aufnehmen.\\
+
+UC-11:
+Durch Klicken auf den \texttt{SUBCRIBE TO PUSH}-Button in der rechten oberen Ecke der Hauptseite kann der Benutzer Push-Nachrichten aktivieren.
