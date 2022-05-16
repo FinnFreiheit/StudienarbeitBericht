@@ -4,7 +4,18 @@
 Um Daten zu speichern, gibt es verschiedene Lösungsansätze. Generell unterscheidet man zwischen den SQL- und NoSQL-Datenbankansätzen. Die Abkürzung \glqq SQL\grqq{} steht dabei für die \glqq Sequel Query Language\grqq{}, die zur Abfrage von relationalen Datenbanken genutzt wird. Im Gegensatz dazu umfasst der Begriff \glqq NoSQL\grqq{} – ausgeschrieben \glqq Not only SQL\grqq{} – jene Datenbanksysteme, die nicht den relationalen Ansätzen entsprechen \cite{eins}.
 
 \section{SQL}
-Spricht man von SQL-Datenbankansätzen, ist die Rede von Relationalen-Datenbank-Management-Systemen (RDBMS). Innerhalb eines RDBMS werden die Daten strukturiert in Tabellen gespeichert, wobei jede Spalte über einen spezifischen Typ verfügt. Systeme relationaler Datenbanken basieren auf dem Konzept sogenannter ACID-Transaktionen.
+Spricht man von SQL-Datenbankansätzen, ist die Rede von Relationalen-Datenbank-Management-Systemen (RDBMS), denen Relationen zugrunde liegen. Relationen sind Tupel, die durch Attribute beschrieben werden. Ein Tupel enthält einen Schlüssel sowie einen dazugehörigen Wert.
+Innerhalb eines RDBMS werden die Daten strukturiert in Tabellen gespeichert. In diesen Tabellen stellt jede Zeile einen Datensatz gekennzeichnet durch einen einzigartigen Schlüssel dar, wobei jede Spalte über ein Attribut dieses Schlüssels verfügt. Damit besteht jede Zeile aus mehreren Tupeln, deren Schlüssel immer derselbe ist. Innerhalb der Tabellen kann mit SQL-Befehlen wie \texttt{SELECT} oder \texttt{INSERT} gearbeitet werden, um Werte abzurufen oder einzufügen. Eine Abfrage könnte folgendermaßen aussehen:
+
+\begin{lstlisting}[caption=SQL SELECT-Abfrage, label=lst:selectabfrage,float=!htb]
+    USE PWA
+    SELECT *
+    FROM User
+\end{lstlisting}    
+    
+In diesem Beispiel werden alle Zeilen und Spalten über \texttt{*} aus einer Tabelle \texttt{User} abgerufen.\\
+
+Systeme relationaler Datenbanken basieren auf dem Konzept sogenannter ACID-Transaktionen.
 
 \subsection{ACID}
 
@@ -14,7 +25,7 @@ Unter atomar versteht man die Aussage, dass entweder alle Änderungen, die währ
 
 \section{NoSQL}
 
-NoSQL-Datenbankansätze basieren nicht auf dem Konzept der ACID-Transaktionen. Ihre Charakteristik liegt in der Speicherung von semi- bis hin zu unstrukturierten Daten. Dadurch verfügen sie über ein flexibles Datenmodell und werden gerne für große Datenmengen im Internet verwendet \cite[S.13]{zwei}. Anstelle des ACID-Konzepts liegt die Grundlage der nichtrelationalen Datenbanksysteme in dem BASE-Konzept. Um dieses jedoch verstehen zu können, muss zuerst ein Überblick über das CAP-Theorem verschafft werden.
+Not-only-SQL-Datenbankansätze basieren nicht auf dem Konzept der ACID-Transaktionen. Ihre Charakteristik liegt in der Speicherung von semi- bis hin zu unstrukturierten Daten. Diese werden in Form von Schlüssel-Wert-Paaren gesichert. Dadurch verfügen NoSQL-Datenbanken über ein flexibles Datenmodell und werden gerne für große Datenmengen im Internet verwendet \cite[S.13]{zwei}. Anstelle des ACID-Konzepts liegt die Grundlage in dem CAP-Theorem.
 Das Kürzel \texttt{CAP} steht für die Bedingungen Konsistenz, Verfügbarkeit und Teilungstoleranz (eng: Consistency, Availability, Partion Tolerance). Die Konsistenz bedeutet auch hier den einheitlichen Zustand der Daten nach Durchführung einer Transaktion. Unter der Verfügbarkeit versteht man die durchgängige Erreichbarkeit des Systems. Die Teilungstoleranz sagt aus, dass das System auch weiterfunktionieren kann, sollte es auf Gruppen von Servern aufgeteilt werden, die nicht in der Lage sind, miteinander zu kommunizieren, siehe Abbildung \ref{img:ConAvaPar}. 
 
 \begin{figure}[!htb]
@@ -24,7 +35,7 @@ Das Kürzel \texttt{CAP} steht für die Bedingungen Konsistenz, Verfügbarkeit u
     \label{img:ConAvaPar}
 \end{figure}
 
-Laut dem Theorem können jedoch immer nur zwei der drei Bedingungen gleichzeitig erfüllt werden \cite[S.15f]{zwei}. NoSQL möchte vor allem immer verfügbar sein. Im Notfall verzichtet eine NoSQL-Datenbank zuerst auf die Konsistenz der Daten, bevor die Verfügbarkeit eingeschränkt wird. SQL-Datenbanken dagegen stellen die Konsistenz in den Vordergrund. Bevor diese verloren geht, wird auf die Verfügbarkeit verzichtet.
+Laut dem Theorem können immer nur zwei der drei Bedingungen gleichzeitig erfüllt werden \cite[S.15f]{zwei}. NoSQL hat den Anspruch, immer verfügbar zu sein. Im Notfall verzichtet eine NoSQL-Datenbank zuerst auf die Konsistenz der Daten, bevor die Verfügbarkeit eingeschränkt wird. SQL-Datenbanken dagegen stellen die Konsistenz in den Vordergrund. Bevor diese verloren geht, wird auf die Verfügbarkeit verzichtet.
 
 \subsection{Modelle}
 
