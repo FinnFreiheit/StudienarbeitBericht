@@ -29,7 +29,9 @@ Ein junges Startup aus IT-Studenten hat eine Idee für eine Applikation und möc
 
 Wie man anhand der Tabelle sehen kann, kommt eine Vielzahl an unterschiedlichen Programmiersprachen zum Einsatz, um die Applikation über mehrere Plattformen zu verbreiten. Jedoch verfügt das junge Startup nicht über die benötigten Kapazitäten, um die Applikation in jeder dieser Programmiersprachen implementieren und warten zu können. 
 
-Damit die Applikation dennoch an möglichst viele Kunden gelangt, sucht das Startup nach einer anderen Lösung, um die aufwendige Implementierung zu umgehen. Dabei kommt die Idee auf, eine \ac{PWA} zu entwickeln. Eine PWA ist eine Webanwendung mit erweiterten Funktionen. Die Besonderheit liegt darin, dass sie - einmal implementiert - auf sämtliche Plattformen installiert werden kann. Dadurch ist sie plattformunabhängig und die Verwendung sämtlicher Programmiersprachen könnte umgangen werden.
+Damit die Applikation dennoch an möglichst viele Kunden gelangt, sucht das Startup nach einer anderen Lösung, um die aufwendige Implementierung zu umgehen. Dabei kommt die Idee auf, eine \ac{PWA} zu entwickeln. Eine PWA ist eine Webanwendung, die wichtige Merkmale nativer Apps enthält. Neben der Erfüllung der wichtigsten Anforderungen, die an Apps gestellt werden, liegt die Besonderheit darin, dass sie - einmal implementiert - auf sämtlichen Plattformen installiert werden kann. Dadurch ist sie plattformunabhängig und die Verwendung sämtlicher Programmiersprachen kann umgangen werden.
+
+Für die Programmierung einer PWA werden lediglich HTML, CSS und JavaScript benötigt. Die Verwendung von JavaScript macht die Entwicklung von PWAs besonders attraktiv, da die Programmiersprache laut einer Umfrage von Stack Overflow bereits seit neun Jahren in Folge die Beliebteste ist. Im Jahr 2021 haben 64\% der befragten Entwickler angegeben, JavaScript zu verwenden. Im Gegensatz dazu verwendeten nur 35\% Java, 27\% C\# und 5\% Swift \cite{stackoverflow2021}. 
 
 
 \section{Problemstellung}\label{Problemstellung}
@@ -43,6 +45,10 @@ Hierfür wird eine Applikation entwickelt, die die Grundfunktionen einer PWA imp
      \item offline verfügbar sein und
      \item Push-Benachrichtigungen ermöglichen. 
  \end{itemize}
+ 
+Diese vier Charakteristika sind Grundlage für eine PWA, die eine relevante Alternative zu nativen Apps darstellen soll. Anhand dieser muss geprüft werden, wie fortgeschritten die Entwicklung von PWAs im Moment ist. Mithilfe der Ergebnisse soll die Frage beantwortet werden, ob PWAs reif genug sind, um native Anwendungen langfristig von dem Markt zu verdrängen. 
+
+Neben den Möglichkeiten sollen jedoch auch die Grenzen aufgezeigt werden, die bei der Umsetzung von PWAs deutlich werden. Dazu zählen jene, die im Bereich der Funktionalitäten auftreten können, aber auch diejenigen, welche durch Unternehmen gesetzt werden. Dabei wird es vor allem wichtig, zwei der größten Unternehmen - Apple und Google - im Vergleich zu betrachten und herauszufinden, in wie weit die Entwicklung von PWAs unterstützt oder auch behindert wird.
 
 Im Anschluss wird die Anwendung auf jenen Plattformen ausgeführt, die in Tabelle \ref{plattformen} aufgeführt sind. Dabei wird untersucht, ob alle beschriebenen Funktionalitäten vorhanden und voll ausführbar sind. 
 
@@ -86,4 +92,4 @@ Für das Frontend wird das Web-Framework Angular verwendet, dessen Eigenschaften
 Um die Verbindung von Frontend und Backend herzustellen, benötigt man einen Server, der das Routing von Anfragen übernimmt. Dazu kommt Node.js zum Einsatz. Speziell das Modul Express soll beschrieben werden, da über jenes das Routing – teils auch über Middleware – übernommen wird.
 Nachdem der aktuelle technische Stand des Aufbaus einer Webpage erläutert wurde, soll im Anschluss darauf eingegangen werden, wie man aus einer normalen Webanwendung eine PWA entwickeln kann. Web App Manifests, Service Workers und Push Notifications sind dabei wichtige Elemente, die beschrieben werden müssen, um alle Grundlagen einer PWA zusammenzufassen. \\
 Nach Schaffen der technischen Grundlagen sollen diese praktisch umgesetzt werden. Dazu soll zunächst bestimmt werden, was die Webanwendung können soll. Dazu gehört das Layout der Anwendung, die Optionen, welche man während der Anwendung ausführen kann sowie die Reaktionen des Backends. Um die Antworten des Backends auf die Anfragen des Frontends umzusetzen, müssen die zugehörigen Requests und Callback-Funktionen im Backend erstellt werden. Um die Webanwendung später als eine PWA installieren, das heißt sie offline verwenden und Daten speichern zu können, müssen im Anschluss Service Workers und Web App Manifests eingebunden werden.\\
-Nach Fertigstellen der App soll diese auf verschiedenen Geräten und in verschiedenen Browsern installiert und bewertet werden. Ein kritischer Blick muss vor allem auf die Offline-Funktionalitäten, das Caching von Daten und die Push-Nachrichten geworfen werden. 
+Nach Fertigstellen der App soll diese auf verschiedenen Geräten und in verschiedenen Browsern installiert und bewertet werden. Ein kritischer Blick muss vor allem auf die Offline-Funktionalitäten, den Zugriff auf Geräteschnittstellen, die Installierbarkeit und die Push-Nachrichten geworfen werden. 
