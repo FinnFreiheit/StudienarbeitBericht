@@ -3,31 +3,31 @@
 
 \section{Registrierung}
 
-Damit die Webanwendung Push-Nachrichten empfangen kann, muss sie sich vorab beim Push-Dienst registrieren. Die Registrierung erfordert das Einverständnis des Anwenders. 
-Um das Anwendererlebnis zu verbessern, wird dieser nicht direkt danach gefragt sondern kann über den Button \texttt{SUBSCRIBE TO PUSH} die Registrierung anstoßen, siehe Abbildung~\ref{img:permissionPush}. Um das Konzepte von Progressive Enhancement einzuhalten, wird der Button nur den Nutzern angezeigt, dessen Browser über die nötigen Funktionalitäten verfügt um Push-Nachrichten empfangen zu können. Hierfür wird der Button über eine \texttt{*ngIf}-Strukturdirektive ein- bzw ausgeblendet (Abschitt \ref{sec:Strukturdirektive}), je nach dem, ob der Browser über ein \texttt{PushManager} verfügt oder nicht. 
+Damit die Webanwendung Push-Nachrichten empfangen kann, muss sie sich vorab bei dem Push-Dienst registrieren. Die Registrierung erfordert das Einverständnis des Anwenders. 
+Um das Anwendererlebnis zu verbessern, wird dieser nicht direkt danach gefragt, sondern kann über den Button \texttt{SUBSCRIBE TO PUSH} die Registrierung anstoßen, siehe Abbildung~\ref{img:permissionPush}. Um das Konzept von Progressive Enhancement einzuhalten, wird der Button nur den Nutzern angezeigt, deren Browser über die nötigen Funktionalitäten verfügt um Push-Nachrichten empfangen zu können. Hierfür wird der Button über eine \texttt{*ngIf}-Strukturdirektive ein- bzw ausgeblendet (Abschitt \ref{sec:Strukturdirektive}), jenachdem, ob der Browser über einen \texttt{PushManager} verfügt oder nicht. 
 
 \begin{figure}[!htb]
     \centering
     \includegraphics[scale=0.4]{permissionPush.png}
-    \caption{Nutzerabfrage um Push-Nachrichten versenden zu können. Abfrage erfolgt erst nachdem der Button \texttt{SUBSCRIBE TO PUSH} in der oberen Navigationsleiste ausgewählt wurde.}
+    \caption{Nutzerabfrage, um Push-Nachrichten versenden zu können. Abfrage erfolgt erst, nachdem der Button \texttt{SUBSCRIBE TO PUSH} in der oberen Navigationsleiste ausgewählt wurde.}
     \label{img:permissionPush}
 \end{figure}
 
 Der Button ist mithilfe eines Event Bindings (Abschitt \ref{subsec:eventBinding}) an die Funktion \linebreak\texttt{subscribeToNotifications()} verknüpft. Da es sich bei der Anwendung um ein Angluar Projekt handelt, 
-wird die Registrierung über die \texttt{SwPush}-Klasse durchgeführt (Listing \ref{lst:subscribeFkt} Zeile 2) die mithilfe von dependency injection über den Konstruktor geladen wurde. Wie in Abschnitt \ref{sec:pushRegistrirung} beschrieben wird die Push-Kommunikation durch das VAPID-Protokoll verschlüsselt. Hierfür muss bei der Registrierung der öffentliche Schlüssel übergeben werden (Listing \ref{lst:subscribeFkt} Zeile 3). Anders als in Abschnitt \ref{sec:pushRegistrirung} beschrieben, ist der Standartwert der Eigenschaft \texttt{userVisibleOnly}, aus dem Konfigurationsobjekt, \texttt{true}. Diese Einstellung wird von der Klasse \texttt{SwPush} vorgenommen. 
+wird die Registrierung über die \texttt{SwPush}-Klasse durchgeführt (Listing \ref{lst:subscribeFkt} Zeile 2), die mithilfe von dependency injection über den Konstruktor geladen wird. Wie in Abschnitt \ref{sec:pushRegistrirung} beschrieben, wird die Push-Kommunikation durch das VAPID-Protokoll verschlüsselt. Hierfür muss bei der Registrierung der öffentliche Schlüssel übergeben werden (Listing \ref{lst:subscribeFkt} Zeile 3). Anders als in Abschnitt \ref{sec:pushRegistrirung} beschrieben, ist der Standardwert der Eigenschaft \texttt{userVisibleOnly} aus dem Konfigurationsobjekt \texttt{true}. Diese Einstellung wird von der Klasse \texttt{SwPush} vorgenommen. 
 
-Ist die Registrierung erfolgreich wird ein Objekt von typ \texttt{PushSubscription} zurückgegeben. 
+Ist die Registrierung erfolgreich, wird ein Objekt von typ \texttt{PushSubscription} zurückgegeben. 
 Das Objekt verfügt über folgende Eigenschaften: 
 \begin{itemize}
     \item \textbf{endpoint}: Hinter dieser Eigenschaft befindet sich eine einzigartige URL, die für die Kommunikation mit dem Push-Dienst verwendet wird. 
     \item \textbf{expirationTime}: Durch diese Eigenschaft können Nachrichten versendet werden, die nur für einen bestimmten Zeitraum gelten. 
     \item \textbf{keys}: Enthält Informationen, um die Nachrichten zu entschlüsseln. 
 \end{itemize}
-Dieses Objekt muss im Anschluss über ein HTTP-Request an das Backend gesendet werden (Listing \ref{lst:subscribeFkt} Zeile 7-8). Hierbei wird die Kommunikation mit dem Backend in einem \texttt{Service} Ausgelagert. 
+Dieses Objekt muss im Anschluss über ein HTTP-Request an das Backend gesendet werden (Listing \ref{lst:subscribeFkt} Zeile 7-8). Hierbei wird die Kommunikation mit dem Backend in einem \texttt{Service} ausgelagert. 
 
 Falls die Registrierung erfolglos war, wird in der \texttt{catch}-Methode des Promises der Fehler auf der Konsole ausgegeben (siehe Listing \ref{lst:subscribeFkt} Zeile 11). 
 
-Nach der Registrierung und dem Versenden des \texttt{PushSubscription} Objektes an das Backend müssen keine weiteren Vorkehrungen im Frontend vorgenommen werden. 
+Nach der Registrierung und dem Versenden des \texttt{PushSubscription} Objektes an das Backend müssen keine weiteren Vorkehrungen im Frontend unternommen werden. 
 
 \begin{lstlisting}[caption={Funktion zur Registrierung beim Push-Dienst},label = lst:subscribeFkt,  float=!htb]
 subscribeToNotifications(){
@@ -49,9 +49,9 @@ subscribeToNotifications(){
 
 Im Backend werden zwei \texttt{post}-Endpunkte implementiert. Der Subscription Endpunkt wird verwendet, um das \texttt{PushSubScription} Objekt entgegenzunehmen. Das Objekt wird in einer Datenbank gespeichert. 
 
-Der zweite Endpunkt wird verwendet um Push-Notifikations anzustoßen. Das Backend benutzt die Web-Push Bibliothek um allen Registrierten Klienten eine Push-Nachricht zu senden.  Die \texttt{sendNotifikation}-Methode der Web-Push Bibliothek benötigt ein Payload und ein \texttt{PushSubScription}-Objekt. Im Payload werden die Informationen angegeben, die in der Push-Nachricht angezeigt werden, hierbei muss mindestens ein Title und eine Nachricht vorhanden sein, siehe Listing \ref{lst:payload}. 
+Mit dem zweiten Endpunkt werden verwendet um Push-Notifications angestoßen. Das Backend benutzt die Web-Push-Bibliothek, um allen registrierten Klienten eine Push-Nachricht zu senden.  Die \texttt{sendNotifikation}-Methode der Web-Push-Bibliothek benötigt einen Payload und ein \texttt{PushSubScription}-Objekt. Der Payload enthält die Informationen, die in der Push-Nachricht angezeigt werden, Hierbei muss mindestens ein Title und eine Nachricht vorhanden sein, siehe Listing \ref{lst:payload}. 
 
-\begin{lstlisting}[caption={Mindestanforderung an ein Payload, für eine Push-Nachricht}, label=lst:payload, float=!htb]
+\begin{lstlisting}[caption={Mindestanforderung an einen Payload für eine Push-Nachricht}, label=lst:payload, float=!htb]
     const notificationPayload = {
         notification: {
             title: 'Neue Notification',
@@ -60,8 +60,8 @@ Der zweite Endpunkt wird verwendet um Push-Notifikations anzustoßen. Das Backen
     }
 \end{lstlisting}
 
-Die Web-Push Methode, verschlüsselt die Nachricht vor dem Versenden, hierfür müssen die VAPID-Schlüsselpaare der Methode \texttt{webpush.setVapidDetails()} übergeben werden. 
-Wird nun eine HTTP-Post Anfrage an diesen Endpunkt gesendet, iteriert die Funktion über alle in der Datenbank gespeicherten \texttt{PushSubscription}-Objekte und sendet über die \texttt{sendNotifikation}-Methode den verschlüsselten Payload. Alle registrierten Klienten erhalten folgende Mitteilung, siehe Abbildung \ref{img:notificationBanner}.
+Die Web-Push-Methode verschlüsselt die Nachricht vor dem Versenden. Hierfür müssen die VAPID-Schlüsselpaare der Methode \texttt{webpush.setVapidDetails()} übergeben werden. 
+Wird nun eine HTTP-Post-Anfrage an diesen Endpunkt gesendet, iteriert die Funktion über alle in der Datenbank gespeicherten \texttt{PushSubscription}-Objekte und sendet über die \texttt{sendNotifikation}-Methode den verschlüsselten Payload. Alle registrierten Klienten erhalten folgende Mitteilung, siehe Abbildung \ref{img:notificationBanner}.
 
 \begin{figure}[!htb]
     \centering
@@ -71,18 +71,18 @@ Wird nun eine HTTP-Post Anfrage an diesen Endpunkt gesendet, iteriert die Funkti
 \end{figure}
 
 
-Apple unterstützt weder im Browser noch im IOS-Betriebssystem die Push-API. Im Browser Safari ist der Push-Manager nicht implementiert, siehe Abbildung \ref{img:PushManagerBrowser}, somit sind Push-Benachrichtigungen wie unter Google Chrome nicht möglich. 
+Apple unterstützt weder im Browser noch im IOS-Betriebssystem die Push-API. Im Browser Safari ist der Push-Manager nicht implementiert, siehe Abbildung \ref{img:PushManagerBrowser}, weshalb  Push-Benachrichtigungen wie unter Google Chrome nicht möglich sind. 
 
 \begin{figure}[!htb]
     \centering
     \includegraphics[scale=0.4]{PushManagerSafari.png}
-    \caption{Apple Safari verfügt nicht über ein Push-Manager und ist somit nicht in der Lage Push-Nachrichten zu erhalten}
+    \caption{Apple Safari verfügt nicht über einen Push-Manager und ist somit nicht in der Lage, Push-Nachrichten zu erhalten}
     \label{img:PushManagerBrowser}
 \end{figure}
 
 
-Der Browser Safari bietet als Alternative \textit{Safari Push Notifications}. Um Safari Push Notification versenden zu können, muss das Backend mit dem \ac*{APNs} kommunizieren. Die Kommunikation erfolgt jedoch \textbf{nicht} über das standardisierte Web-Push-Protokoll.
+Der Browser Safari bietet als Alternative \textit{Safari Push Notifications}. Um Safari Push Notifications versenden zu können, muss das Backend mit dem \ac*{APNs} kommunizieren. Die Kommunikation erfolgt jedoch \textbf{nicht} über das standardisierte Web-Push-Protokoll.
 
-Die APNs Kommunikation erfordert, das der Entwickler sich beim Apple Developer Programm registriert und eine Push-ID für die Webanwendung anlegt. Anschließend muss der Entwickler ein \ac*{TLS}-Clientzertifikat anfordern. In der Safari Umgebung wird anstelle des \texttt{PushSubscription}-Objektes ein \texttt{Device-Token} erzeugt, um Pushbenachrichtigungen zu versenden. 
+Die APNs Kommunikation erfordert, dass der Entwickler sich bei dem Apple Developer Programm registriert und eine Push-ID für die Webanwendung anlegt. Anschließend muss der Entwickler ein \ac*{TLS}-Clientzertifikat anfordern. In der Safari Umgebung wird anstelle des \texttt{PushSubscription}-Objektes ein \texttt{Device-Token} erzeugt, um Pushbenachrichtigungen zu versenden. 
 
 Es ist somit ein erhöhter Programmieraufwand nötig, um Push-Notifications für Apple-Umgebungen zu realisieren.

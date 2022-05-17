@@ -1,12 +1,12 @@
 %!TEX root = ../../main.tex
 \chapter{Netzwerkunabhängigkeit}
 
-Da eine PWA wie eine Native-App funktionieren soll, muss sie Netzwerkunabhängig ausgeführt werden können. Webanwendung werden nach dem Aufrufen von einem Webserver geladen, dies erfordert eine Netzwerkverbindung zu diesem Webserver. Auch eine PWA brauch ein Netzwerkverbindung, wenn sie das erste mal aufgerufen wird. Bei diesem Aufruf werden jedoch alle Ressourcen, die vom Webserver gesendet werden durch den Service Worker in den Cache gespeichert. 
-Wird die PWA erneut aufgerufen können die Daten jedoch Lokal aus dem Cache bezogen werden. Eine Netzwerkverbindung ist nicht mehr nötig. 
+Da eine PWA wie eine Native-App funktionieren soll, muss sie netzwerkunabhängig ausgeführt werden können. Webanwendung werden nach Aufruf von einem Webserver geladen, was eine Netzwerkverbindung zu diesem Webserver erfordert. Auch eine PWA braucht eine Netzwerkverbindung, wenn sie das erste Mal aufgerufen wird. Bei diesem Aufruf werden jedoch alle Ressourcen, die von dem Webserver gesendet werden, durch den Service Worker in den Cache gespeichert. 
+Wird die PWA erneut aufgerufen, können die Daten jedoch lokal aus dem Cache bezogen werden. Eine Netzwerkverbindung ist nicht mehr nötig. 
 
-Zusätzlich können jedoch auch zur Laufzeit der Anwendung HTTP-Request durchgeführt werden, um zusätzliche Daten zu beziehen. Die entwickelte Anwendung bezieht zum Beispiel sämtliche Kommentare eines Fotos aus einer Datenbank. 
-Damit die Kommentare auch ohne eine Netzwerkverbindung angezeigt werden können, müssen sie im Cache gespeichert werden. Hierfür wurde der Endpunkt zu den Kommentaren in die \texttt{ngsw-conig.json} eingepflegt. 
-Wird dieser Endpunkt aufgerufen wird die Antwort automatisch im Cache gespeichert, siehe Abbildung \ref{img:cacheComment}
+Zusätzlich können jedoch auch zur Laufzeit der Anwendung HTTP-Requests durchgeführt werden, um zusätzliche Daten zu beziehen. Die entwickelte Anwendung bezieht zum Beispiel sämtliche Kommentare eines Posts aus einer Datenbank. 
+Damit die Kommentare auch ohne eine Netzwerkverbindung angezeigt werden können, müssen sie im Cache gespeichert werden. Hierfür wird der Endpunkt zu den Kommentaren in die \texttt{ngsw-conig.json} eingepflegt. 
+Ruft man diesen Endpunkt auf, wird die Antwort automatisch im Cache gespeichert, siehe Abbildung \ref{img:cacheComment}
 
 \begin{figure}[!htb]
     \centering

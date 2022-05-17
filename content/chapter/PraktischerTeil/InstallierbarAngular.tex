@@ -1,9 +1,9 @@
 %!TEX root = ../../main.tex
 \chapter{Installation der PWA}
 
-Dadurch, das die Webanwendung über ein Service Worker und ein Web-Manifest verfügt, kann diese auf dem Endgerät installiert werden. Das von Angular erzeugte Web-Manifest wurde in den Eigenschaften \texttt{theme\_color} und \texttt{backgroud\_color} angepasst, beide Eigenschaften wurden von Blau auf Weiß gesetzt.
+Da die Webanwendung über einen Service Worker und ein Web-Manifest verfügt, kann diese auf dem Endgerät installiert werden. Das von Angular erzeugte Web-Manifest wurde in den Eigenschaften \texttt{theme\_color} und \texttt{backgroud\_color} angepasst, beide Eigenschaften wurden von Blau auf Weiß gesetzt.
 
-Die Installation über Google Chrome erfolgt über den Download-Button in der URL-Suchleiste, siehe Abbildung \ref{img:installChrome}
+Die Installation über Google Chrome erfolgt über den Download-Button in der URL-Suchleiste, siehe Abbildung \ref{img:installChrome}.
 
 \begin{figure}[!htb]
     \centering
@@ -12,7 +12,7 @@ Die Installation über Google Chrome erfolgt über den Download-Button in der UR
     \label{img:installChrome}
 \end{figure}
 
-Die PWA kann nicht über den Apple Safari Browser auf den Rechner installiert werden. Möchte man die PWA auf einem MacOS system installieren muss somit ein zusätzlicher Browser wie zum Beispiel Google Chrome installiert werden. 
+Die PWA kann nicht über den Apple Safari Browser auf dem Rechner installiert werden. Möchte man die PWA auf einem MacOS-System installieren, muss deshalb ein zusätzlicher Browser wie zum Beispiel Google Chrome installiert werden. 
 
 Nachdem die PWA unter Chrome installiert wurde, kann die Applikation unter \textit{Programme} geöffnet werden. Die Desktop-Anwendung der PWA ist in Abbildung \ref{img:desktopPwa} dargestellt.
 
@@ -24,20 +24,20 @@ Nachdem die PWA unter Chrome installiert wurde, kann die Applikation unter \text
 \end{figure}
 
 
-Wird eine PWA unter Android geöffnet, so wird der Anwender direkt gefragt, ob er diese Installieren möchte, siehe Abbildung \ref{img:installAndroid}.
+Wird eine PWA unter Android geöffnet, so wird der Anwender direkt gefragt, ob er diese installieren möchte, siehe Abbildung \ref{img:installAndroid}.
 
 \begin{figure}%
     \centering
     \subfloat[][]{\includegraphics[width=0.4\linewidth]{installAndroid.png}}%
     \qquad
     \subfloat[][]{\includegraphics[width=0.4\linewidth]{installAndroid02.png}}%
-    \caption{PWA installation unter Android}%
+    \caption{PWA Installation unter Android}%
     \label{img:installAndroid}
   \end{figure}
 
-Obwohl die Installation eine PWA über Safari auf MacOS nicht möglich ist, kann diese über Safari auf IOS installiert werden. Jedoch müssen hierfür zusätzliche Einstellungen vorgenommen werden. In dem \texttt{head} der \texttt{index.html} muss der Dateipfad zu dem verwendeten Icon angegeben werden, da dieser nicht aus dem Web-App-Manifest ausgelesen wird. 
+Obwohl die Installation einer PWA über Safari auf MacOS nicht möglich ist, kann diese über Safari auf IOS installiert werden. Jedoch müssen hierfür zusätzliche Einstellungen vorgenommen werden. In dem \texttt{head} der \texttt{index.html} muss der Dateipfad zu dem verwendeten Icon angegeben werden, da dieser nicht aus dem Web-App-Manifest ausgelesen wird. 
 Des weiteren muss in einem \texttt{Meta-Tag} angegeben werden, dass die Webanwendung als App genutzt werden kann. Diese zusätzlichen Angaben ermöglichen es, die Applikation zu installieren. 
-Hierfür kann unter dem \textit{Teilen}-Button die Auswahl \textit{Zum Home-Bildschirm} ausgewählt werden. Nachdem ein Name für die App eingegeben wurde, wird die Anwendung als App zu dem Bildschirm hinzugefügt. In der Folgenden Bilderserien, Abbildung \ref{img:iphone01} bis \ref{img:iphone0n}, sind die einzelnen Schritte aufgezeigt. 
+Hierfür kann unter dem \textit{Teilen}-Button die Auswahl \textit{Zum Home-Bildschirm} ausgewählt werden. Nachdem ein Name für die App eingegeben wurde, wird die Anwendung als App zu dem Bildschirm hinzugefügt. In der folgenden Bilderserie, Abbildung \ref{img:iphone01} bis \ref{img:iphone0n}, sind die einzelnen Schritte aufgezeigt. 
 
 \begin{figure}[!htb]
     \begin{minipage}[b]{.4\linewidth} % [b] => Ausrichtung an \caption
