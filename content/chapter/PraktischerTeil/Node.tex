@@ -187,6 +187,29 @@ In diesem Beispiel kann man eine PATCH-Anfrage erkennen, mit der die Daten eines
 
 In dem letzten Beispiel wird eine DELETE-Anfrage beschrieben. Mit dieser wird über den Endpunkt \texttt{/users/:id} ein User anhand seiner ID gelöscht. Findet der Server diesen User in der Datenbank, kann er ihn löschen und den Success-http-Status \texttt{204} zurücksenden. Im Fehlerfall wird ein Error geworfen und der Error-Status \texttt{404} gesendet.
 
+\subsection{Login}
+Um sich als User einzuloggen, muss man innerhalb des Login-Felds den bei der Registrierung gewählten Usernamen sowie das zugehörige Passwort eingeben. In einem JSON-Objekt werden sowohl Username als auch Passwort an die Datenbank geschickt. Dazu wird folgender API-Request definiert:
+
+\begin{lstlisting}[caption=Login-Request, label=lst:loginrequest,float=!htb]
+    router.get('/users/login', async(req, res) => {
+        try {
+            const user = await User.findOne({ 
+                username: req.body.username,
+                password: req.body.password,
+            });
+            console.log('login request');
+            res.send(user.id);
+        } catch {
+            res.status(401);
+            res.send({
+                error: "Username or password wrong!"
+            });
+        }
+    });
+\end{lstlisting}
+
+Den Usernamen sowie das Passwort kann die Datenbank aus dem Body des JSON-Objekts herauslesen. Anhand dieser wird ein User gesucht, der diese Daten enthält. Ist dies der Fall, wird die ID des Users an den Client zurückgesendet, der damit weiterarbeiten kann. Sollte kein User vorhanden sein, der den eingegeben Usernamen und das Passwort enthält, wird der http-Errorstatus \texttt{401} zurückgesendet und der Fehler \texttt{Username or password wrong!} ausgegeben.
+
 \subsection{Verwendung der Endpunkte}
 Die Requests und Callback-Funktionen sind bereits definiert. Nun muss der Server angewiesen werden, wie er diese zu verwenden hat. Dazu wird in einer separaten Datei \texttt{server.js} zunächst festgelegt, wo die gebauten Routen zu finden sind. Später können diese Routen mit \texttt{app.use()} aufgerufen werden und sind für den Client verfügbar. Ebenso muss in dieser Datei der Port festgelegt, über den die Endpunkte zu erreichen sind, sowie die Verbindung zu der Datenbank aufgebaut werden.
 
