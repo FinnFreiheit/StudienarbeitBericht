@@ -4,7 +4,7 @@
 Um Daten zu speichern, gibt es verschiedene Lösungsansätze. Generell unterscheidet man zwischen den SQL- und NoSQL-Datenbankansätzen. Die Abkürzung \glqq SQL\grqq{} steht dabei für die \glqq Sequel Query Language\grqq{}, die zur Abfrage von relationalen Datenbanken genutzt wird. Im Gegensatz dazu umfasst der Begriff \glqq NoSQL\grqq{} – ausgeschrieben \glqq Not only SQL\grqq{} – jene Datenbanksysteme, die nicht den relationalen Ansätzen entsprechen \cite{eins}.
 
 \section{SQL}
-Spricht man von SQL-Datenbankansätzen, ist die Rede von Relationalen-Datenbank-Management-Systemen (RDBMS), denen Relationen zugrunde liegen. Relationen sind Tupel, die durch Attribute beschrieben werden. Ein Tupel enthält einen Schlüssel sowie einen dazugehörigen Wert.
+Spricht man von SQL-Datenbankansätzen, ist die Rede von \ac{RDBMS}, denen Relationen zugrunde liegen. Relationen sind Tupel, die durch Attribute beschrieben werden. Ein Tupel enthält einen Schlüssel sowie einen dazugehörigen Wert.
 Innerhalb eines RDBMS werden die Daten strukturiert in Tabellen gespeichert. In diesen Tabellen stellt jede Zeile einen Datensatz gekennzeichnet durch einen einzigartigen Schlüssel dar, wobei jede Spalte über ein Attribut dieses Schlüssels verfügt. Damit besteht jede Zeile aus mehreren Tupeln, deren Schlüssel immer derselbe ist. Innerhalb der Tabellen kann mit SQL-Befehlen wie \texttt{SELECT} oder \texttt{INSERT} gearbeitet werden, um Werte abzurufen oder einzufügen. Eine Abfrage könnte folgendermaßen aussehen:
 
 \begin{lstlisting}[caption=SQL SELECT-Abfrage, label=lst:selectabfrage,float=!htb]
@@ -82,7 +82,7 @@ Außerdem verfügt MongoDB über eine Primär-Sekundär-Replikation, wobei die P
 
 \section{Speicherung der Daten}
 \subsection{JSON-basierte Speicherung}
-Eine Datenbank enthält Kollektionen, die Dokumente umfassen, siehe Abbildung \ref*{img:jsonSpeicherung}. Diese Dokumente enthalten die zu speichernden Daten \cite[S.30]{zwei} in Form von Schlüssel-Wert-Paaren \cite[S.27]{zwei}. Zur Speicherung wird Binary JSON – kurz BSON – eingesetzt. JSON ist die JavaScript Object Notation und gilt als eine der Standardsprachen für den Datenaustausch im heutigen modernen Web. Das Format von JSON ist sowohl für Maschinen als auch für den Menschen lesbar. Zudem werden alle Standarddatentypen wie beispielsweise Strings, Zahlenwerte, Boolean-Werte und Arrays unterstützt \cite[S.31]{zwei}. Ein JSON-Objekt kann folgendermaßen aussehen:
+Eine Datenbank enthält Kollektionen, die Dokumente umfassen, siehe Abbildung \ref*{img:jsonSpeicherung}. Diese Dokumente enthalten die zu speichernden Daten \cite[S.30]{zwei} in Form von Schlüssel-Wert-Paaren \cite[S.27]{zwei}. Zur Speicherung wird \ac{BSON} eingesetzt. JSON ist die JavaScript Object Notation und gilt als eine der Standardsprachen für den Datenaustausch im heutigen modernen Web. Das Format von JSON ist sowohl für Maschinen als auch für den Menschen lesbar. Zudem werden alle Standarddatentypen wie beispielsweise Strings, Zahlenwerte, Boolean-Werte und Arrays unterstützt \cite[S.31]{zwei}. Ein JSON-Objekt kann folgendermaßen aussehen:
 
 \begin{lstlisting}[caption=JSON-Objekt, label=lst:jsonobjekt,float=!htb]
     {
