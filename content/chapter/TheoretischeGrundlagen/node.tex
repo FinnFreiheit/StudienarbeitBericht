@@ -14,7 +14,7 @@ Hierbei wird die asynchrone Verarbeitung deutlich. Jene Funktionen von Node.js, 
 \subsection{Ereignisschleife}
 
 Node.js arbeitet ereignisorientiert. Muss in einem Moment keine Aufgabe ausgeführt werden, schläft die JavaScript-Laufzeitumgebung und wartet auf ein neues Ereignis. Dabei arbeitet Node.js nicht mit Ereignissen in Form von Mausklicks oder Tastaturanschlägen, sondern mit Datenbankverbindungen oder dem Öffnen von Dateien. 
-Für diesen Prozess ist die Ereignisschleife verantwortlich, eine Endlosschleife, die in jeder Iteration das Vorhandensein von neuen Ereignissen prüft. Sie muss erkennen, wann eine neue Aufgabe ausgeführt werden muss. Sobald ein Ereignis ausgelöst wird, führt die Schleife die zugehörige Aufgabe. Währenddessen kann jeder beliebige Logik in die Callback-Funktion schreiben \cite[S.3]{neins}.
+Für diesen Prozess ist die Ereignisschleife verantwortlich, eine Endlosschleife, die in jeder Iteration das Vorhandensein von neuen Ereignissen prüft. Sie muss erkennen, wann eine neue Aufgabe ausgeführt werden muss. Sobald ein Ereignis ausgelöst wird, befindet sich die zugehörige Aufgabe in der Schleife. Währenddessen kann jeder eine beliebige Logik in die Callback-Funktion schreiben \cite[S.3]{neins}.
 Neben der Ereignisschleife gibt es den Worker Pool, der sich um den restlichen Workload kümmert. Während die Ereignisschleife außer für Callback-Funktionen nur für Anfragen verantwortlich ist, die nicht blockieren können, laufen innerhalb des Worker Pools Aufgaben, die nicht in jedem Fall nicht-blockierend sind \cite{dienstag}. 
 
 \section{Vorteile durch die Nutzung von JavaScript}
@@ -76,7 +76,7 @@ Beispielsweise könnte eine Routing-Funktion mit zwei Callback-Funktionen folgen
 
 In obigem Beispiel kann man die Response-Methode \texttt{res.send()} sehen. Damit lässt sich eine Antwort verschiedener Typen senden. Neben dieser gibt es weitere Methoden, die in Callback-Funktionen verwendet werden können. Beispielsweise lässt sich mit \texttt{res.json()} eine Antwort in JSON-Format und mit \texttt{res.sendStatus()} der Status-Code der Antwort senden. Der Status-Code bezieht sich auf http-Codes wie beispielsweise Code  \texttt{ 200 OK} und Code  \texttt{400 Bad Request}.
 
-Des Weiteren gibt es die Möglichkeit verkettete Routen-Handler zu erstellen unter der Verwendung von \texttt{app.route()}. Dabei wird der Pfad an einem Punkt definiert. Im Anschluss lassen sich die Callback-Funktionen für verschiedene Request-Methoden spezifizieren. Das definieren modularer Routen hat den Vorteil, dass sich Redundanzen vermeiden lassen und der Code minimalistisch gehalten werden kann. 
+Des weiteren gibt es die Möglichkeit, verkettete Routen-Handler zu erstellen unter der Verwendung von \texttt{app.route()}. Dabei wird der Pfad an einem Punkt definiert. Im Anschluss lassen sich die Callback-Funktionen für verschiedene Request-Methoden spezifizieren. Das definieren modularer Routen hat den Vorteil, dass sich Redundanzen vermeiden lassen und der Code minimalistisch gehalten werden kann. 
 Beispielsweise kann eine modulare Routing-Methode so aussehen, siehe Listing \ref*{lst:modulareRouting}
 
 \begin{lstlisting}[caption={modulare Routing Methode \cite{nfunf}}, label={lst:modulareRouting}]
@@ -96,8 +96,8 @@ Beispielsweise kann eine modulare Routing-Methode so aussehen, siehe Listing \re
 
 Als Middleware wird eine Funktion bezeichnet, die vor dem endgültigen Request-Handler aufgerufen wird. Sie steht zwischen einem rohem Request und der letztendlich verwendeten Route \cite{nsieben}.
 Eine Express-Anwendung ist eine Serie von Middleware-Funktionsaufrufen. Diese Funktionen haben Zugriff auf die Request- und Response-Objekte sowie die in der Serie nächste Middleware-Funktion. 
-Middleware-Funktionen können verschiedene Aufgaben ausführen. Dazu gehört die Ausführung jedes beliebigen Codes und die Möglichkeit, Änderungen an Request- und Response-Objekten vornehmen zu können. Außerdem kann eine Funktion die Nächste aufrufen unter Verwendung von \texttt{next()}. Wird jener Befehl nicht aufgerufen, kann die Kontrolle nicht an die nächste Middleware-Funktion übergeben werden. Dies bedeutet, dass der Request-Response-Zyklus der Anwendung beendet wird.
-Insgesamt gibt es fünf verschiedene Arten von Middleware, die Express verwenden kann, die im folgenden beschrieben werden. 
+Middleware-Funktionen können verschiedene Aufgaben ausführen. Dazu gehört die Ausführung jedes beliebigen Codes und die Möglichkeit, Änderungen an Request- und Response-Objekten vornehmen zu können. Außerdem kann eine Funktion unter Verwendung von \texttt{next()} die Nächste aufrufen. Wird jener Befehl nicht aufgerufen, kann die Kontrolle nicht an die nächste Middleware-Funktion übergeben werden. Dies bedeutet, dass der Request-Response-Zyklus der Anwendung beendet wird.
+Insgesamt gibt es fünf verschiedene Arten von Middleware, die Express verwenden kann, die im Folgenden beschrieben werden. 
 
 \subsubsection{Application-Level-Middleware}
 
@@ -115,7 +115,7 @@ Die Instanz wird folgendermaßen verwendet, siehe Listing \ref*{lst:verwendungIn
 
 \subsubsection{Error-Handling-Middleware}
 
-Ebenfalls lässt sich mit Middleware-Funktionen ein Error-Handling durchführen. Wichtig dabei ist, dass immer vier Argumente angeboten werden müssen, damit eine Middleware als Error-Handling-Middleware erkannt wird. Diese vier Argumente sind \grqq err, req, res, next\glqq{}. 
+Ebenfalls lässt sich mit Middleware-Funktionen ein Error-Handling durchführen. Wichtig dabei ist, dass immer vier Argumente angeboten werden müssen, damit eine Middleware als Error-Handling-Middleware erkannt wird. Diese vier Argumente sind \glqq err, req, res, next\grqq{}. 
 Eine Error-Handling-Funktion könnte folgendermaßen aussehen, siehe Listing \ref*{lst:errorHandlingMiddleware}
 
 \begin{lstlisting}[caption={Error-Handling-Middleware}, label={lst:errorHandlingMiddleware}]
