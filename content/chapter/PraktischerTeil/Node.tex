@@ -147,7 +147,7 @@ Mit der obigen Beispiel-Funktion wird ein User über seine ID unter Verwendung d
     });
 \end{lstlisting}
 
-In obigem Code kann man eine POST-Anfrage an den Endpunkt \texttt{/users} erkennen. Im Zuge dieser Anfrage wird ein JSON-Objekt gesendet, dessen Inhalte über \texttt{req.body.*} aufgerufen werden können. Mit den enthaltenen Daten wird ein neuer User in der Datenbank angelegt. Zusätzlich erstellt MongoDB automatisch eine ID und weißt sie dem neuen User zu.
+In obigem Code kann man eine POST-Anfrage an den Endpunkt \texttt{/users} erkennen. Im Zuge dieser Anfrage wird ein JSON-Objekt gesendet, dessen Inhalte über \texttt{req.body.*} aufgerufen werden können. Mit den enthaltenen Daten wird ein neuer User in der Datenbank angelegt. Zusätzlich erstellt MongoDB automatisch eine ID und weist sie dem neuen User zu.
 
 \begin{lstlisting}[caption=PATCH-Request, label=lst:patchrequest,float=!htb]
     router.patch('/users/:id', async(req, res) => {
