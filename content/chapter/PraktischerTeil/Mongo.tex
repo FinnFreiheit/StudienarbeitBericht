@@ -1,5 +1,9 @@
 %!TEX root = ../../main.tex
 \chapter{MongoDB}
+
+Die Open-Source basierte Datenbank MongoDB wurde gewählt, da sie Daten im BSON-Format abspeichert, wodurch sämtliche JavaScript-Datentypen unterstützt werden. Dies macht MongoDB zu einer guten Wahl für Node.js-Plattformen. Außerdem wird die Verfügbarkeit von Daten unterstützt. Während andere NoSQL-Datenbanken mehrere Master-Knoten haben können, um eine kontinuierlich hohe Verfügbarkeit aufweisen zu können, verfügt MongoDB nur über einen Master. Nach dem Konzept des automatischen Failovers wird nach Ausfall eines Master-Knotens jedoch ein Slave-Knoten zu dem neuen Master gemacht. Dies benötigt zwar eine kurze Zeit, dennoch wäre es im Rahmen der Progressive Web App nicht schlimm, für die Dauer von ungefähr einer Minute auf verfügbare Daten zu verzichten. \\
+Ebenso wichtig ist, dass MongoDB in der Datenspeicherung hochflexibel ist und auch unstrukturierte Daten abspeichern kann. Objekte, die in MongoDB definiert werden, können beliebige Strukturen aufweisen und unterliegen keiner vorgegebenen Tabellenstruktur.
+
 \section{Mongoose}
 Die Verbindung der Datenbank mit der Express-Webanwendung kann mithilfe des Moduls Mongoose hergestellt werden, einem objektorientierten JavaScript-Framework, das eine einfach zu verwendene Schnittstelle zwischen Node.js und MongoDB darstellt. Die Verbindung wird in der \texttt{server.js}-Datei hergestellt und sieht folgendermaßen aus:
 
@@ -86,7 +90,7 @@ Unter Verwendung von
 lässt sich ein neues Schema erstellen. Die Definition der Schlüssel-Wert-Paare findet innerhalb der geschwungenen Klammern statt.
 
 \section{Dateiupload}
-Um Bilder in die MongoDB laden zu können wird zunächst eine Middleware benötigt. Dazu verwendet man Multer. In der Middleware wird festgelegt, an welchem Ort die Datei gespeichert werden soll und welche Formate angenommen werden. In diesem Fall sind das eine URL der Datenbank sowie die Bildformate png und jpeg. Wichtig ist, dass die Dateinamen einzigartig sind. Um dies zu bewahren, werden den Original-Dateinamen Zeitstempel hinzugefügt.
+Um Bilder in die MongoDB laden zu können, wird zunächst eine Middleware benötigt. Dazu verwendet man Multer. In der Middleware wird festgelegt, an welchem Ort die Datei gespeichert werden soll und welche Formate angenommen werden. In diesem Fall sind das eine URL der Datenbank sowie die Bildformate png und jpeg. Wichtig ist, dass die Dateinamen einzigartig sind. Um dies zu bewahren, werden den Original-Dateinamen Zeitstempel hinzugefügt.
 
 \begin{lstlisting}[caption=Zuweisen der URL der Datenbank, label=lst:url]
     url: 'mongodb://127.0.0.1:27017',
@@ -100,11 +104,11 @@ Um Bilder in die MongoDB laden zu können wird zunächst eine Middleware benöti
     filename: `${Date.now()}-${file.originalname}`;
 \end{lstlisting}
 
-Die Middleware wird aufgerufen, sobald der Client einen POST-Request zum Hochladen eines Bildes ausführt. Dabei wird überprüft, ob die Anfrage ein passendes File enthält. Ist dies der Fall erhält man im Rückgabewert die URL des Speicherorts des Bildes.
+Die Middleware wird aufgerufen, sobald der Client einen POST-Request zum Hochladen eines Bildes ausführt. Dabei wird überprüft, ob die Anfrage ein passendes File enthält. Ist dies der Fall, erhält man im Rückgabewert die URL des Speicherorts des Bildes.
 
 \begin{lstlisting}[caption=Speicherort des Bildes, label=lst:speicherortbild]
     const imgUrl = `http://localhost:4000/download/${req.file.filename}`;
 \end{lstlisting}
 
 Ebenso lassen sich bereits gespeicherte Bilder aus der Datenbank downloaden. Dafür wird zunächst ein GET-Request an die Datenbank gesendet, der den Filenamen enthält. Dieser wird in der GridFS-Collection \texttt{fileupload} gesucht. Findet der Cursor den Filenamen, kann der Download gestartet werden. Da das Bild zuvor in einzelne Chunks zerlegt wurde, um in der MongoDB gespeichert werden zu können, müssen diese zuerst zusammengesetzt werden. 
-Außerdem kann ein Bild über einen DELETE-Request gelöscht werden. Auch hier wird über den Filenamen geprüft, ob das Bild in der Datenbank enthalten ist. Falls ja kann es gelöscht werden.
+Außerdem kann ein Bild über einen DELETE-Request gelöscht werden. Auch hier wird über den Filenamen geprüft, ob das Bild in der Datenbank enthalten ist. Ist es das, kann es gelöscht werden.
