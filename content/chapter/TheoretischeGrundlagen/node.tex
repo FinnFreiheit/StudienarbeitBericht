@@ -79,7 +79,7 @@ In obigem Beispiel kann man die Response-Methode \texttt{res.send()} sehen. Dami
 Des weiteren gibt es die Möglichkeit, verkettete Routen-Handler zu erstellen unter der Verwendung von \texttt{app.route()}. Dabei wird der Pfad an einem Punkt definiert. Im Anschluss lassen sich die Callback-Funktionen für verschiedene Request-Methoden spezifizieren. Das definieren modularer Routen hat den Vorteil, dass sich Redundanzen vermeiden lassen und der Code minimalistisch gehalten werden kann. 
 Beispielsweise kann eine modulare Routing-Methode so aussehen, siehe Listing \ref*{lst:modulareRouting}
 
-\begin{lstlisting}[caption={modulare Routing Methode \cite{nfunf}}, label={lst:modulareRouting}]
+\begin{lstlisting}[caption={Modulare Routing Methode \cite{nfunf}}, label={lst:modulareRouting}]
     app.route('/user')
     .get((req, res) => {
         res.send('Get user')
