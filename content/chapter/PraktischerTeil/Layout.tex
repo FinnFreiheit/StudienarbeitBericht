@@ -1,17 +1,17 @@
 %!TEX root = ../../main.tex
 \chapter{Layout}
 
-Im Folgendem wird beschrieben, wie die Applikation aufgebaut ist. Und wie durch ein Responsive Design die Anwendung auch unabhängig von der Bildschirmgröße übersichtlich dargestellt werden kann. Dies ist besonders wichtig, da die Anwendung sowohl auf einem Desktop-PC als auch auf einem mobilen Endgerät benutzt werden soll. 
+Im Folgenden wird beschrieben, wie die Applikation aufgebaut ist und wie sie durch ein responsives Design auch unabhängig von der Bildschirmgröße übersichtlich dargestellt werden kann. Dies ist besonders wichtig, da die Anwendung sowohl auf einem Desktop-PC als auch auf einem mobilen Endgerät zur Verfügung gestellt werden soll. 
 
 \section{Layout Webanwendung}
-Die Abwendung verfügt über folgende von einander Abgrenzbare Elemente: 
+Die Abwendung verfügt über folgende, voneinander abgrenzbare Elemente: 
 \begin{itemize}
     \item obere Navigationsleiste
     \item Hauptfeld
     \item Fußzeile
 \end{itemize}
 
-Die obere Navigationsleiste beinhaltet den Title der Anwendung, ein Knopf um Push-Nachrichten zu Abonnieren, und einen um zur Anmeldeseite zu gelangen. Im Hauptfeld werden wahlweise Fotos oder Kommentare angezeigt. Im unterem Teil des Hauptfeldes befinden sich zwei Icons. Das Herz-Icon kann vom Nutzer ausgewählt werden, was zu einer Inkrementierung des Zählers führt, der wiederum in der oberen rechten Ecke des Herz-Icons zu sehen ist. Das Kommentar-Icon dient als Navigationsobjekt um zwischen der Anzeige von Bildern und Kommentaren zu wechseln. In der unteren Navigationsleiste befinden sich Icons um auf die Geräteschnittstellen \texttt{Geolocation} und \texttt{Kamera}, sowie ein Icon um Bilder per Drag and Drop hochzuladen.  Das HTML-Grundgerüst der Anwendung ist in Listing \ref{lst:grundHTML} dargestellt. 
+Die obere Navigationsleiste beinhaltet den Title der Anwendung, einen Knopf, um Push-Nachrichten zu abonnieren, und einen, um zur Anmeldeseite zu gelangen. Im Hauptfeld werden wahlweise Fotos oder Kommentare angezeigt. Im unteren Teil des Hauptfeldes befinden sich zwei Icons. Das Herz-Icon kann vom Nutzer ausgewählt werden, was zu einer Inkrementierung des Zählers führt, der wiederum in der oberen rechten Ecke des Herz-Icons zu sehen ist. Das Kommentar-Icon dient als Navigationsobjekt, über das zwischen der Anzeige von Bildern und Kommentaren gewechselt werden kann. In der unteren Navigationsleiste befinden sich Icons, mit deren Hilfe auf die Geräteschnittstellen \texttt{Geolocation} und \texttt{Kamera} zugegriffen werden kann, sowie ein Icon, um Bilder per Drag and Drop hochzuladen.  Das HTML-Grundgerüst der Anwendung ist in Listing \ref{lst:grundHTML} dargestellt. 
 
 \begin{lstlisting}[caption={HTML-Grundgerüst der Webanwendung}, label=lst:grundHTML, float=!htb]
     <div class="pageContainer">
@@ -28,9 +28,9 @@ Die obere Navigationsleiste beinhaltet den Title der Anwendung, ein Knopf um Pus
 
 \subsection{CSS-Grid}
 
-Das Anordnen der Elemente und das verhalten bei unterschiedlichen Bildschirmbreiten wird mithilfe von CSS-Grid umgesetzt. Welches im folgende am Hand der Hauptseite erklärt wird. 
-Mithilfe von CSS-Grid kann ein Raster aus Zeilen und Spalten erstellt werden. Die HTML-Elemente werden im anschluss dem Raster zuteilt. 
-Das Raster der Anwendung und dem im Listing aufgeführtem HTML-Grundgerüst (Listing \ref{lst:grundHTML}) ist in Abbildung \ref{img:gridRaster} dargestellt.
+Das Anordnen der Elemente und das Verhalten bei unterschiedlichen Bildschirmbreiten wird mithilfe von CSS-Grid umgesetzt, welches im Folgenden anhand der Hauptseite erklärt wird. 
+Mithilfe von CSS-Grid kann ein Raster aus Zeilen und Spalten erstellt werden. Die HTML-Elemente werden im Anschluss dem Raster zugeteilt. 
+Das Raster der Anwendung und das im Listing aufgeführte HTML-Grundgerüst (Listing \ref{lst:grundHTML}) ist in Abbildung \ref{img:gridRaster} dargestellt.
 
 \begin{figure}[!htb]
     \centering
@@ -39,7 +39,7 @@ Das Raster der Anwendung und dem im Listing aufgeführtem HTML-Grundgerüst (Lis
     \label{img:gridRaster}
 \end{figure}
 
-Die Realisierung des Rasters in CSS ist in Listing \ref{lst:cssGridStart} aufgeführt. Die CSS-Klassen beziehen sich auf die, aus dem HTML-Grundgerüst \ref{lst:grundHTML}.
+Die Realisierung des Rasters in CSS ist in Listing \ref{lst:cssGridStart} aufgeführt. Die CSS-Klassen beziehen sich auf diejenigen aus dem HTML-Grundgerüst \ref{lst:grundHTML}.
 
 \begin{lstlisting}[caption={Realisierung des Grid-Rasters in CSS}, label={lst:cssGridStart}, float=!htb]
     .pageContainer{
@@ -72,5 +72,5 @@ Die Realisierung des Rasters in CSS ist in Listing \ref{lst:cssGridStart} aufgef
     }
 \end{lstlisting}
 
-Um ein Responsive-Design zu realisieren kann das Raster und die Zuordnung der Elemente abhängig von der Bildschirmbreite geschehen. Hierfür werden sogenannte \texttt{Media Query} verwendet. 
+Um ein Responsive-Design zu realisieren, kann das Raster und die Zuordnung der Elemente in Abhängigkeit der Bildschirmbreite geschehen. Hierfür werden sogenannte \texttt{Media Query} verwendet. 
 
