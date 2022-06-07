@@ -39,13 +39,13 @@ Laut dem Theorem können immer nur zwei der drei Bedingungen gleichzeitig erfül
 
 \subsection{Modelle}
 
-NoSQL umfasst im Allgemeinen vier verschiedene Modelle, die einen möglichen Aufbau einer NoSQL-Datenbank zeigen, siehe Abbildung \ref*{img:modell}.
+NoSQL umfasst im Allgemeinen vier verschiedene Modelle, die einen möglichen Aufbau einer NoSQL-Datenbank zeigen, siehe Abbildung \ref{img:modell}.
 
 \begin{figure}
     \centering
     \includegraphics{modell.png}
-    \label{img:modell}
     \caption{Modelle einer NoSQL Datenbank  \cite{drei}}
+    \label{img:modell}
 \end{figure}
 
 Auf dem ersten Bild erkennt man den Dokumentspeicher. In diesem Modell werden Daten in Dokumenten hierarchisch in einer Datenbank angeordnet und abgespeichert. Diese Dokumente sind JSON-basiert, was heißt, dass die dort abgespeicherten Daten im JSON-Format vorliegen.
@@ -82,7 +82,7 @@ Außerdem verfügt MongoDB über eine Primär-Sekundär-Replikation, wobei die P
 
 \section{Speicherung der Daten}
 \subsection{JSON-basierte Speicherung}
-Eine Datenbank enthält Kollektionen, die Dokumente umfassen, siehe Abbildung \ref*{img:jsonSpeicherung}. Diese Dokumente enthalten die zu speichernden Daten \cite[S.30]{zwei} in Form von Schlüssel-Wert-Paaren \cite[S.27]{zwei}. Zur Speicherung wird \ac{BSON} eingesetzt. JSON ist die JavaScript Object Notation und gilt als eine der Standardsprachen für den Datenaustausch im heutigen modernen Web. Das Format von JSON ist sowohl für Maschinen als auch für den Menschen lesbar. Zudem werden alle Standarddatentypen wie beispielsweise Strings, Zahlenwerte, Boolean-Werte und Arrays unterstützt \cite[S.31]{zwei}. Ein JSON-Objekt kann folgendermaßen aussehen:
+Eine Datenbank enthält Kollektionen, die Dokumente umfassen, siehe Abbildung \ref*{img:jsonSpeicherung}. Diese Dokumente enthalten die zu speichernden Daten \cite[S.30]{zwei} in Form von Schlüssel-Wert-Paaren \cite[S.27]{zwei}. Zur Speicherung wird \ac{BSON} eingesetzt. JSON ist die JavaScript Object Notation und gilt als eine der Standardsprachen für den Datenaustausch im heutigen modernen Web. Das Format von JSON ist sowohl für Maschinen als auch für den Menschen lesbar. Zudem werden alle Standarddatentypen wie beispielsweise Strings, Zahlenwerte, Boolean-Werte und Arrays unterstützt \cite[S.31]{zwei}. Ein JSON-Objekt kann folgendermaßen aussehen, Listing \ref{lst:jsonobjekt}.
 
 \begin{lstlisting}[caption=JSON-Objekt, label=lst:jsonobjekt,float=!htb]
     {
@@ -97,8 +97,8 @@ Im Gegenteil zu RDBMS kann für eine Speicherung ein dynamisches Schema gewählt
 \begin{figure}
     \centering
     \includegraphics[scale=0.6]{jsonSpeicherung.jpg}
-    \label{img:jsonSpeicherung}
     \caption{Aufbau von MongoDB \cite[S.30]{zwei}}
+    \label{img:jsonSpeicherung}
 \end{figure}
 
 \subsection{BSON}
