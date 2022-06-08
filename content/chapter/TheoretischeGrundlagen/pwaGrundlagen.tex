@@ -191,7 +191,7 @@ Bei der Registrierung sollte das Konzept des \textit{Progressive Enhancements} b
 
 
 Falls der Browser über die nötigen Funktionen verfügt, kann die \texttt{subscribe()}-Methode der \texttt{ServiceWorkerRegistration} aufgerufen werden,
-welches ein Objekt des Typs \texttt{PushSubscription} zurückgibt. 
+welches ein Objekt des Typs \\ \texttt{PushSubscription} zurückgibt. 
 Die PushSubscription verfügt über ein Konfigurationsobjekt mit zwei Eigenschaften. Die erste Eigenschaft trägt den Namen \texttt{userVisibleOnly} und ist eine \textit{boolsche} Eigenschaft, die  beschreibt, ob Pushnachrichten immer zu einer für den Anwender sichtbaren Meldung führen. Diese hat standardmäßig den Wert \texttt{false}. Innerhalb des Browsers Google Chrome führt das jedoch zu Komplikationen, da der Browser aus Gründen der Datensicherheit keine sogenannte \textit{Silent Push} Nachrichten zulässt. Daher sollte diese Eigenschaft auf den Wert \texttt{true} geändert werden. 
 
 Die zweite Eigenschaft des Konfigurationsobjekts bezeichnet man als\\ \texttt{applicationServerKey}. Diese Eigenschaft wird benötigt, um die Nachrichten zwischen dem Push-Dienst und der Anwendung zu verschlüsseln. Zur Verschlüsselung wird das \ac{VAPID}-Protokoll verwendet, das von der IETF spezifiziert wurde \cite{rfc8292}. Die Verschlüsselung benötigt einen öffentlichen und einen privaten Schlüssel. Der öffentliche Schlüssel ist unter der \texttt{applicationServerKey}-Eigenschaft gespeichert. Der private Schlüssel wird wiederum in dem Backend der Anwendung hinterlegt. 
