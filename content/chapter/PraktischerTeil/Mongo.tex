@@ -3,7 +3,7 @@
 
 Die Open-Source basierte Datenbank MongoDB wurde gewählt, da sie Daten im BSON-Format abspeichert, wodurch sämtliche JavaScript-Datentypen unterstützt werden. Dies macht MongoDB zu einer guten Wahl für Node.js-Plattformen. Außerdem wird die Verfügbarkeit von Daten unterstützt. Während andere NoSQL-Datenbanken mehrere Master-Knoten haben können, um eine kontinuierlich hohe Verfügbarkeit aufweisen zu können, verfügt MongoDB nur über einen Master. Nach dem Konzept des automatischen Failovers wird nach Ausfall eines Master-Knotens jedoch ein Slave-Knoten zu dem neuen Master gemacht. Dies benötigt zwar eine kurze Zeit, dennoch wäre es im Rahmen der Progressive Web App nicht schlimm, für die Dauer von ungefähr einer Minute auf verfügbare Daten zu verzichten. 
 
-Ebenso wichtig ist, dass MongoDB in der Datenspeicherung hochflexibel ist und auch unstrukturierte Daten abspeichern kann. Objekte, die in MongoDB definiert werden, können beliebige Strukturen aufweisen und unterliegen keiner vorgegebenen Tabellenstruktur.
+Ebenso wichtig ist, dass MongoDB in der Datenspeicherung hochflexibel ist und auch unstrukturierte Daten abspeichern kann. Objekte, die in MongoDB definiert werden, können beliebige Strukturen aufweisen und unterliegen keiner vorgegebenen Tabellenstruktur \cite{tozzi_2018}.
 
 \section{Mongoose}
 Die Verbindung der Datenbank mit der Express-Webanwendung kann mithilfe des Moduls Mongoose hergestellt werden, einem objektorientierten JavaScript-Framework, das eine einfach zu verwendene Schnittstelle zwischen Node.js und MongoDB darstellt. Die Verbindung wird in der \texttt{server.js}-Datei hergestellt und sieht folgendermaßen aus:
